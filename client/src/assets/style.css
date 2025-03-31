@@ -38,3 +38,23 @@ nav{
     height: 100%;
     background-color: rgb(70, 70, 107);
 }
+
+.start-page{
+    display: flex;
+    min-height: 100vh;
+}
+
+.start-forms{
+    width: 30%;
+    background-color: beige;
+}
+
+.begin-screen{
+    width: 70%;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

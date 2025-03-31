@@ -7,7 +7,7 @@ function App() {
 
   return (
     <div className='root-component'>
-    <Navbar />
+    {/* <Navbar /> */}
       <main>
         <Outlet/>
       </main>
