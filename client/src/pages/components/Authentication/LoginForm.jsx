@@ -2,12 +2,15 @@ import React from 'react';
 
 const LoginForm = () => {
     return (
-        <form className='start-form'>
-        <input type='text' placeholder='username'/>
-        <input type='password' placeholder='password'/>
-            
-        <button>Login</button>
-        </form>
+        <>
+            <h1 className='start-title'>Login</h1>
+            <form className='start-form'>
+            <input type='text' placeholder='username'/>
+            <input type='password' placeholder='password'/>
+                
+            <button className='auth-btn'>Login</button>
+            </form>
+        </>
     );
 }
 

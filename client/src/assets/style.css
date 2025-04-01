@@ -25,7 +25,7 @@ main{
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: rgb(70, 70, 107);
+    background-color: rgb(40, 40, 61);
 }
 
 header{
@@ -36,25 +36,112 @@ header{
 nav{
     width: 100%;
     height: 100%;
-    background-color: rgb(70, 70, 107);
+    background-color: rgb(40, 40, 61);
 }
 
 .start-page{
     display: flex;
-    min-height: 100vh;
+    height: 100vh;
 }
 
 .start-forms{
     width: 30%;
-    background-color: beige;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .begin-screen{
     width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.start-logo{
+    width: 50%;
+    height: 90%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-img{
+    max-width: 100%;
+    max-height: 100%;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+} 
+
+.mini-logo{
+    width: 70%;
+    height: 25%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.logo-mini{
+    max-width: 50%;
+    max-height: 100%;
+    height: 100%;
+    width: 50%;
 }
 
 form{
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+input{
+    color: black;
+    padding: 10px;
+    width: 80%;
+    font-size: 14px;
+}
+
+input:focus{
+    outline: none;
+}
+
+button{
+    padding: 10px;
+    color: black;
+    border: 2px solid black;
+    cursor: pointer;
+    background-color: transparent;
+    transition: all 0.5s;
+}
+
+button:hover{
+    background-color: rgb(57, 57, 194);
+    transform: translateY(-5px);
+    color: white;
+}
+
+.auth-btn{
+    width: 40%;
+}
+
+.google-auth-btn{
+    margin-top: 50px;
+    width: 70%;
+}
+
+.start-title{
+    color: black;
+    font-size: 28px;
+    margin-bottom: 10px;
 }
