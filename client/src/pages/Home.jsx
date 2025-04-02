@@ -1,10 +1,15 @@
 import React from 'react';
+import Feed from './components/home/Feed';
+import Suggestions from './components/home/Suggestions';
+import Sidebar from './components/home/Sidebar';
 
 const Home = () => {
     return (
-        <div>
-            
-        </div>
+        <section className='home-page'>
+            <Sidebar />
+            <Feed />
+            <Suggestions />
+        </section>
     );
 }
 
