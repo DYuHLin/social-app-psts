@@ -10,23 +10,23 @@ const Suggestions = () => {
                     <div className='user-card'>
                         <div className='user-info'>
                             <img src={profileImg} alt='Profile image' className='profile-img' />
-                            <p>Username</p>
+                            <p className='follow-name'>Username</p>
                         </div>
-                        <button>Follow</button>
+                        <button className='follow-btn'>Follow</button>
                     </div>
                     <div className='user-card'>
                         <div className='user-info'>
                             <img src={profileImg} alt='Profile image' className='profile-img' />
-                            <p>Username</p>
+                            <p className='follow-name'>Username</p>
                         </div>
-                        <button>Follow</button>
+                        <button className='follow-btn'>Follow</button>
                     </div>
                     <div className='user-card'>
                         <div className='user-info'>
                             <img src={profileImg} alt='Profile image' className='profile-img' />
-                            <p>Username</p>
+                            <p className='follow-name'>Username</p>
                         </div>
-                        <button>Follow</button>
+                        <button className='follow-btn'>Follow</button>
                     </div>
                 </div>
                 
@@ -35,7 +35,25 @@ const Suggestions = () => {
                 <h2>Most Followed</h2>
                 <div className='users'>
                     <div className='user-card'>
-                            
+                        <div className='user-info'>
+                            <img src={profileImg} alt='Profile image' className='profile-img' />
+                            <p className='follow-name'>Username</p>
+                        </div>
+                        <button className='follow-btn'>Follow</button>
+                    </div>
+                    <div className='user-card'>
+                        <div className='user-info'>
+                            <img src={profileImg} alt='Profile image' className='profile-img' />
+                            <p className='follow-name'>Username</p>
+                        </div>
+                        <button className='follow-btn'>Follow</button>
+                    </div>
+                    <div className='user-card'>
+                        <div className='user-info'>
+                            <img src={profileImg} alt='Profile image' className='profile-img' />
+                            <p className='follow-name'>Username</p>
+                        </div>
+                        <button className='follow-btn'>Follow</button>
                     </div>
                 </div>      
             </div>
