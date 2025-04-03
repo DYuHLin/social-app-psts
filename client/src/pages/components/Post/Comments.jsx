@@ -1,16 +1,10 @@
 import React from 'react';
-import CommentWriter from './components/Post/CommentWriter';
-import Comments from './components/Post/Comments';
 
-const Post = () => {
+const Comments = () => {
     return (
-        <section className='home-page'>
-            <div className='feed'>
-                <div className='filter-feed'>
-                    <h1>Post</h1>
-                </div>
-
-                <div className='feed-post'>
+        <>
+            <h1 className='comment-title'>Comments</h1>
+            <div className='feed-post'>
                 <div className='post-info'>
                     <p className='feed-user'>Username</p>
                     <p>12/02/2016</p>
@@ -26,11 +20,8 @@ const Post = () => {
                     <p className='feed-icons'><i className='bx bx-comment' /> </p>
                 </div>
             </div>
-            <CommentWriter />
-            <Comments />
-            </div>
-        </section>
+        </>
     );
 }
 
-export default Post;
+export default Comments;

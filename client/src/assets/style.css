@@ -395,3 +395,27 @@ textarea{
     border: 1px solid white;
     padding: 10px;
 }
+
+.post-op{
+    cursor: pointer;
+    font-size: 22px;
+}
+
+.post-input{
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+}
+
+.comment-form{
+    margin-top: 16px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid white;
+}
+
+.comment-title{
+    font-size: 28px;
+    padding: 12px;
+    text-decoration: underline;
+}
