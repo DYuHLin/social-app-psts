@@ -22,7 +22,7 @@ const Profile = () => {
                         <p className='follow-label'>100 Followers</p>
                         <p className='follow-label'>100 Follwing</p>
                     </div>
-                    <button className='follow-btn'>Follow</button>
+                    <button className='follow-profile-btn'>Follow</button>
                 </div>
             </div>
             <UserPosts />
