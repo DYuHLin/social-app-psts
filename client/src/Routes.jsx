@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Create from './pages/Create';
 import Post from './pages/Post';
 import Likes from './pages/Likes';
+import UserList from './pages/UserList';
 
 function Routes(){
     const router = createBrowserRouter(createRoutesFromElements(
@@ -15,6 +16,7 @@ function Routes(){
         <Route path='/create' element={<Create/>} />
         <Route path='/:id/post' element={<Post/>} />
         <Route path='/likes' element={<Likes/>} />
+        <Route path='/users' element={<UserList/>} />
 
         </Route>
     ))

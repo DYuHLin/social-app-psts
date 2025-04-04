@@ -419,3 +419,38 @@ textarea{
     padding: 12px;
     text-decoration: underline;
 }
+
+.search-input{
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    margin: 40px;
+}
+
+.user-option{
+    width: 100%;
+    height: 40px;
+    border-bottom: 1px solid white;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.user-search-info{
+    height: 100%;
+    max-height: 100%;
+    width: 50%;
+    max-width: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.user-search-card{
+    width: 100%;
+    height: 60px;
+    border-bottom: 1px solid white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px;
+}
