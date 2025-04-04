@@ -8,6 +8,7 @@ import Post from './pages/Post';
 import Likes from './pages/Likes';
 import UserList from './pages/UserList';
 import Notifications from './pages/Notifications';
+import Profile from './pages/Profile';
 
 function Routes(){
     const router = createBrowserRouter(createRoutesFromElements(
@@ -19,6 +20,7 @@ function Routes(){
         <Route path='/likes' element={<Likes/>} />
         <Route path='/users' element={<UserList/>} />
         <Route path='/notifications' element={<Notifications/>} />
+        <Route path='/profile/:id' element={<Profile/>} />
 
         </Route>
     ))

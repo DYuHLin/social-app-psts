@@ -230,12 +230,14 @@ h2{
     max-width: 50%;
     display: flex;
     align-items: center;
+    gap: 8px;
 }
 
 .profile-img{
     height: inherit;
     max-height: inherit;
     border-radius: 50%;
+    border: 1px solid white;
 }
 
 .follow-btn, .post-btn{
@@ -462,4 +464,57 @@ textarea{
     display: flex;
     align-items: center;
     padding: 6px;
+}
+
+.user-profile-info{
+    width: 100%;
+    height: 40%;
+    display: flex;
+    align-content: space-between;
+    flex-direction: row;
+    border-bottom: 1px solid white;
+    padding: 18px;
+    margin-bottom: 30px;
+}
+
+.profile-card-info{
+    width: 70%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 12px;
+    gap: 14px;
+}
+
+.profile-card-img{
+    width: 30%;
+    height: 73%;
+    padding: 12px;
+}
+
+.profile-card-image{
+    height: 100%;
+    max-height: 100%;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+.followers{
+    display: flex;
+    gap: 20px;
+}
+
+.follow-btn{
+    width: 90%;
+    font-size: 22px;
+    color: white;
+    border: 2px solid white;
+}
+
+.follow-label{
+    font-size: 20px;
+    font-weight: 500;
 }
