@@ -540,3 +540,10 @@ textarea{
   .img-preview{
     max-width: 100%;
   }
+
+  a{
+    display: flex;
+    gap: 20px;
+    font-size: 22px;
+    text-decoration: none;
+  }

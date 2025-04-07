@@ -10,6 +10,10 @@ import UserList from './pages/UserList';
 import Notifications from './pages/Notifications';
 import Profile from './pages/Profile';
 import Follow from './pages/Follow';
+import Logout from './pages/Logout';
+import EditProfile from './pages/EditProfile';
+import EditPost from './pages/EditPost';
+import EditComment from './pages/EditComment';
 
 function Routes(){
     const router = createBrowserRouter(createRoutesFromElements(
@@ -23,6 +27,10 @@ function Routes(){
         <Route path='/notifications' element={<Notifications/>} />
         <Route path='/profile/:id' element={<Profile/>} />
         <Route path='/profile/:id/followers' element={<Follow/>} />
+        <Route path='/logout' element={<Logout />} />
+        <Route path='/profile/:id/edit' element={<EditProfile />} />
+        <Route path='/:id/post/edit' element={<EditPost />} />
+        <Route path='/:id/post/:id/comment/edit' element={<EditComment />} />
 
         </Route>
     ))
