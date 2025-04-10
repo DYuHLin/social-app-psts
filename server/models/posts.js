@@ -17,7 +17,7 @@ posts.create = async (text, video, link, date, poster) => {
 }
 
 posts.delete = async (id) => {
-    await pool.query(`DELETE FROM users WHERE id = ${id};`)
+    await pool.query(`DELETE FROM posts WHERE id = ${id};`)
 }
 
 posts.update = async (text, video, link, date, poster, id) => {
