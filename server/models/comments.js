@@ -3,7 +3,7 @@ const pool = require('../db/Pool')
 const comments = {}
 
 comments.get = async () => {
-    const {rows} = await pool.query('select * from comments INNER JOIN users ON posts.poster = user.id;')
+    const {rows} = await pool.query('select * from comments INNER JOIN users ON posts.poster = user.id INNER JOIN images ON comments.id = images.comment;')
     return rows
 }
 
