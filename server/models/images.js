@@ -13,3 +13,5 @@ images.deletePostImages = async (id) => {
 images.deleteCommentImages = async (id) => {
     await pool.query(`DELETE FROM images WHERE comment = ${id};`)
 }
+
+module.exports = images

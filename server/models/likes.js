@@ -2,24 +2,21 @@ const pool = require('../db/Pool')
 
 const likes = {}
 
-likes.getPost = async () => {
-    const {rows} = await pool.query(`SELECT * FROM images INNER JOIN posts ON images.post = posts.id;`)
+likes.getLikes = async (id) => {
+    const {rows} = await pool.query(`SELECT * FROM likes INNER JOIN posts ON likes.post = posts.id WHERE liker = ${id};`)
     return rows
 }
 
-likes.getComment = async () => {
-    const {rows} = await pool.query(`SELECT * FROM images INNER JOIN posts ON images.comments = comments.id;`)
-    return rows
+likes.create = async (image, post, liker) => {
+    await pool.query(`INSERT INTO likes (post, comment, liker) VALUES($1, $2, $3);`, [post, comment, liker])
 }
 
-likes.create = async (image, post, comment) => {
-    await pool.query(`INSERT INTO likes (image, post, comment) VALUES($1, $2, $3);`, [image, post, comment])
+likes.deletePostLike = async (id, user) => {
+    await pool.query(`DELETE FROM likes WHERE post = ${id} AND liker = ${user};`)
 }
 
-likes.deletePost = async (id) => {
-    await pool.query(`DELETE FROM likes WHERE post = ${id};`)
+likes.deletecommentLike = async (id, user) => {
+    await pool.query(`DELETE FROM likes WHERE comment = ${id} AND liker = ${user};`)
 }
 
-likes.deleteComment = async (id) => {
-    await pool.query(`DELETE FROM likes WHERE comment = ${id};`)
-}
+module.exports = likes

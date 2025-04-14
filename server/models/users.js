@@ -23,3 +23,5 @@ users.delete = async (id) => {
 users.update = async (username, password, description, image, id) => {
     await pool.query(`UPDATE users SET username = $1, password = $2, description = $3 image = $4 WHERE id = $5;`, [username, password, description, image, id])
 }
+
+module.exports = users

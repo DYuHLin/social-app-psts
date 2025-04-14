@@ -14,3 +14,5 @@ followers.create = async (follower, following) => {
 followers.delete = async (id) => {
     await pool.query(`DELETE FROM followers WHERE id = ${id};`)
 }
+
+module.exports = followers
