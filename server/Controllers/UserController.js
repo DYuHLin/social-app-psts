@@ -47,20 +47,35 @@ exports.userLogin = asyncHandler(async (req, res, next) => {
 
 exports.userUpdate = asyncHandler(async (req, res, next) => {
     try{
-        
+        const user = await userModel.exist()
+        if(user){
+            return res.json('Username has been taken')
+        } else {
+            bcrypt.hash(req.body.password, 10, async (err, hashed) => {
+                if(err){
+                    return next(err)
+                } else {
+                    await userModel.update(req.body.username, hashed, req.body.description, image, req.body.id)
+                    return res.json('success')
+                }
+            })
+        }
     } catch(err){
         next(err)
     }
 })
 
 exports.getAllUsers = asyncHandler(async (req, res, next) => {
-
+    const users = await userModel.get()
+    return res.json(users)
 })
 
 exports.getUser = asyncHandler(async (req, res, next) => {
-
+    const users = await userModel.single()
+    return res.json(users)
 })
 
 exports.userDelete = asyncHandler(async (req, res, next) => {
-
+    await userModel.delete()
+    return res.json('deleted')
 })
