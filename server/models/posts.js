@@ -3,12 +3,12 @@ const pool = require('../db/Pool')
 const posts = {}
 
 posts.get = async () => {
-    const {rows} = await pool.query('select * from posts INNER JOIN users ON posts.poster = user.id INNER JOIN images ON posts.id = images.post;')
+    const {rows} = await pool.query('SELECT * FROM posts INNER JOIN users ON posts.poster = user.id INNER JOIN images ON posts.id = images.post;')
     return rows
 }
 
 posts.single = async (id) => {
-    const {rows} = await pool.query(`SELECT * FROM posts INNER JOIN users ON posts.poster = user.id WHERE id = ${id};`)
+    const {rows} = await pool.query(`SELECT * FROM posts INNER JOIN users ON posts.poster = user.id INNER JOIN images ON posts.id = images.post WHERE id = ${id};`)
     return rows
 }
 
