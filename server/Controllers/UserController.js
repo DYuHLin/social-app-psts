@@ -6,19 +6,20 @@ const token = require('./Token')
 exports.userRegister = asyncHandler(async (req, res, next) => {
     try{
         const user = await userModel.exist()
-        if(user){
+        if(user.length != 0){
             return res.json('Username has been taken')
         } else {
             bcrypt.hash(req.body.password, 10, async (err, hashed) => {
                 if(err){
                     return next(err)
                 } else {
-                    newUser = await userModel.create(req.body.username, hashed, req.body.description, image)
+                    newUser = await userModel.create(req.body.username, hashed, req.body.description, req.body.image)
                     return res.json('success')
                 }
             })
         }
     } catch(err){
+        console.log(err)
         next(err)
     }
 })
@@ -55,7 +56,7 @@ exports.userUpdate = asyncHandler(async (req, res, next) => {
                 if(err){
                     return next(err)
                 } else {
-                    await userModel.update(req.body.username, hashed, req.body.description, image, req.body.id)
+                    await userModel.update(req.body.username, hashed, req.body.description, image, req.params.id)
                     return res.json('success')
                 }
             })
@@ -71,11 +72,11 @@ exports.getAllUsers = asyncHandler(async (req, res, next) => {
 })
 
 exports.getUser = asyncHandler(async (req, res, next) => {
-    const users = await userModel.single()
+    const users = await userModel.single(req.params.id)
     return res.json(users)
 })
 
 exports.userDelete = asyncHandler(async (req, res, next) => {
-    await userModel.delete()
+    await userModel.delete(req.params.id)
     return res.json('deleted')
 })

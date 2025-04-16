@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const socket = require('socket.io')
+const userRoutes = require('./Routes/UserRoutes')
 require('dotenv').config()
 
 const app = express()
@@ -20,5 +21,7 @@ app.use(session({secret: 'cats', resave: false, saveUninitialized: true}))
 app.use(cookieParser())
 app.use(bodyParser.json({limit: '50mb'}))
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
+
+app.use('/api/user', userRoutes)
 
 const server = app.listen(3000, () => console.log('app is listening on port 3000'))
