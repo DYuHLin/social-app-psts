@@ -5,6 +5,8 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const socket = require('socket.io')
 const userRoutes = require('./Routes/UserRoutes')
+const postRoutes = require('./Routes/PostRoutes')
+const commentRoutes = require('./Routes/CommentRoutes')
 require('dotenv').config()
 
 const app = express()
@@ -23,5 +25,7 @@ app.use(bodyParser.json({limit: '50mb'}))
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
 
 app.use('/api/user', userRoutes)
+app.use('/api/post', postRoutes)
+app.use('/api/comment', commentRoutes)
 
 const server = app.listen(3000, () => console.log('app is listening on port 3000'))
