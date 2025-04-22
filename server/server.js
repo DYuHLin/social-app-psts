@@ -4,6 +4,9 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const socket = require('socket.io')
+const passport = require('passport')
+const passportSetup = require('./passport')
+const cookieSession = require('cookie-session')
 const userRoutes = require('./Routes/UserRoutes')
 const postRoutes = require('./Routes/PostRoutes')
 const commentRoutes = require('./Routes/CommentRoutes')
@@ -14,6 +17,15 @@ const notificationRoutes = require('./Routes/NotificationRoutes')
 require('dotenv').config()
 
 const app = express()
+
+app.use(cookieSession({
+    name: 'session',
+    keys:['cyberwolve'],
+    maxAge: 24 * 60 * 60 * 100,
+}))
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use(cors({
     origin: 'http://localhost:5173/',
