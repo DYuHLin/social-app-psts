@@ -5,8 +5,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const socket = require('socket.io')
 const passport = require('passport')
-const passportSetup = require('./passport')
-const cookieSession = require('cookie-session')
+// const passportSetup = require('./passport')
 const userRoutes = require('./Routes/UserRoutes')
 const postRoutes = require('./Routes/PostRoutes')
 const commentRoutes = require('./Routes/CommentRoutes')
@@ -15,17 +14,9 @@ const followRoutes = require('./Routes/FollowerRoutes')
 const likeRoutes = require('./Routes/LikeRoutes')
 const notificationRoutes = require('./Routes/NotificationRoutes')
 require('dotenv').config()
+require('./passport')
 
 const app = express()
-
-app.use(cookieSession({
-    name: 'session',
-    keys:['cyberwolve'],
-    maxAge: 24 * 60 * 60 * 100,
-}))
-
-app.use(passport.initialize())
-app.use(passport.session())
 
 app.use(cors({
     origin: 'http://localhost:5173/',
@@ -39,6 +30,10 @@ app.use(session({secret: 'cats', resave: false, saveUninitialized: true}))
 app.use(cookieParser())
 app.use(bodyParser.json({limit: '50mb'}))
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
+
+// app.use(passport.initialize())
+app.use(passport.session())
+app.use(passport.authenticate('session'))
 
 app.use('/api/user', userRoutes)
 app.use('/api/post', postRoutes)
