@@ -7,7 +7,7 @@ likes.getLikes = async (id) => {
     return rows
 }
 
-likes.create = async (post, post, liker) => {
+likes.create = async (post, comment, liker) => {
     await pool.query(`INSERT INTO likes (post, comment, liker) VALUES($1, $2, $3);`, [post, comment, liker])
 }
 
