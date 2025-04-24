@@ -5,7 +5,7 @@ const pool = require('./db/Pool')
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_SECRET_ID,
-    callbackURL: "/auth/google/callback",
+    callbackURL: "http://localhost:3000/api/auth/google/callback",
     scope: ['profile', 'email'],
     response_type: 'application/json'
   },
@@ -13,7 +13,7 @@ passport.use(new GoogleStrategy({
     const account = profile._json
     let user = {}
     try{
-      const currentUserQuery = await pool.query(`SELECT * FROM users WHERE google_id = ${account.sub};`)
+      const currentUserQuery = await pool.query(`SELECT * FROM users WHERE google_id LIKE '${account.sub}';`)
       if (currentUserQuery.rows.length > 0){
         user = {
           id: currentUserQuery.rows.id,
@@ -24,7 +24,7 @@ passport.use(new GoogleStrategy({
       } else {
           await pool.query(`INSERT INTO users (username, password, description, image, google_id) VALUES ($1, $2, $3, $4, $5);`, 
           [account.name, null, null, account.picture, account.sub])
-          const newUserQuery = await pool.query(`SELECT * FROM users WHERE google_id = ${account.sub};`)
+          const newUserQuery = await pool.query(`SELECT * FROM users WHERE google_id LIKE '${account.sub}';`)
           user = {
             id: newUserQuery.rows.id,
             google_id: account.sub,
