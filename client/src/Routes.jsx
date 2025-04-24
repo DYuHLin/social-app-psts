@@ -14,24 +14,29 @@ import Logout from './pages/Logout';
 import EditProfile from './pages/EditProfile';
 import EditPost from './pages/EditPost';
 import EditComment from './pages/EditComment';
+import { useContext } from 'react';
+import AppContext from './context/AppContext';
 
 function Routes(){
+    const {ProtectedRoutes} = useContext(AppContext)
+
     const router = createBrowserRouter(createRoutesFromElements(
         <Route path='/' element={<App />}>
-        <Route path='/gettingstarted' element={<Start/>} />
-        <Route index element={<Home/>} />
-        <Route path='/create' element={<Create/>} />
-        <Route path='/:id/post' element={<Post/>} />
-        <Route path='/likes' element={<Likes/>} />
-        <Route path='/users' element={<UserList/>} />
-        <Route path='/notifications' element={<Notifications/>} />
-        <Route path='/profile/:id' element={<Profile/>} />
-        <Route path='/profile/:id/followers' element={<Follow/>} />
-        <Route path='/logout' element={<Logout />} />
-        <Route path='/profile/:id/edit' element={<EditProfile />} />
-        <Route path='/:id/post/edit' element={<EditPost />} />
-        <Route path='/:id/post/:id/comment/edit' element={<EditComment />} />
-
+            <Route path='/gettingstarted' element={<Start/>} />   
+            {/* <Route element = {<ProtectedRoutes />} > */}
+                <Route index element={<Home/>} />
+                <Route path='/create' element={<Create/>} />
+                <Route path='/:id/post' element={<Post/>} />
+                <Route path='/likes' element={<Likes/>} />
+                <Route path='/users' element={<UserList/>} />
+                <Route path='/notifications' element={<Notifications/>} />
+                <Route path='/profile/:id' element={<Profile/>} />
+                <Route path='/profile/:id/followers' element={<Follow/>} />
+                <Route path='/logout' element={<Logout />} />
+                <Route path='/profile/:id/edit' element={<EditProfile />} />
+                <Route path='/:id/post/edit' element={<EditPost />} />
+                <Route path='/:id/post/:id/comment/edit' element={<EditComment />} />
+            {/* </Route> */}
         </Route>
     ))
 
