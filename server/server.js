@@ -18,26 +18,27 @@ require('./passport')
 
 const app = express()
 
-app.use(cors({
-    origin: 'http://localhost:5173/',
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    optionsSuccessStatus: true,
-}))
-
-app.use(express.json({limit: '50mb', extended: true}))
-app.use(session({secret: 'cats', resave: false, saveUninitialized: true, cookie: {
-   secure: process.env.NODE_ENV === "production" ? "true" : "auto",
-   sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-   maxAge: 30 * 24 * 60 * 60 * 1000,
-  }}))
+app.use(express.json())
 app.use(cookieParser())
 app.use(bodyParser.json({limit: '50mb'}))
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(session({secret: 'cats', cookie: {
+   secure: "development" === "production" ? "true" : "auto",
+   sameSite: "development" === "production" ? "none" : "lax",
+   maxAge: 30 * 24 * 60 * 60 * 1000,
+  }, resave: false, saveUninitialized: false,
+}))
 
-// app.use(passport.initialize())
+app.use(passport.initialize())
 app.use(passport.session())
-app.use(passport.authenticate('session'))
+// app.use(passport.authenticate('session'))
+
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+    // methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    // optionsSuccessStatus: true,
+}))
 
 app.use('/api/auth', userRoutes)
 app.use('/api/post', postRoutes)

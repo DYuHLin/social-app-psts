@@ -1,6 +1,8 @@
 const user = require('../Controllers/UserController')
 const express = require('express')
 const passport = require('passport')
+const token = require('../Controllers/Token')
+const isAuth = require('./IsAuth')
 
 const router = express.Router()
 
@@ -32,13 +34,22 @@ router.delete('/:id/deleteuser', user.userDelete)
 // })
 
 router.get('/google', passport.authenticate('google', {
-    scope: 'profile'
+    scope: ['profile']
 }))
 
 router.get('/google/callback', passport.authenticate('google', {
+    successRedirect: 'http://localhost:5173/',
     session: true,
-}), (req, res, next) => {
-    res.redirect('http://localhost:5173/')
+}))
+
+router.get('/account',  (req, res, next) => {
+    if(req.user){
+        console.log(req.user) 
+        return res.json(req.user) 
+    } else{
+        console.log(user) 
+        return res.json('not successful')
+    }
 })
 
 module.exports = router

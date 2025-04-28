@@ -1,12 +1,16 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import LoginForm from './components/Authentication/LoginForm';
 import RegisterForm from './components/Authentication/RegisterForm';
 import MainLogo from '../assets/img/6.png'
+import AppContext from '../context/AppContext';
 // import axios from 'axios'
 
 const Start = () => {
-    const [forms, setForms] = useState(true);
-    const googleLogin = async () => {
+    const {user} = useContext(AppContext)
+    const [forms, setForms] = useState(true)
+
+    const googleLogin = (e) => {
+        e.preventDefault()
         const path = 'http://localhost:3000/api/auth/google'
         window.open(path, '_self')
     }
@@ -19,7 +23,10 @@ const Start = () => {
                 </div>
                     {forms ? <LoginForm /> : <RegisterForm />}
                     <button onClick={() => setForms(!forms)} className='auth-btn'>{forms ? 'Register' : 'Login'}</button>
-                    <button className='google-auth-btn' onClick={googleLogin}>Continue with Google</button>
+                    <form onSubmit={googleLogin}>
+                        <button className='google-auth-btn'>Continue with Google</button>
+                    </form>  
+                    <button onClick={() => console.log(user)}>Show</button>
             </div>
             <div className='begin-screen'>
                 <div className='start-logo'>

@@ -14,11 +14,11 @@ import Logout from './pages/Logout';
 import EditProfile from './pages/EditProfile';
 import EditPost from './pages/EditPost';
 import EditComment from './pages/EditComment';
-import { useContext } from 'react';
-import AppContext from './context/AppContext';
+// import { useContext } from 'react';
+// import AppContext from './context/AppContext';
 
 function Routes(){
-    const {ProtectedRoutes} = useContext(AppContext)
+    // const {ProtectedRoutes} = useContext(AppContext)
 
     const router = createBrowserRouter(createRoutesFromElements(
         <Route path='/' element={<App />}>
