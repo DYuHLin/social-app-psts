@@ -1,13 +1,12 @@
 const user = require('../Controllers/UserController')
 const express = require('express')
 const passport = require('passport')
-const token = require('../Controllers/Token')
 const isAuth = require('./IsAuth')
 
 const router = express.Router()
 
 router.post('/register', user.userRegister)
-router.post('/login', user.userRegister)
+router.post('/login', user.userLogin)
 router.get('/allusers', user.getAllUsers)
 router.get('/:id/user', user.getUser)
 router.put('/:id/updateuser', user.userUpdate)
@@ -42,14 +41,9 @@ router.get('/google/callback', passport.authenticate('google', {
     session: true,
 }))
 
-router.get('/account',  (req, res, next) => {
-    if(req.user){
-        console.log(req.user) 
-        return res.json(req.user) 
-    } else{
-        console.log(user) 
-        return res.json('not successful')
-    }
+router.get('/account', isAuth,  (req, res, next) => {
+    console.log(req.user) 
+    return res.json(req.user) 
 })
 
 module.exports = router

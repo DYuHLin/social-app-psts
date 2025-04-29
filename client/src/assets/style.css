@@ -547,3 +547,7 @@ textarea{
     font-size: 22px;
     text-decoration: none;
   }
+
+  .error{
+    color: black;
+  }

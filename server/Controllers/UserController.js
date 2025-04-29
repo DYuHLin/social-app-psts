@@ -5,7 +5,7 @@ const token = require('./Token')
 
 exports.userRegister = asyncHandler(async (req, res, next) => {
     try{
-        const user = await userModel.exist()
+        const user = await userModel.exist(req.body.username)
         if(user.length != 0){
             return res.json('Username has been taken')
         } else {
@@ -26,21 +26,21 @@ exports.userRegister = asyncHandler(async (req, res, next) => {
 
 exports.userLogin = asyncHandler(async (req, res, next) => {
     try{
-        const user = await userModel.exist()
-        if(!user){
-            return res.json('invalid username')
+        const user = await userModel.exist(req.body.username)
+        if(user.length == 0){
+            return res.json('username')
         }
 
         const match = await bcrypt.compare(req.body.password, user.password)
         if(!match){
-            return res.json('invalid password')
+            return res.json('password')
         } 
 
         const accessToken = token.getAccessToken(user)
         const refreshToken = token.getRefreshToken(user)
         token.refreshTokens.push(refreshToken)
 
-        return res.json({accessToken, refreshToken})
+        return res.json(accessToken)
     } catch(err){
         next(err)
     }
@@ -48,7 +48,7 @@ exports.userLogin = asyncHandler(async (req, res, next) => {
 
 exports.userUpdate = asyncHandler(async (req, res, next) => {
     try{
-        const user = await userModel.exist()
+        const user = await userModel.exist(req.body.username)
         if(user){
             return res.json('Username has been taken')
         } else {
