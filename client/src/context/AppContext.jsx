@@ -11,6 +11,7 @@ export const AppProvider = ({children}) => {
     // }
 
     const [user, setUser] = useState(false)
+    const [gUser, setGuser] = useState(false)
 
     const ProtectedRoutes = () => {
         return () => {
@@ -23,12 +24,25 @@ export const AppProvider = ({children}) => {
          axios.get('http://localhost:3000/api/auth/account', {withCredentials: true, headers: {'Content-Type': 'application/json'}})
              .then(res => {
                  console.log(res.data)
-                 setUser(res.data)
+                 setGuser(res.data)
+             });
+    },[])
+
+    useEffect(() => {
+        // sessionStorage.setItem('APP_USER', JSON.stringify(user))
+         axios.get('http://localhost:3000/api/auth/accountstore', {withCredentials: true, headers: {'Content-Type': 'application/json'}})
+             .then(res => {  
+                console.log(res.data)
+                 if(res.data.user){
+                    setUser(res.data.user[0])
+                 } else{
+                    setUser(false)
+                 }
              });
     },[])
 
     return (
-        <AppContext.Provider value={{ProtectedRoutes, setUser, user}}>
+        <AppContext.Provider value={{ProtectedRoutes, setUser, user, gUser}}>
             {children}
         </AppContext.Provider>
     )

@@ -4,15 +4,15 @@ const asyncHandler = require('express-async-handler')
 
 let refreshTokens = [];
 
-exports.getAccessToken = (user) => {
+const getAccessToken = (user) => {
     return jwt.sign({user}, 'secretkey', {expiresIn: '10h'});
 };
 
-exports.getRefreshToken = (user) => {
+const getRefreshToken = (user) => {
     return jwt.sign({user}, 'refreshsecretkey');
 };
 
-exports.refresh_token = asyncHandler(async (req, res, next) => {
+const refresh_token = asyncHandler(async (req, res, next) => {
     //token from user
     const refreshToken = req.body.token;
     //send error if there is no token or invalid
@@ -36,4 +36,4 @@ exports.refresh_token = asyncHandler(async (req, res, next) => {
     });
 });
 
-module.exports = {refreshTokens}
+module.exports = {refreshTokens, getAccessToken, getRefreshToken, refresh_token}

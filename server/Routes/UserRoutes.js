@@ -12,25 +12,12 @@ router.get('/:id/user', user.getUser)
 router.put('/:id/updateuser', user.userUpdate)
 router.delete('/:id/deleteuser', user.userDelete)
 
-// Google auth
-// router.get('/login/success', (req, res, next) => {
-//     if(res.user){
-//         res.status(200).json({
-//             error: false,
-//             message: 'Login success',
-//             user: req.user,
-//         })
-//     } else{
-//         res.status(403).json({error: true, message: 'Not Authorized'})
-//     }
-// })
+router.get('/accountstore', (req, res, next) => {
+    console.log(req.session)
+    return res.json(req.session)
+})
 
-// router.get('/login/failed', (req, res, next) => {
-//     res.status(401).json({
-//         error: true,
-//         message: 'Login failure',
-//     })
-// })
+// Google OAuth
 
 router.get('/google', passport.authenticate('google', {
     scope: ['profile']

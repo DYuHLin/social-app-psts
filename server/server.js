@@ -3,6 +3,7 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const session = require('express-session')
+const store = session.MemoryStore()
 const socket = require('socket.io')
 const passport = require('passport')
 // const passportSetup = require('./passport')
@@ -26,7 +27,7 @@ app.use(session({secret: 'cats', cookie: {
    secure: "development" === "production" ? "true" : "auto",
    sameSite: "development" === "production" ? "none" : "lax",
    maxAge: 30 * 24 * 60 * 60 * 1000,
-  }, resave: false, saveUninitialized: false,
+  }, resave: false, saveUninitialized: false, store
 }))
 
 app.use(passport.initialize())

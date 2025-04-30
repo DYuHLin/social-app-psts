@@ -27,20 +27,22 @@ exports.userRegister = asyncHandler(async (req, res, next) => {
 exports.userLogin = asyncHandler(async (req, res, next) => {
     try{
         const user = await userModel.exist(req.body.username)
+        console.log(user)
         if(user.length == 0){
+            console.log(user)
             return res.json('username')
+        } else{
+            const match = await bcrypt.compare(req.body.password, user[0].password)
+            if(!match){
+                return res.json('password')
+            }
+            const accessToken = token.getAccessToken(user)
+            const refreshToken = token.getRefreshToken(user)
+            token.refreshTokens.push(refreshToken)
+            req.session.authenticated= true
+            req.session.user = user
+            return res.json(req.session)
         }
-
-        const match = await bcrypt.compare(req.body.password, user.password)
-        if(!match){
-            return res.json('password')
-        } 
-
-        const accessToken = token.getAccessToken(user)
-        const refreshToken = token.getRefreshToken(user)
-        token.refreshTokens.push(refreshToken)
-
-        return res.json(accessToken)
     } catch(err){
         next(err)
     }
