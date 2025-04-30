@@ -6,11 +6,11 @@ import AppContext from './context/AppContext'
 
 function App() {
 
-  const {user} = useContext(AppContext)
+  const {user, gUser} = useContext(AppContext)
 
   return (
     <div className='root-component'>
-      {user ? <Navbar /> : ''} 
+      {user || gUser ? <Navbar />  : ''} 
       <main>
         <Outlet/>
       </main>

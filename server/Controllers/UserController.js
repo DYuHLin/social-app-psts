@@ -7,7 +7,7 @@ exports.userRegister = asyncHandler(async (req, res, next) => {
     try{
         const user = await userModel.exist(req.body.username)
         if(user.length != 0){
-            return res.json('Username has been taken')
+            return res.json('Username')
         } else {
             bcrypt.hash(req.body.password, 10, async (err, hashed) => {
                 if(err){

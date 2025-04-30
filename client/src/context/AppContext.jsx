@@ -5,13 +5,9 @@ import axios from 'axios'
 const AppContext = createContext()
 
 export const AppProvider = ({children}) => {
-    // const getInitialState = () => {
-    //     const localUser = sessionStorage.getItem('APP_USER')
-    //     return localUser ? JSON.parse(localUser): false
-    // }
-
     const [user, setUser] = useState(false)
     const [gUser, setGuser] = useState(false)
+    const defualtImg = 'https://res.cloudinary.com/dqdoxrm2x/image/upload/v1744207814/feq9ujcmkjrbabkptc6y.jpg'
 
     const ProtectedRoutes = () => {
         return () => {
@@ -20,7 +16,6 @@ export const AppProvider = ({children}) => {
     }
 
     useEffect(() => {
-        // sessionStorage.setItem('APP_USER', JSON.stringify(user))
          axios.get('http://localhost:3000/api/auth/account', {withCredentials: true, headers: {'Content-Type': 'application/json'}})
              .then(res => {
                  console.log(res.data)
@@ -29,7 +24,6 @@ export const AppProvider = ({children}) => {
     },[])
 
     useEffect(() => {
-        // sessionStorage.setItem('APP_USER', JSON.stringify(user))
          axios.get('http://localhost:3000/api/auth/accountstore', {withCredentials: true, headers: {'Content-Type': 'application/json'}})
              .then(res => {  
                 console.log(res.data)
@@ -42,7 +36,7 @@ export const AppProvider = ({children}) => {
     },[])
 
     return (
-        <AppContext.Provider value={{ProtectedRoutes, setUser, user, gUser}}>
+        <AppContext.Provider value={{ProtectedRoutes, setUser, user, gUser, defualtImg}}>
             {children}
         </AppContext.Provider>
     )
