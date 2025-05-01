@@ -1,31 +1,34 @@
 import axios from 'axios';
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import AppContext from '../../../context/AppContext';
 import ProfileImg from '../Misc/ProfileImg'
 
-const RegisterForm = () => {
+const RegisterForm = ({setForms}) => {
     const {defaultImg} = useContext(AppContext)
     const [error, setError] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [img, setImg] = useState(defaultImg)
     const [confirmPassword, setConfirmPassword] = useState('')
-    const navigate = useNavigate()
 
-    const register = async (e) => {
+    const register = (e) => {
         e.preventDefault()
-        const register = {username: username, password: password, description: '', image: img}
+        const updatedUsername = username.replace(/\s/g, '')
+
+        const register = {username: updatedUsername, password: password, description: '', image: img}
         try{
             if(confirmPassword !== password){
                 setError('These passwords do not match')
-            } else{
-                const res = await axios.post('http://localhost:3000/api/auth/register', register, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
-                if(res.data == 'username'){
-                    setError('This username is taken')
-                } else {
-                    navigate('/gettingstarted')
-                }
+            }else{
+                axios.post('http://localhost:3000/api/auth/register', register, {headers: {'Content-Type': 'application/json'}})
+                    .then(res => res.data)
+                    .then(status => {
+                        if(status == 'username'){
+                            setError('This username is taken')
+                        } else if(status == 'success'){
+                            setForms(true)
+                        }
+                    })
             }    
         } catch(err){
             console.log(err)
@@ -33,7 +36,7 @@ const RegisterForm = () => {
     }
     return (
         <>
-            <h1 className='start-title'>Login</h1>
+            <h1 className='start-title'>Register</h1>
             <form className='start-form' onSubmit={register}>
             <input type='text' placeholder='username' required name='username' onChange={(e) => setUsername(e.target.value)}/>
             <input type='password' placeholder='password' required name='password' onChange={(e) => setPassword(e.target.value)}/>

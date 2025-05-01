@@ -21,7 +21,7 @@ const Start = () => {
                 <div className='mini-logo'>
                     <img src={MainLogo} className='logo-mini' />
                 </div>
-                    {forms ? <LoginForm /> : <RegisterForm />}
+                    {forms ? <LoginForm /> : <RegisterForm setForms = {setForms}/>}
                     <button onClick={() => setForms(!forms)} className='auth-btn'>{forms ? 'Register' : 'Login'}</button>
                     <form onSubmit={googleLogin}>
                         <button className='google-auth-btn'>Continue with Google</button>

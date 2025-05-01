@@ -7,10 +7,11 @@ exports.userRegister = asyncHandler(async (req, res, next) => {
     try{
         const user = await userModel.exist(req.body.username)
         if(user.length != 0){
-            return res.json('Username')
+            return res.json('username')
         } else {
             bcrypt.hash(req.body.password, 10, async (err, hashed) => {
                 if(err){
+                    console.log(err)
                     return next(err)
                 } else {
                     newUser = await userModel.create(req.body.username, hashed, req.body.description, req.body.image)
@@ -27,9 +28,7 @@ exports.userRegister = asyncHandler(async (req, res, next) => {
 exports.userLogin = asyncHandler(async (req, res, next) => {
     try{
         const user = await userModel.exist(req.body.username)
-        console.log(user)
         if(user.length == 0){
-            console.log(user)
             return res.json('username')
         } else{
             const match = await bcrypt.compare(req.body.password, user[0].password)

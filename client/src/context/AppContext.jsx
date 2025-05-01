@@ -7,7 +7,7 @@ const AppContext = createContext()
 export const AppProvider = ({children}) => {
     const [user, setUser] = useState(false)
     const [gUser, setGuser] = useState(false)
-    const defualtImg = 'https://res.cloudinary.com/dqdoxrm2x/image/upload/v1744207814/feq9ujcmkjrbabkptc6y.jpg'
+    const defaultImg = "https://res.cloudinary.com/dqdoxrm2x/image/upload/v1744207814/feq9ujcmkjrbabkptc6y.jpg"
 
     const ProtectedRoutes = () => {
         return () => {
@@ -36,7 +36,7 @@ export const AppProvider = ({children}) => {
     },[])
 
     return (
-        <AppContext.Provider value={{ProtectedRoutes, setUser, user, gUser, defualtImg}}>
+        <AppContext.Provider value={{ProtectedRoutes, setUser, user, gUser, defaultImg}}>
             {children}
         </AppContext.Provider>
     )

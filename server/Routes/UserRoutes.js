@@ -13,7 +13,6 @@ router.put('/:id/updateuser', user.userUpdate)
 router.delete('/:id/deleteuser', user.userDelete)
 
 router.get('/accountstore', (req, res, next) => {
-    console.log(req.session)
     return res.json(req.session)
 })
 
