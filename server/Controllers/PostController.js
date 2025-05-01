@@ -12,16 +12,16 @@ exports.getPost = asyncHandler(async (req, res, next) => {
 })
 
 exports.createPost = asyncHandler(async (req, res, next) => {
-    const {text, video, link, date, poster} = req.body
+    const {text, video, link, date, poster, youtube} = req.body
 
-    await postModel.create(text, video, link, date, poster)
+    await postModel.create(text, video, link, date, poster, youtube)
     return res.json('created')
 })
 
 exports.updatePost = asyncHandler(async (req, res, next) => {
-    const {text, video, link, date, poster} = req.body
+    const {text, video, link, date, poster, youtube} = req.body
 
-    await postModel.update(text, video, link, date, poster, req.params.id)
+    await postModel.update(text, video, link, date, poster, youtube, req.params.id)
     return res.json('updated')
 })
 

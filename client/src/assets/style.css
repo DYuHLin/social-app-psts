@@ -551,3 +551,7 @@ textarea{
   .error{
     color: black;
   }
+
+  .hidden{
+    display: none;
+  }
