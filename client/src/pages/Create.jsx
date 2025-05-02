@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PostImg from './components/Misc/PostImg'
+import AppContext from '../context/AppContext';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Create = () => {
+    const {user} = useContext(AppContext)
+    const navigate = useNavigate()
     const [text, setText] = useState('')
     const [video, setVideo] = useState('')
     const [link, setLink] = useState('')
@@ -15,7 +20,19 @@ const Create = () => {
 
     const createPost = (e) => {
         e.preventDefault()
-        // const post = {text, video, link, poster}
+        const post = {text, video, link, poster: user.id, youtube}
+        axios.post(`http://localhost:3000/api/post/create`, post, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            .then(res => res.data)
+            .then((post) => {
+                if(img.length !== 0){
+                    for(let i = 0; i < img.length; i++){
+                        axios.post(`http://localhost:3000/api/image/create`, {image: img[i], post: post.id}, 
+                        {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+                    }
+                } else{
+                    navigate('/')
+                }
+            })
     }
 
     return (
