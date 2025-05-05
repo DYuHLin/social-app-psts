@@ -1,8 +1,9 @@
 import React from 'react';
 
-const Feed = () => {
+const Feed = ({posts}) => {
     return (
         <div className='feed'>
+            <button onClick={() => console.log(posts)}>Show</button>
             <div className='filter-feed'>
                 <span className='active'>All</span>
                 <span>Following</span>

@@ -13,14 +13,14 @@ const Create = () => {
     const [youtube, setYoutube] = useState('')
     const [img, setImg] = useState([])
 
-    const [youtubeShow, setYoutubeShow] = useState(true)
+    const [youtubeShow, setYoutubeShow] = useState(false)
     const [linkShow, setLinkShow] = useState(false)
     const [videoShow, setVideoShow] = useState(false)
     const [imgShow, setImgShow] = useState(false)
 
     const createPost = (e) => {
         e.preventDefault()
-        const post = {text, video, link, poster: user.id, youtube}
+        const post = {text, video, link, date: Date.now(), poster: user.id, youtube}
         axios.post(`http://localhost:3000/api/post/create`, post, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
             .then(res => res.data)
             .then((post) => {
@@ -29,6 +29,7 @@ const Create = () => {
                         axios.post(`http://localhost:3000/api/image/create`, {image: img[i], post: post.id}, 
                         {headers: {'Content-Type': 'application/json'}, withCredentials: true})
                     }
+                    navigate('/')
                 } else{
                     navigate('/')
                 }
@@ -54,7 +55,7 @@ const Create = () => {
                 </div>
                 <div className='filter-feed'>
                     <i className='bx bx-link post-op' onClick={() => {setLinkShow(!linkShow); setImgShow(false); setYoutubeShow(false); setVideoShow(false);}}/>
-                    <i className='bx bxl-youtube' onClick={() => {setLinkShow(false); setImgShow(false); setYoutubeShow(!youtubeShow); setVideoShow(false);}}/>
+                    <i className='bx bxl-youtube post-op' onClick={() => {setLinkShow(false); setImgShow(false); setYoutubeShow(!youtubeShow); setVideoShow(false);}}/>
                     <i className='bx bx-image post-op' onClick={() => {setLinkShow(false); setImgShow(!imgShow); setYoutubeShow(false); setVideoShow(false);}}/>
                     <i className='bx bxs-videos post-op' onClick={() => {setLinkShow(!linkShow); setImgShow(false); setYoutubeShow(false); setVideoShow(false);}}/>
                 </div>
