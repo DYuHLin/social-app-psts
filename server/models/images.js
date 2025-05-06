@@ -2,6 +2,16 @@ const pool = require('../db/Pool')
 
 const images = {}
 
+images.getPost = async () => {
+    const {rows} = await pool.query('SELECT * FROM images WHERE post IS NOT NULL;')
+    return rows
+}
+
+images.getComments = async () => {
+    const {rows} = await pool.query('SELECT * FROM images WHERE comment IS NOT NULL;')
+    return rows
+}
+
 images.create = async (image, post, comment) => {
     await pool.query(`INSERT INTO images (image, post, comment) VALUES($1, $2, $3);`, [image, post, comment])
 }

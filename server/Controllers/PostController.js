@@ -1,8 +1,18 @@
 const asyncHandler = require('express-async-handler')
 const postModel = require('../models/posts')
+const imageModel = require('../models/images')
 
 exports.getAllPosts = asyncHandler(async (req, res, next) => {
     const posts = await postModel.get()
+    const images = await imageModel.getPost()
+    for(let i = 0; i < posts.length; i++){
+        posts[i].images = []
+    }
+    const result = posts.map((post) => {
+        post.images.push(images.find((img) => {return img.post == post.id}))
+        return post
+    })
+    console.log(result)
     return res.json(posts)
 })
 
