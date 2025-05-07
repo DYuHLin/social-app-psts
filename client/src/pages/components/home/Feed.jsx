@@ -1,6 +1,7 @@
 import React from 'react';
+import LinkPreview from '../Misc/LinkPreview';
 
-const Feed = ({posts}) => {
+const Feed = ({posts, loading}) => {
     return (
         <div className='feed'>
             <button onClick={() => console.log(posts)}>Show</button>
@@ -8,86 +9,49 @@ const Feed = ({posts}) => {
                 <span className='active'>All</span>
                 <span>Following</span>
             </div>
-            <div className='feed-post'>
-                <div className='post-info'>
-                    <p className='feed-user'>Username</p>
-                    <p>12/02/2016</p>
-                </div>
-                <div className='post-content'>
-                    <p className='feed-content'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vehicula dolor velit, a condimentum magna dapibus vel. Nulla cursus pretium 
-                    lacus a egestas. Nunc sit amet ligula nulla. Maecenas sit amet arcu nec lectus gravida egestas. Integer vel lorem vitae elit porta posuere eu 
-                    vitae sapien. Nunc eu ullamcorper est, vel tincidunt tellus. Pellentesque accumsan tincidunt diam quis tincidunt. Integer in odio quis arcu 
-                    pellentesque vulputate ut at augue.</p>
-                </div>
-                <div className='post-actions'>
-                    <p className='feed-icons'><i className='bx bx-heart' /> </p>
-                    <p className='feed-icons'><i className='bx bx-comment' /> </p>
-                </div>
-            </div>
-            <div className='feed-post'>
-                <div className='post-info'>
-                    <p className='feed-user'>Username</p>
-                    <p>12/02/2016</p>
-                </div>
-                <div className='post-content'>
-                    <p className='feed-content'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vehicula dolor velit, a condimentum magna dapibus vel. Nulla cursus pretium 
-                    lacus a egestas. Nunc sit amet ligula nulla. Maecenas sit amet arcu nec lectus gravida egestas. Integer vel lorem vitae elit porta posuere eu 
-                    vitae sapien. Nunc eu ullamcorper est, vel tincidunt tellus. Pellentesque accumsan tincidunt diam quis tincidunt. Integer in odio quis arcu 
-                    pellentesque vulputate ut at augue.</p>
-                </div>
-                <div className='post-actions'>
-                    <p className='feed-icons'><i className='bx bx-heart' /> </p>
-                    <p className='feed-icons'><i className='bx bx-comment' /> </p>
-                </div>
-            </div>
-            <div className='feed-post'>
-                <div className='post-info'>
-                    <p className='feed-user'>Username</p>
-                    <p>12/02/2016</p>
-                </div>
-                <div className='post-content'>
-                    <p className='feed-content'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vehicula dolor velit, a condimentum magna dapibus vel. Nulla cursus pretium 
-                    lacus a egestas. Nunc sit amet ligula nulla. Maecenas sit amet arcu nec lectus gravida egestas. Integer vel lorem vitae elit porta posuere eu 
-                    vitae sapien. Nunc eu ullamcorper est, vel tincidunt tellus. Pellentesque accumsan tincidunt diam quis tincidunt. Integer in odio quis arcu 
-                    pellentesque vulputate ut at augue.</p>
-                </div>
-                <div className='post-actions'>
-                    <p className='feed-icons'><i className='bx bx-heart' /> </p>
-                    <p className='feed-icons'><i className='bx bx-comment' /> </p>
-                </div>
-            </div>
-            <div className='feed-post'>
-                <div className='post-info'>
-                    <p className='feed-user'>Username</p>
-                    <p>12/02/2016</p>
-                </div>
-                <div className='post-content'>
-                    <p className='feed-content'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vehicula dolor velit, a condimentum magna dapibus vel. Nulla cursus pretium 
-                    lacus a egestas. Nunc sit amet ligula nulla. Maecenas sit amet arcu nec lectus gravida egestas. Integer vel lorem vitae elit porta posuere eu 
-                    vitae sapien. Nunc eu ullamcorper est, vel tincidunt tellus. Pellentesque accumsan tincidunt diam quis tincidunt. Integer in odio quis arcu 
-                    pellentesque vulputate ut at augue.</p>
-                </div>
-                <div className='post-actions'>
-                    <p className='feed-icons'><i className='bx bx-heart' /> </p>
-                    <p className='feed-icons'><i className='bx bx-comment' /> </p>
-                </div>
-            </div>
-            <div className='feed-post'>
-                <div className='post-info'>
-                    <p className='feed-user'>Username</p>
-                    <p>12/02/2016</p>
-                </div>
-                <div className='post-content'>
-                    <p className='feed-content'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vehicula dolor velit, a condimentum magna dapibus vel. Nulla cursus pretium 
-                    lacus a egestas. Nunc sit amet ligula nulla. Maecenas sit amet arcu nec lectus gravida egestas. Integer vel lorem vitae elit porta posuere eu 
-                    vitae sapien. Nunc eu ullamcorper est, vel tincidunt tellus. Pellentesque accumsan tincidunt diam quis tincidunt. Integer in odio quis arcu 
-                    pellentesque vulputate ut at augue.</p>
-                </div>
-                <div className='post-actions'>
-                    <p className='feed-icons'><i className='bx bx-heart' /> </p>
-                    <p className='feed-icons'><i className='bx bx-comment' /> </p>
-                </div>
-            </div>
+            { loading && posts.length === 0 ? <p>Loading the posts...</p> : posts.length === 0 ? <p>There are no posts right now</p>:
+                posts.map((post, key) => {
+                    return(
+                    <div className='feed-post' key={key}>
+                        <div className='post-info'>
+                            <p className='feed-user'>{post.username}</p>
+                            <p>{new Date(Number(post.date)).toLocaleString()}</p>
+                        </div>
+                        <div className='post-content'>
+                            {post.text.trim() != '' ? <p className='feed-content'>{post.text}</p> : ''}
+                            {post.link.trim() != '' ? <LinkPreview url={post.link} /> : ''}
+                            {post.video.trim() != '' ? <div className='vid-container'><video className='video' src={post.video} controls /> </div>: ''}
+                            {post.youtube.trim() != '' ? <div className='ytvid' dangerouslySetInnerHTML={{__html: post.youtube}}></div> : ''}
+                            {
+                                post.images.length != 0 ? 
+                                <section className="img-container">
+                                    <div className="slider-wrapper">
+                                        <div className="slider">
+                                            {post.images.map((pic, id) => {
+                                                return(
+                                                <img id={`slide-${id}`} src={pic.image} alt="posts image" key={id}/>
+                                                )
+                                            })}
+                                        </div>
+                                        <div className="slider-nav">
+                                            {post.images.map((pic, id) => {
+                                                return(
+                                                <a href={`#slide-${id}`} key={id}></a>
+                                                )
+                                            })}
+                                        </div>
+                                    </div>
+                            </section> : ''
+                            }
+                        </div>
+                        <div className='post-actions'>
+                            <p className='feed-icons'><i className='bx bx-heart' /> </p>
+                            <p className='feed-icons'><i className='bx bx-comment' /> </p>
+                        </div>
+                    </div>
+                    )
+                })
+            }
         </div>
     );
 }

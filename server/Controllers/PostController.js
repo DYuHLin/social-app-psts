@@ -6,13 +6,19 @@ exports.getAllPosts = asyncHandler(async (req, res, next) => {
     const posts = await postModel.get()
     const images = await imageModel.getPost()
     for(let i = 0; i < posts.length; i++){
-        posts[i].images = []
+        let imgs = images.filter((img) => {return img.post == posts[i].id})
+        posts[i].images = imgs
     }
-    const result = posts.map((post) => {
-        post.images.push(images.find((img) => {return img.post == post.id}))
-        return post
-    })
-    console.log(result)
+    // const result = posts.map((post) => {
+    //     images.map((img) => {
+    //         if(post.id === img.post){
+    //             post.images.push(img)
+    //         }
+    //         return post
+    //     })   
+    // })
+    let test = images.filter((img) => {return img.post == 13})
+    console.log(posts)
     return res.json(posts)
 })
 
