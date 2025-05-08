@@ -1,13 +1,17 @@
 const asyncHandler = require('express-async-handler')
 const postModel = require('../models/posts')
 const imageModel = require('../models/images')
+const likesModel = require('../models/likes')
 
 exports.getAllPosts = asyncHandler(async (req, res, next) => {
     const posts = await postModel.get()
     const images = await imageModel.getPost()
+    const likes = await likesModel.getAllLikes()
     for(let i = 0; i < posts.length; i++){
         let imgs = images.filter((img) => {return img.post == posts[i].id})
+        let postLikes = likes.filter((lke) => {return lke.post == posts[i].id})
         posts[i].images = imgs
+        posts[i].likes = postLikes
     }
     // const result = posts.map((post) => {
     //     images.map((img) => {

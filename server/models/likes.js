@@ -2,6 +2,11 @@ const pool = require('../db/Pool')
 
 const likes = {}
 
+likes.getAllLikes = async () => {
+    const {rows} = await pool.query(`SELECT * FROM likes;`)
+    return rows
+}
+
 likes.getLikes = async (id) => {
     const {rows} = await pool.query(`SELECT * FROM likes INNER JOIN posts ON likes.post = posts.id WHERE liker = ${id};`)
     return rows

@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import LinkPreview from '../Misc/LinkPreview';
+import axios from 'axios';
+import AppContext from '../../../context/AppContext';
 
 const Feed = ({posts, loading}) => {
+    const {user} = useContext(AppContext)
+
+    const likePost = (post) => {
+        try{
+            const like = {post: post, comment: null, liker: user.id,}
+            axios.post(`http://localhost:3000/api/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+        } catch(err){
+            console.log(err)
+        }
+    }
+
     return (
         <div className='feed'>
             <button onClick={() => console.log(posts)}>Show</button>
@@ -45,7 +58,7 @@ const Feed = ({posts, loading}) => {
                             }
                         </div>
                         <div className='post-actions'>
-                            <p className='feed-icons'><i className='bx bx-heart' /> </p>
+                            <p className='feed-icons' onClick={() => likePost(post.id)}><i className='bx bx-heart' />{post.likes.length}</p>
                             <p className='feed-icons'><i className='bx bx-comment' /> </p>
                         </div>
                     </div>
