@@ -6,19 +6,28 @@ exports.getAllLikes = asyncHandler(async (req, res, next) => {
     return res.json(likes)
 })
 
-exports.createLike = asyncHandler(async (req, res, next) => {
+exports.createPostLike = asyncHandler(async (req, res, next) => {
     const {post, comment, liker} = req.body
+    const like = await likeModel.findPostLike(liker, post)
 
-    await likeModel.create(post, comment, liker)
-    return res.json('liked')
+    if(like.length == 0){
+        await likeModel.create(post, comment, liker)
+        return res.json('liked')
+    } else{
+        await likeModel.deletePostLike(post, liker)
+        return res.json('unlike')
+    }
 })
 
-exports.deletePostLike = asyncHandler(async (req, res, next) => {
-    await likeModel.deletePostLike(req.body.post, req.params.id)
-    return res.json('removed')
-})
+exports.createCommentLike = asyncHandler(async (req, res, next) => {
+    const {post, comment, liker} = req.body
+    const like = await likeModel.findCommentLike(liker, comment)
 
-exports.deleteCommentLike = asyncHandler(async (req, res, next) => {
-    await likeModel.deletecommentLike(req.body.comment, req.params.id)
-    return res.json('removed')
+    if(like.length == 0){
+        await likeModel.create(post, comment, liker)
+        return res.json('liked')
+    } else{
+        await likeModel.deletecommentLike(comment, liker)
+        return res.json('unlike')
+    }
 })

@@ -8,6 +8,10 @@
     color: white;
 }
 
+body{
+    min-height: 100%;
+}
+
 body::-webkit-scrollbar {
     width: 6px;
   }
@@ -280,7 +284,7 @@ span{
 
 .feed-post{
     width: 100%;
-    max-width: 100%;
+    min-width: 100%;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -329,13 +333,17 @@ span{
     width: 100%;
     margin: 0;
     padding: 0;
-    height: 375px;
+  }
+
+  .post-content{
+    max-height: 600px;
   }
   
 .slider-wrapper{
     position: relative;
     max-width: 100%;
-    margin: 0 ;
+    margin: 0;
+    height: 375px;
 }
 
 .slider{

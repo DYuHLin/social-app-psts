@@ -3,9 +3,8 @@ const express = require('express')
 
 const router = express.Router()
 
-router.post('/create', likes.createLike)
+router.post('/likepost', likes.createPostLike)
+router.post('/likecomment', likes.createCommentLike)
 router.get('/allposts', likes.getAllLikes)
-router.delete('/deletepostlike', likes.deletePostLike)
-router.delete('/deletecommentlike', likes.deleteCommentLike)
 
 module.exports = router

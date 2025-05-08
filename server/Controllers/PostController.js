@@ -18,7 +18,6 @@ exports.getAllPosts = asyncHandler(async (req, res, next) => {
     //     })   
     // })
     let test = images.filter((img) => {return img.post == 13})
-    console.log(posts)
     return res.json(posts)
 })
 
