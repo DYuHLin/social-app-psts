@@ -1,25 +1,82 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import AppContext from '../../../context/AppContext';
 
-const Comments = () => {
+const Comments = ({postId}) => {
+    const navigate = useNavigate()
+    const {user} = useContext(AppContext)
+    const [comments, setComments] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    const likePost = (post) => {
+        try{
+            const like = {post: null, comment: post, liker: user.id,}
+            axios.post(`http://localhost:3000/api/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+        } catch(err){
+            console.log(err)
+        }
+    }
+
+    useEffect(() => {
+        axios.get(`http://localhost:3000/api/comment/${postId}/allcomments`, {headers: {'Content-Type': 'application/json'}})
+          .then((res) => {
+            setComments(res.data)
+            // setFilteredResults(res.data.filter((post) => decoded.user.followers.some((userId) => userId.user._id === post.user._id)))
+            setLoading(false)
+          })
+          .catch((err) => {
+            console.log(err)
+            // toast.error('There was an error fetching the posts')
+          })
+    }, [postId, comments])
+
     return (
         <>
             <h1 className='comment-title'>Comments</h1>
-            <div className='feed-post'>
-                <div className='post-info'>
-                    <p className='feed-user'>Username</p>
-                    <p>12/02/2016</p>
-                </div>
-                <div className='post-content'>
-                    <p className='feed-content'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vehicula dolor velit, a condimentum magna dapibus vel. Nulla cursus pretium 
-                    lacus a egestas. Nunc sit amet ligula nulla. Maecenas sit amet arcu nec lectus gravida egestas. Integer vel lorem vitae elit porta posuere eu 
-                    vitae sapien. Nunc eu ullamcorper est, vel tincidunt tellus. Pellentesque accumsan tincidunt diam quis tincidunt. Integer in odio quis arcu 
-                    pellentesque vulputate ut at augue.</p>
-                </div>
-                <div className='post-actions'>
-                    <p className='feed-icons'><i className='bx bx-heart' /> </p>
-                    <p className='feed-icons'><i className='bx bx-comment' /> </p>
-                </div>
-            </div>
+            { loading && comments.length === 0 ? <p>Loading the comments...</p> : comments.length === 0 ? <p>There are no comments right now</p>:
+                comments.map((post, key) => {
+                    return(
+                    <div className='feed-post' key={key}>
+                        <div className='post-info'>
+                            <p className='feed-user'>{post.username}</p>
+                            <p>{new Date(Number(post.date)).toLocaleString()}</p>
+                        </div>
+                        <div className='post-content' onClick={() => navigate(`/${post.id}/post`)}>
+                            {post.text.trim() != '' ? <p className='feed-content'>{post.text}</p> : ''}
+                            {post.link.trim() != '' ? <a href={post.link}>{post.link}</a> : ''}
+                            {post.video.trim() != '' ? <div className='vid-container'><video className='video' src={post.video} controls /> </div>: ''}
+                            {post.youtube.trim() != '' ? <div className='ytvid' dangerouslySetInnerHTML={{__html: post.youtube}}></div> : ''}
+                            {
+                                post.images.length != 0 ? 
+                                <section className="img-container">
+                                    <div className="slider-wrapper">
+                                        <div className="slider">
+                                            {post.images.map((pic, id) => {
+                                                return(
+                                                <img id={`slide-${id}`} src={pic.image} alt="posts image" key={id}/>
+                                                )
+                                            })}
+                                        </div>
+                                        <div className="slider-nav">
+                                            {post.images.map((pic, id) => {
+                                                return(
+                                                <a href={`#slide-${id}`} key={id}></a>
+                                                )
+                                            })}
+                                        </div>
+                                    </div>
+                            </section> : ''
+                            }
+                        </div>
+                        <div className='post-actions'>
+                            <p className='feed-icons' onClick={() => likePost(post.id)}><i className='bx bx-heart' />{post.likes.length}</p>
+                            <p className='feed-icons'><i className='bx bx-comment' /> </p>
+                        </div>
+                    </div>
+                    )
+                })
+            }
         </>
     );
 }

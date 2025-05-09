@@ -75,7 +75,7 @@ const Post = () => {
                         </div>
                     </div>}
             <CommentWriter postId = {id}/>
-            <Comments />
+            <Comments postId = {id}/>
             </div>
         </section>
     );
