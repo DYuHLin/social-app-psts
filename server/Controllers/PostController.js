@@ -27,6 +27,12 @@ exports.getAllPosts = asyncHandler(async (req, res, next) => {
 
 exports.getPost = asyncHandler(async (req, res, next) => {
     const post = await postModel.single(req.params.id)
+    const images = await imageModel.getSinglePost(req.params.id)
+    const likes = await likesModel.getAllLikes()
+
+    post[0].images = images
+    post[0].likes = likes.filter((like) => {return like.post == req.params.id})
+
     return res.json(post)
 })
 

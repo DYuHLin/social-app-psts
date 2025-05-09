@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
-import LinkPreview from '../Misc/LinkPreview';
+// import LinkPreview from '../Misc/LinkPreview';
 import axios from 'axios';
 import AppContext from '../../../context/AppContext';
+import { useNavigate } from 'react-router-dom';
 
 const Feed = ({posts, loading}) => {
     const {user} = useContext(AppContext)
+    const navigate = useNavigate()
 
     const likePost = (post) => {
         try{
@@ -17,7 +19,6 @@ const Feed = ({posts, loading}) => {
 
     return (
         <div className='feed'>
-            <button onClick={() => console.log(posts)}>Show</button>
             <div className='filter-feed'>
                 <span className='active'>All</span>
                 <span>Following</span>
@@ -30,9 +31,9 @@ const Feed = ({posts, loading}) => {
                             <p className='feed-user'>{post.username}</p>
                             <p>{new Date(Number(post.date)).toLocaleString()}</p>
                         </div>
-                        <div className='post-content'>
+                        <div className='post-content' onClick={() => navigate(`/${post.id}/post`)}>
                             {post.text.trim() != '' ? <p className='feed-content'>{post.text}</p> : ''}
-                            {post.link.trim() != '' ? <LinkPreview url={post.link} /> : ''}
+                            {post.link.trim() != '' ? <a href={post.link}>{post.link}</a> : ''}
                             {post.video.trim() != '' ? <div className='vid-container'><video className='video' src={post.video} controls /> </div>: ''}
                             {post.youtube.trim() != '' ? <div className='ytvid' dangerouslySetInnerHTML={{__html: post.youtube}}></div> : ''}
                             {

@@ -7,6 +7,11 @@ images.getPost = async () => {
     return rows
 }
 
+images.getSinglePost = async (id) => {
+    const {rows} = await pool.query(`SELECT * FROM images WHERE post = ${id};`)
+    return rows
+}
+
 images.getComments = async () => {
     const {rows} = await pool.query('SELECT * FROM images WHERE comment IS NOT NULL;')
     return rows

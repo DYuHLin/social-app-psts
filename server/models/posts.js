@@ -9,7 +9,8 @@ posts.get = async () => {
 }
 
 posts.single = async (id) => {
-    const {rows} = await pool.query(`SELECT * FROM posts INNER JOIN users ON posts.poster = users.id INNER JOIN images ON posts.id = images.post WHERE id = ${id};`)
+    const {rows} = await pool.query(`SELECT posts.id, posts.text, posts.video, posts.link, posts.date, posts.youtube, users.username, users.id AS user_id, 
+        users.google_id FROM posts INNER JOIN users ON posts.poster = users.id WHERE posts.id = ${id};`)
     return rows
 }
 
