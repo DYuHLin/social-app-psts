@@ -12,10 +12,10 @@ exports.getComment = asyncHandler(async (req, res, next) => {
 })
 
 exports.createComment = asyncHandler(async (req, res, next) => {
-    const {text, video, link, date, poster, post} = req.body
+    const {text, video, link, date, poster, post, youtube} = req.body
 
-    await commentModel.create(text, video, link, date, poster, post)
-    return res.json('created')
+    const comment = await commentModel.create(text, video, link, date, poster, post, youtube)
+    return res.json(comment)
 })
 
 exports.updateComment = asyncHandler(async (req, res, next) => {

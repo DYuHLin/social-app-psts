@@ -13,8 +13,9 @@ comments.single = async (id) => {
     return rows
 }
 
-comments.create = async (text, video, link, date, poster, post) => {
-    await pool.query(`INSERT INTO comments (text, video, link, date, poster, post) VALUES($1, $2, $3, $4, $5, $6);`, [text, video, link, date, poster, post])
+comments.create = async (text, video, link, date, poster, post, youtube) => {
+    await pool.query(`INSERT INTO comments (text, video, link, date, poster, post, youtube) VALUES($1, $2, $3, $4, $5, $6, $7);`, 
+        [text, video, link, date, poster, post, youtube])
 }
 
 comments.delete = async (id) => {

@@ -33,6 +33,7 @@ const Create = () => {
                 } else{
                     navigate('/')
                 }
+                return post
             })
     }
 

@@ -24,7 +24,6 @@ const Post = () => {
         axios.get(`http://localhost:3000/api/post/${id}/post`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setPost(res.data)
-            console.log(res.data)
           })
           .catch((err) => {
             console.log(err)
@@ -75,7 +74,7 @@ const Post = () => {
                             <p className='feed-icons'><i className='bx bx-comment' /> </p>
                         </div>
                     </div>}
-            <CommentWriter />
+            <CommentWriter postId = {id}/>
             <Comments />
             </div>
         </section>
