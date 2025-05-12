@@ -17,6 +17,20 @@ exports.getAllComments = asyncHandler(async (req, res, next) => {
     return res.json(posts)
 })
 
+exports.getAllCommentsComments = asyncHandler(async (req, res, next) => {
+    const posts = await commentModel.getCC(req.params.id)
+    const images = await imageModel.getComments()
+    const likes = await likesModel.getAllLikes()
+    for(let i = 0; i < posts.length; i++){
+        let imgs = images.filter((img) => {return img.comment == posts[i].id})
+        let postLikes = likes.filter((lke) => {return lke.comment == posts[i].id})
+        posts[i].images = imgs
+        posts[i].likes = postLikes
+    }
+
+    return res.json(posts)
+})
+
 exports.getComment = asyncHandler(async (req, res, next) => {
     const post = await commentModel.single(req.params.id)
     const images = await imageModel.getComments()
@@ -30,9 +44,9 @@ exports.getComment = asyncHandler(async (req, res, next) => {
 })
 
 exports.createComment = asyncHandler(async (req, res, next) => {
-    const {text, video, link, date, poster, post, youtube} = req.body
+    const {text, video, link, date, poster, post, youtube, comments} = req.body
 
-    const comment = await commentModel.create(text, video, link, date, poster, post, youtube)
+    const comment = await commentModel.create(text, video, link, date, poster, post, youtube, comments)
     return res.json(comment)
 })
 

@@ -74,8 +74,8 @@ const CommentPage = () => {
                             <p className='feed-icons'><i className='bx bx-comment' /> </p>
                         </div>
                     </div>}
-            <CommentWriter postId = {id}/>
-            <Comments postId = {id}/>
+            <CommentWriter postId = {null} commentId = {id}/>
+            <Comments postId = {null} commentId={id}/>
             </div>
         </section>
     );

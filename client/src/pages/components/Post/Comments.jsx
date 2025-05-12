@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../../../context/AppContext';
 
-const Comments = ({postId}) => {
+const Comments = ({postId, commentId}) => {
     const navigate = useNavigate()
     const {user} = useContext(AppContext)
     const [comments, setComments] = useState([])
@@ -19,7 +19,8 @@ const Comments = ({postId}) => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/comment/${postId}/allcomments`, {headers: {'Content-Type': 'application/json'}})
+        if(postId != null){
+            axios.get(`http://localhost:3000/api/comment/${postId}/allcomments`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setComments(res.data)
             setLoading(false)
@@ -28,7 +29,19 @@ const Comments = ({postId}) => {
             console.log(err)
             // toast.error('There was an error fetching the posts')
           })
-    }, [postId, comments])
+        } else if(commentId != null) {
+            axios.get(`http://localhost:3000/api/comment/${commentId}/allcommentscomments`, {headers: {'Content-Type': 'application/json'}})
+          .then((res) => {
+            setComments(res.data)
+            setLoading(false)
+          })
+          .catch((err) => {
+            console.log(err)
+            // toast.error('There was an error fetching the posts')
+          })
+        }
+
+    }, [postId, commentId, comments])
 
     return (
         <>

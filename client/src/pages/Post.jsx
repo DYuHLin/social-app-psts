@@ -74,8 +74,8 @@ const Post = () => {
                             <p className='feed-icons'><i className='bx bx-comment' /> </p>
                         </div>
                     </div>}
-            <CommentWriter postId = {id}/>
-            <Comments postId = {id}/>
+            <CommentWriter postId = {id} commentId={null}/>
+            <Comments postId = {id} commentId={null}/>
             </div>
         </section>
     );

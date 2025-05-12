@@ -3,7 +3,7 @@ import AppContext from '../../../context/AppContext';
 import axios from 'axios';
 import PostImg from '../Misc/PostImg';
 
-const CommentWriter = ({postId}) => {
+const CommentWriter = ({postId, commentId}) => {
     const {user} = useContext(AppContext)
     const [text, setText] = useState('')
     const [video, setVideo] = useState('')
@@ -18,7 +18,7 @@ const CommentWriter = ({postId}) => {
 
     const createComment = (e) => {
         e.preventDefault()
-        const comment = {text, video, link, date: Date.now(), poster: user.id, post: postId, youtube}
+        const comment = {text, video, link, date: Date.now(), poster: user.id, post: postId, youtube, comment: commentId}
         axios.post(`http://localhost:3000/api/comment/create`, comment, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
             .then(res => res.data)
             .then((post) => {
