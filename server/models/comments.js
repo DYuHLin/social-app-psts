@@ -8,14 +8,21 @@ comments.get = async (id) => {
     return rows
 }
 
-comments.single = async (id) => {
-    const {rows} = await pool.query(`SELECT * FROM comments INNER JOIN users ON posts.poster = user.id INNER JOIN images ON comments.id = images.comment WHERE id = ${id};`)
+comments.getCC = async (id) => {
+    const {rows} = await pool.query(`select comments.id, comments.text, comments.video, comments.link, comments.youtube, comments.date, comments.post, users.username, 
+        users.id AS userId from comments INNER JOIN users ON comments.poster = users.id WHERE comments.comment = ${id};`)
     return rows
 }
 
-comments.create = async (text, video, link, date, poster, post, youtube) => {
-    await pool.query(`INSERT INTO comments (text, video, link, date, poster, post, youtube) VALUES($1, $2, $3, $4, $5, $6, $7);`, 
-        [text, video, link, date, poster, post, youtube])
+comments.single = async (id) => {
+    const {rows} = await pool.query(`SELECT comments.id, comments.text, comments.video, comments.link, comments.youtube, comments.date, comments.post, users.username, 
+        users.id AS userId FROM comments INNER JOIN users ON comments.poster = users.id WHERE comments.id = ${id};`)
+    return rows
+}
+
+comments.create = async (text, video, link, date, poster, post, youtube, comment) => {
+    await pool.query(`INSERT INTO comments (text, video, link, date, poster, post, youtube, comment) VALUES($1, $2, $3, $4, $5, $6, $7, $8);`, 
+        [text, video, link, date, poster, post, youtube, comment])
 }
 
 comments.delete = async (id) => {
@@ -24,6 +31,11 @@ comments.delete = async (id) => {
 
 comments.update = async (text, video, link, date, poster, post, id) => {
     await pool.query(`UPDATE comments SET text = $1, video = $2, link = $3 date = $4, poster = $5, post = $6 WHERE id = $6;`, [text, video, link, date, poster, post, id])
+}
+
+comments.updateCC = async (text, video, link, date, poster, comment, id) => {
+    await pool.query(`UPDATE comments SET text = $1, video = $2, link = $3 date = $4, poster = $5, comment = $6 WHERE id = $6;`, 
+        [text, video, link, date, poster, comment, id])
 }
 
 module.exports = comments

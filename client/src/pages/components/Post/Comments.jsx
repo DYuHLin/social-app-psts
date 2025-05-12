@@ -22,7 +22,6 @@ const Comments = ({postId}) => {
         axios.get(`http://localhost:3000/api/comment/${postId}/allcomments`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setComments(res.data)
-            // setFilteredResults(res.data.filter((post) => decoded.user.followers.some((userId) => userId.user._id === post.user._id)))
             setLoading(false)
           })
           .catch((err) => {
@@ -42,7 +41,7 @@ const Comments = ({postId}) => {
                             <p className='feed-user'>{post.username}</p>
                             <p>{new Date(Number(post.date)).toLocaleString()}</p>
                         </div>
-                        <div className='post-content' onClick={() => navigate(`/${post.id}/post`)}>
+                        <div className='post-content' onClick={() => navigate(`/${post.id}/comment`)}>
                             {post.text.trim() != '' ? <p className='feed-content'>{post.text}</p> : ''}
                             {post.link.trim() != '' ? <a href={post.link}>{post.link}</a> : ''}
                             {post.video.trim() != '' ? <div className='vid-container'><video className='video' src={post.video} controls /> </div>: ''}

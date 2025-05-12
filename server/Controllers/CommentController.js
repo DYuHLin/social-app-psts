@@ -19,6 +19,13 @@ exports.getAllComments = asyncHandler(async (req, res, next) => {
 
 exports.getComment = asyncHandler(async (req, res, next) => {
     const post = await commentModel.single(req.params.id)
+    const images = await imageModel.getComments()
+    const likes = await likesModel.getAllLikes()
+    let imgs = images.filter((img) => {return img.comment == req.params.id})
+    let postLikes = likes.filter((lke) => {return lke.comment == req.params.id})
+    post[0].images = imgs
+    post[0].likes = postLikes
+
     return res.json(post)
 })
 
