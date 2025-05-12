@@ -18,7 +18,7 @@ const CommentWriter = ({postId, commentId}) => {
 
     const createComment = (e) => {
         e.preventDefault()
-        const comment = {text, video, link, date: Date.now(), poster: user.id, post: postId, youtube, comment: commentId}
+        const comment = {text, video, link, date: Date.now(), poster: user.id, post: postId, youtube, comments: commentId}
         axios.post(`http://localhost:3000/api/comment/create`, comment, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
             .then(res => res.data)
             .then((post) => {
@@ -50,7 +50,7 @@ const CommentWriter = ({postId, commentId}) => {
                 <i className='bx bx-image post-op' onClick={() => {setLinkShow(false); setImgShow(!imgShow); setYoutubeShow(false); setVideoShow(false);}}/>
                 <i className='bx bxs-videos post-op' onClick={() => {setLinkShow(!linkShow); setImgShow(false); setYoutubeShow(false); setVideoShow(false);}}/>
             </div>
-            <button onClick={() => console.log(user)}>Show</button>
+            {/* <button onClick={() => console.log(user)}>Show</button> */}
         </>
     );
 }

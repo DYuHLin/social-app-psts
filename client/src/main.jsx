@@ -7,6 +7,6 @@ createRoot(document.getElementById('root')).render(
   <AppProvider>
     <StrictMode>
     <Routes />
-    </StrictMode>,
+    </StrictMode>
   </AppProvider>
 )
