@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const UserList = () => {
     const [users, setUsers] = useState([])
     const [loading, setLoading] = useState(true)
     const [search, setSearch] = useState('')
+    const navigate = useNavigate()
 
     useEffect(() => {
         axios.get(`http://localhost:3000/api/auth/allusers`, {headers: {'Content-Type': 'application/json'}})
@@ -29,7 +31,7 @@ const UserList = () => {
                 {loading && users.length == 0 ? <p>Loading users...</p> : users.length == 0 ? <p>There are no users...</p> :
                     users.filter((item) => {return search.toLocaleLowerCase() == '' ? users : item.username.toLocaleLowerCase().includes(search)}).map((user, key) => {return(
                         <div className='user-search-card' key={key}>
-                            <div className='user-info'>
+                            <div className='user-info' onClick={() => navigate(`/profile/${user.id}`)}>
                                 <img src={user.image} alt='Profile image' className='profile-img' />
                                 <p className='follow-name'>{user.username}</p>
                             </div>

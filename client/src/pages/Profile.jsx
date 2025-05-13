@@ -22,6 +22,15 @@ const Profile = () => {
           })
     },[id])
 
+    const follow = (other) => {
+        try{
+            const fllw = {follower: user.id, following: other}
+            axios.post(`http://localhost:3000/api/follow/create`, fllw, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+        } catch(err){
+            console.log(err)
+        }
+    }
+
     return (
         <section className='home-page'>
             <div className='feed'>
@@ -36,10 +45,10 @@ const Profile = () => {
                     <h3>{currentUser[0].username}</h3>
                     <p>{currentUser[0].description == null ? '' : currentUser[0].description}</p>
                     <div className='followers'>
-                        <p className='follow-label'>{currentUser[0].length} Followers</p>
-                        <p className='follow-label'>{currentUser[0].length} Follwing</p>
+                        <p className='follow-label'>{currentUser[0].followers.length} Followers</p>
+                        <p className='follow-label'>{currentUser[0].following.length} Follwing</p>
                     </div>
-                    {currentUser[0].id != user.id ?<button className='follow-profile-btn'>Follow</button> : ''}
+                    {currentUser[0].id != user.id ?<button className='follow-profile-btn' onClick={() => follow(currentUser[0].id)}>Follow</button> : ''}
                 </div>
             </div>}
             <UserPosts />

@@ -13,12 +13,12 @@ exports.getUserFollowing = asyncHandler(async (req, res, next) => {
 
 exports.addFollow = asyncHandler(async (req, res, next) => {
     const {follower, following} = req.body
-
-    await followerModel.create(follower, following)
-    return res.json('added')
-})
-
-exports.deletefollow = asyncHandler(async (req, res, next) => {
-    await followerModel.delete(req.body.id)
-    return res.json('removed')
+    const follow = await followerModel.findFollowing(follower, following)
+    if(follow.length == 0){
+        await followerModel.create(follower, following)
+        return res.json('added')
+    } else {
+        await followerModel.delete(follower, following)
+        return res.json('removed')
+    }
 })

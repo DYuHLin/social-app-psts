@@ -3,7 +3,7 @@ const pool = require('../db/Pool')
 const followers = {}
 
 followers.findFollowing = async (current, other) => {
-    const {rows} = await pool.query(`SELECT * FROM followers WHERE follower = ${current} AND following = ${id};`)
+    const {rows} = await pool.query(`SELECT * FROM followers WHERE follower = ${current} AND following = ${other};`)
     return rows
 }
 
@@ -14,7 +14,7 @@ followers.getFollower = async (id) => {
 }
 
 followers.getFollowing = async (id) => {
-    const {rows} = await pool.query(`SELECT users.username, users.image, users.id AS user_id FROM followers FULL OUTER JOIN users ON followers.follower = users.id 
+    const {rows} = await pool.query(`SELECT users.username, users.image, users.id AS user_id FROM followers FULL OUTER JOIN users ON followers.following = users.id 
         WHERE followers.follower = ${id};`)
     return rows
 }
@@ -23,8 +23,8 @@ followers.create = async (follower, following) => {
     await pool.query(`INSERT INTO followers (follower, following) VALUES($1, $2);`, [follower, following])
 }
 
-followers.delete = async (id) => {
-    await pool.query(`DELETE FROM followers WHERE id = ${id};`)
+followers.delete = async (follower, following) => {
+    await pool.query(`DELETE FROM followers WHERE follower = ${follower} AND following = ${following};`)
 }
 
 module.exports = followers
