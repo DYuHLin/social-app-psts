@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler')
 const userModel = require('../models/users')
 const bcrypt = require('bcryptjs')
 const token = require('./Token')
+const followerModel = require('../models/followers')
 
 exports.userRegister = asyncHandler(async (req, res, next) => {
     try{
@@ -74,6 +75,10 @@ exports.getAllUsers = asyncHandler(async (req, res, next) => {
 
 exports.getUser = asyncHandler(async (req, res, next) => {
     const users = await userModel.single(req.params.id)
+    const followers = await followerModel.getFollower(req.params.id)
+    const following = await followerModel.getFollowing(req.params.id)
+    users[0].followers = followers
+    users[0].following = following
     return res.json(users)
 })
 

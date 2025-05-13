@@ -2,13 +2,20 @@ const pool = require('../db/Pool')
 
 const followers = {}
 
+followers.findFollowing = async (current, other) => {
+    const {rows} = await pool.query(`SELECT * FROM followers WHERE follower = ${current} AND following = ${id};`)
+    return rows
+}
+
 followers.getFollower = async (id) => {
-    const {rows} = await pool.query(`SELECT * FROM followers FULL OUTER JOIN users ON followers.follower = users.id WHERE followers.following = ${id};`)
+    const {rows} = await pool.query(`SELECT users.username, users.image, users.id AS user_id FROM followers FULL OUTER JOIN users ON followers.follower = users.id 
+        WHERE followers.following = ${id};`)
     return rows
 }
 
 followers.getFollowing = async (id) => {
-    const {rows} = await pool.query(`SELECT * FROM followers FULL OUTER JOIN users ON followers.follower = users.id WHERE followers.following = ${id};`)
+    const {rows} = await pool.query(`SELECT users.username, users.image, users.id AS user_id FROM followers FULL OUTER JOIN users ON followers.follower = users.id 
+        WHERE followers.follower = ${id};`)
     return rows
 }
 

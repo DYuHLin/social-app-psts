@@ -1,30 +1,47 @@
-import React from 'react';
-import ProfileImg from '../assets/img/5.png'
+import React, { useContext, useEffect, useState } from 'react';
 import UserPosts from './components/User/UserPosts';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import AppContext from '../context/AppContext';
 
 const Profile = () => {
+    const {id} = useParams()
+    const {user} = useContext(AppContext)
+
+    const [currentUser, setCurrentUser] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        axios.get(`http://localhost:3000/api/auth/${id}/user`, {headers: {'Content-Type': 'application/json'}})
+          .then((res) => {
+            setCurrentUser(res.data)
+            setLoading(false)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+    },[id])
+
     return (
         <section className='home-page'>
             <div className='feed'>
             <div className='filter-feed'>
                 <h1>Profile</h1>
             </div>
-            <div className='user-profile-info'>
+            {loading && currentUser.length == 0 ? '' : currentUser.length == 0 ? '' : <div className='user-profile-info'>
                 <div className='profile-card-img'>
-                    <img src={ProfileImg} alt='Profile image' className='profile-card-image' />
+                    <img src={currentUser[0].image} alt='Profile image' className='profile-card-image' />
                 </div>
                 <div className='profile-card-info'>
-                    <h3>Username</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vehicula dolor velit, a condimentum magna dapibus vel. Nulla cursus pretium 
-                    lacus a egestas. Nunc sit amet ligula nulla. Maecenas sit amet arcu nec lectus gravida egestas. Integer vel lorem vitae elit porta posuere eu 
-                    vitae sapien. Nunc eu ullamcorper est, vel tincidunt tellus.</p>
+                    <h3>{currentUser[0].username}</h3>
+                    <p>{currentUser[0].description == null ? '' : currentUser[0].description}</p>
                     <div className='followers'>
-                        <p className='follow-label'>100 Followers</p>
-                        <p className='follow-label'>100 Follwing</p>
+                        <p className='follow-label'>{currentUser[0].length} Followers</p>
+                        <p className='follow-label'>{currentUser[0].length} Follwing</p>
                     </div>
-                    <button className='follow-profile-btn'>Follow</button>
+                    {currentUser[0].id != user.id ?<button className='follow-profile-btn'>Follow</button> : ''}
                 </div>
-            </div>
+            </div>}
             <UserPosts />
             </div>
         </section>
