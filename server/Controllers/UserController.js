@@ -70,6 +70,11 @@ exports.userUpdate = asyncHandler(async (req, res, next) => {
 
 exports.getAllUsers = asyncHandler(async (req, res, next) => {
     const users = await userModel.get()
+    const followers = await followerModel.getAll()
+    for(let i = 0; i < users.length; i++){
+        let follow = followers.filter((flw) => {return flw.following == users[i].id})
+        users[i].followers = follow
+    }
     return res.json(users)
 })
 

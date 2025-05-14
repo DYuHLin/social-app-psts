@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import AppContext from '../../../context/AppContext';
 
 const Sidebar = () => {
+    const {user} = useContext(AppContext)
     return (
         <div className='sidebar'>
             <ul className='side-list'>
@@ -10,7 +12,7 @@ const Sidebar = () => {
                 <li className='side-item'><Link to='/users'><i className='bx bx-user' /> <p className='side-text'>Users</p></Link></li>
                 <li className='side-item'><Link to='/notifications'><i className='bx bx-bell' /> <p className='side-text'>Notifications</p></Link></li>
                 <li className='side-item'><Link to='/likes'><i className='bx bx-like' /> <p className='side-text'>Likes</p></Link></li>
-                <li className='side-item'><Link to='/profile/a4242d'><i className='bx bx-user' /> <p className='side-text'>Profile</p></Link></li>
+                <li className='side-item'><Link to={`/profile/${user.id}`}><i className='bx bx-user' /> <p className='side-text'>Profile</p></Link></li>
                 <li className='side-item'><Link to='/logout'><i className='bx bx-log-out' /> <p className='side-text'>Logout</p></Link></li>
             </ul>
         </div>

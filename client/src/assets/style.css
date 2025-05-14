@@ -246,6 +246,25 @@ h2{
     max-height: inherit;
     border-radius: 50%;
     border: 1px solid white;
+    object-fit: cover;
+}
+
+.profile-img-suggestion{
+    height: inherit;
+    max-height: inherit;
+    width: 80%;
+    border-radius: 50%;
+    border: 1px solid white;
+    object-fit: cover;
+}
+
+.profile-img-list{
+    height: inherit;
+    max-height: inherit;
+    border-radius: 50%;
+    border: 1px solid white;
+    object-fit: cover;
+    width: 17%;
 }
 
 .follow-btn, .post-btn{

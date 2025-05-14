@@ -2,6 +2,11 @@ const pool = require('../db/Pool')
 
 const followers = {}
 
+followers.getAll = async () => {
+    const {rows} = await pool.query(`SELECT * FROM followers;`)
+    return rows
+}
+
 followers.findFollowing = async (current, other) => {
     const {rows} = await pool.query(`SELECT * FROM followers WHERE follower = ${current} AND following = ${other};`)
     return rows
