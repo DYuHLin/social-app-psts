@@ -3,15 +3,15 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../../../context/AppContext';
 
-const UserPosts = ({id}) => {
-    const [posts, setPosts] = useState([])
+const UserComments = ({id}) => {
+    const [comments, setComments] = useState([])
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
     const {user} = useContext(AppContext)
 
     const likePost = (post) => {
         try{
-            const like = {post: post, comment: null, liker: user.id,}
+            const like = {post: null, comment: post, liker: user.id,}
             axios.post(`http://localhost:3000/api/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
         } catch(err){
             console.log(err)
@@ -19,9 +19,9 @@ const UserPosts = ({id}) => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/post/allposts`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`http://localhost:3000/api/comment/getall`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
-            setPosts(res.data.filter((post) => { return post.user_id == id }))
+            setComments(res.data.filter((post) => { return post.userid == id }))
             setLoading(false)
           })
           .catch((err) => {
@@ -29,12 +29,11 @@ const UserPosts = ({id}) => {
             // toast.error('There was an error fetching the posts')
           })
     },[id])
-
     return (
         <>
-            <h1>Posts</h1>       
-            {loading && posts.length === 0 ? <p>Loading the posts...</p> : posts.length === 0 ? <p>There are no posts right now</p>:
-                posts.map((post, key) => {
+            <h1>Comments</h1>       
+            {loading && comments.length === 0 ? <p>Loading the comments...</p> : comments.length === 0 ? <p>There are no comments right now</p>:
+                comments.map((post, key) => {
                     return(
                     <div className='feed-post' key={key}>
                         <div className='post-info'>
@@ -80,4 +79,4 @@ const UserPosts = ({id}) => {
     );
 }
 
-export default UserPosts;
+export default UserComments;

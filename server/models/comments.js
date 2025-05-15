@@ -2,6 +2,12 @@ const pool = require('../db/Pool')
 
 const comments = {}
 
+comments.getAll = async (id) => {
+    const {rows} = await pool.query(`select comments.id, comments.text, comments.video, comments.link, comments.youtube, comments.date, comments.post, users.username, 
+        users.id AS userId from comments INNER JOIN users ON comments.poster = users.id;`)
+    return rows
+}
+
 comments.get = async (id) => {
     const {rows} = await pool.query(`select comments.id, comments.text, comments.video, comments.link, comments.youtube, comments.date, comments.post, users.username, 
         users.id AS userId from comments INNER JOIN users ON comments.poster = users.id WHERE comments.post = ${id};`)

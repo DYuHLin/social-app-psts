@@ -3,12 +3,14 @@ import UserPosts from './components/User/UserPosts';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import AppContext from '../context/AppContext';
+import UserComments from './components/User/UserComments';
 
 const Profile = () => {
     const {id} = useParams()
     const {user} = useContext(AppContext)
 
     const [currentUser, setCurrentUser] = useState([])
+    const [view, setView] = useState(false)
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -51,7 +53,8 @@ const Profile = () => {
                     {currentUser[0].id != user.id ?<button className='follow-profile-btn' onClick={() => follow(currentUser[0].id)}>Follow</button> : ''}
                 </div>
             </div>}
-            <UserPosts />
+            <button className='post-btn' onClick={() => setView(!view)}>View {!view ? 'Posts' : 'Comments'}</button>
+            {!view ? <UserPosts id={id}/> : <UserComments id={id} />}
             </div>
         </section>
     );

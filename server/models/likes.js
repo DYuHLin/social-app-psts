@@ -12,13 +12,8 @@ likes.getLikes = async (id) => {
     return rows
 }
 
-likes.findPostLike = async (id, postId) => {
-    const {rows} = await pool.query(`SELECT * FROM likes WHERE liker = ${id} AND post = ${postId};`)
-    return rows
-}
-
 likes.findCommentLike = async (id, commId) => {
-    const {rows} = await pool.query(`SELECT * FROM likes WHERE liker = ${id} AND post = ${commId};`)
+    const {rows} = await pool.query(`SELECT * FROM likes WHERE liker = ${id} AND comment = ${commId};`)
     return rows
 }
 

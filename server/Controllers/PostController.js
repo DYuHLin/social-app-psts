@@ -13,14 +13,7 @@ exports.getAllPosts = asyncHandler(async (req, res, next) => {
         posts[i].images = imgs
         posts[i].likes = postLikes
     }
-    // const result = posts.map((post) => {
-    //     images.map((img) => {
-    //         if(post.id === img.post){
-    //             post.images.push(img)
-    //         }
-    //         return post
-    //     })   
-    // })
+
     let test = images.filter((img) => {return img.post == 13})
     return res.json(posts)
 })
