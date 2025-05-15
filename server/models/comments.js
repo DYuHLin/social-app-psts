@@ -35,13 +35,14 @@ comments.delete = async (id) => {
     await pool.query(`DELETE FROM comments WHERE id = ${id};`)
 }
 
-comments.update = async (text, video, link, date, poster, post, id) => {
-    await pool.query(`UPDATE comments SET text = $1, video = $2, link = $3 date = $4, poster = $5, post = $6 WHERE id = $6;`, [text, video, link, date, poster, post, id])
+comments.update = async (text, video, link, date, poster, post, youtube, comment, id) => {
+    await pool.query(`UPDATE comments SET text = $1, video = $2, link = $3 date = $4, poster = $5, post = $6, youtube = $7, comment = $8 WHERE id = $9;`, 
+        [text, video, link, date, poster, post, youtube, comment, id])
 }
 
-comments.updateCC = async (text, video, link, date, poster, comment, id) => {
-    await pool.query(`UPDATE comments SET text = $1, video = $2, link = $3 date = $4, poster = $5, comment = $6 WHERE id = $6;`, 
-        [text, video, link, date, poster, comment, id])
+comments.updateCC = async (text, video, link, date, poster, post, youtube, comment, id) => {
+    await pool.query(`UPDATE comments SET text = $1, video = $2, link = $3 date = $4, poster = $5, post = $6, youtube = $7, comment = $8 WHERE id = $9;`, 
+        [text, video, link, date, poster, comment, post, youtube, id])
 }
 
 module.exports = comments

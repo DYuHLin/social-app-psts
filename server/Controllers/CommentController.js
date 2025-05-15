@@ -65,9 +65,9 @@ exports.createComment = asyncHandler(async (req, res, next) => {
 })
 
 exports.updateComment = asyncHandler(async (req, res, next) => {
-    const {text, video, link, date, poster, post, youtube} = req.body
+    const {text, video, link, date, poster, post, youtube, comment} = req.body
 
-    await commentModel.update(text, video, link, date, poster, post, req.params.id)
+    await commentModel.update(text, video, link, date, poster, post, youtube, comment, req.params.id)
     return res.json('updated')
 })
 
