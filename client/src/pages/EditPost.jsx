@@ -1,6 +1,42 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import AppContext from '../context/AppContext';
 
 const EditPost = () => {
+    const {id} = useParams()
+    const [post, setPost] = useState([])
+    const {user} = useContext(AppContext)
+    const navigate = useNavigate()
+    const [text, setText] = useState('')
+    const [video, setVideo] = useState('')
+    const [link, setLink] = useState('')
+    const [youtube, setYoutube] = useState('')
+
+    const [youtubeShow, setYoutubeShow] = useState(false)
+    const [linkShow, setLinkShow] = useState(false)
+    const [videoShow, setVideoShow] = useState(false)
+
+    const updatePost = (e) => {
+        e.preventDefault()
+        const postU = {text, video, link, date: post[0].date, poster: user.id, youtube}
+        axios.post(`http://localhost:3000/api/post/${post[0].id}/updatepost`, postU, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            .then(res => {
+                navigate('/')
+                return res.data
+            })
+    }
+
+    useEffect(() => {
+        axios.get(`http://localhost:3000/api/post/${id}/post`, {headers: {'Content-Type': 'application/json'}})
+          .then((res) => {
+            setPost(res.data)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+    },[id])
+
     return (
         <section className='home-page'>
             <div className='feed'>
@@ -9,18 +45,18 @@ const EditPost = () => {
                 </div>
 
                 <div className='feed-post'>
-                    <form>
-                        <textarea placeholder='Write something' rows='8'></textarea>
-                        {/* <input type='text' placeholder='link' className='post-input'/>
-                        <input type='text' placeholder='video link' className='post-input'/> */}
+                    <form onSubmit={updatePost}>
+                        <textarea placeholder='Write something' rows='8' onChange={(e) => setText(e.target.value)} value={post[0].text}></textarea>
+                        <input type='text' placeholder='link' className={`post-input ${linkShow ? '' : 'hidden'}`} onChange={(e) => setLink(e.target.value)} value={post[0].link}/>
+                        <input type='text' placeholder='video link' className={`post-input ${videoShow ? '' : 'hidden'}`} onChange={(e) => setVideo(e.target.value)} value={post[0].video}/> 
+                        <input type='text' placeholder='youtube link' className={`post-input ${youtubeShow ? '' : 'hidden'}`} onChange={(e) => setYoutube(e.target.value)} value={post[0].youtube}/>
                         <button className='post-btn'>Post</button>
                     </form>
                 </div>
                 <div className='filter-feed'>
-                    <i className='bx bx-link post-op'/>
-                    <i class='bx bx-pencil post-op'/>
-                    <i class='bx bx-image post-op' />
-                    <i class='bx bxs-videos post-op' />
+                    <i className='bx bx-link post-op' onClick={() => {setLinkShow(!linkShow); setYoutubeShow(false); setVideoShow(false);}}/>
+                    <i className='bx bxl-youtube post-op' onClick={() => {setLinkShow(false); setYoutubeShow(!youtubeShow); setVideoShow(false);}}/>
+                    <i className='bx bxs-videos post-op' onClick={() => {setLinkShow(!linkShow); setYoutubeShow(false); setVideoShow(false);}}/>
                 </div>
             </div>
         </section>

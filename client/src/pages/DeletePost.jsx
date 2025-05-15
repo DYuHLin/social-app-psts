@@ -1,6 +1,31 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const DeletePost = () => {
+    const {id} = useParams()
+    const [post, setPost] = useState([])
+    const navigate = useNavigate()
+
+    const deletePost = (e) => {
+        e.preventDefault()
+        axios.delete(`http://localhost:3000/api/post/${post[0].id}/deletepost`, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            .then(res => {
+                navigate('/')
+                return res.data
+        })
+    }
+
+    useEffect(() => {
+        axios.get(`http://localhost:3000/api/post/${id}/post`, {headers: {'Content-Type': 'application/json'}})
+          .then((res) => {
+            setPost(res.data)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+    },[id])
+
     return (
         <section className='home-page'>
             <div className='feed'>
@@ -9,7 +34,7 @@ const DeletePost = () => {
                 </div>
 
                 <div className='feed-post'>
-                    <form>
+                    <form onSubmit={deletePost}>
                         <h1 className='comment-title'>Delete</h1>
                         <p>Are you sure you want to delete this post?</p>
                         <button className='post-btn'>Delete</button>
