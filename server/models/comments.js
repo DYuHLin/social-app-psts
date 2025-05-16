@@ -36,7 +36,7 @@ comments.delete = async (id) => {
 }
 
 comments.update = async (text, video, link, date, poster, post, youtube, comment, id) => {
-    await pool.query(`UPDATE comments SET text = $1, video = $2, link = $3 date = $4, poster = $5, post = $6, youtube = $7, comment = $8 WHERE id = $9;`, 
+    await pool.query(`UPDATE comments SET text = $1, video = $2, link = $3, date = $4, poster = $5, post = $6, youtube = $7, comment = $8 WHERE id = $9;`, 
         [text, video, link, date, poster, post, youtube, comment, id])
 }
 

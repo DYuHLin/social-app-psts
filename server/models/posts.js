@@ -25,7 +25,7 @@ posts.delete = async (id) => {
 }
 
 posts.update = async (text, video, link, date, poster, youtube, id) => {
-    await pool.query(`UPDATE posts SET text = $1, video = $2, link = $3 date = $4, poster = $5, youtube = $6 WHERE id = $7;`, 
+    await pool.query(`UPDATE posts SET text = $1, video = $2, link = $3, date = $4, poster = $5, youtube = $6 WHERE id = $7;`, 
         [text, video, link, date, poster, youtube, id])
 }
 

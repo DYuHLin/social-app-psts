@@ -16,6 +16,7 @@ import EditPost from './pages/EditPost';
 import EditComment from './pages/EditComment';
 import CommentPage from './pages/CommentPage';
 import DeletePost from './pages/DeletePost';
+import DeleteComment from './pages/DeleteComment';
 // import { useContext } from 'react';
 // import AppContext from './context/AppContext';
 
@@ -40,7 +41,7 @@ function Routes(){
                 <Route path='/:id/post/edit' element={<EditPost />} />
                 <Route path='/:id/post/delete' element={<DeletePost />} />
                 <Route path='/:id/comment/edit' element={<EditComment />} />
-                <Route path='/:id/comment/delete' element={<EditComment />} />
+                <Route path='/:id/comment/delete' element={<DeleteComment />} />
             {/* </Route> */}
         </Route>
     ))

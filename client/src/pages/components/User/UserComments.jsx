@@ -70,6 +70,8 @@ const UserComments = ({id}) => {
                         <div className='post-actions'>
                             <p className='feed-icons' onClick={() => likePost(post.id)}><i className='bx bx-heart' />{post.likes.length}</p>
                             <p className='feed-icons'><i className='bx bx-comment' /> </p>
+                            {post.userid == user.id ? <button onClick={() => navigate(`/${post.id}/comment/edit`)}>update</button> : ''}
+                            {post.userid == user.id ? <button onClick={() => navigate(`/${post.id}/comment/delete`)}>delete</button> : ''}
                         </div>
                     </div>
                     )

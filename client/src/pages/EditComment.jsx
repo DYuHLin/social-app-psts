@@ -20,7 +20,7 @@ const EditComment = () => {
     const updateComment = (e) => {
         e.preventDefault()
         const commentU = {text, video, link, date: comment[0].date, poster: user.id, post: comment[0].post, youtube, comment: comment[0].comment}
-        axios.post(`http://localhost:3000/api/comment/${comment[0].id}/updatecomment`, commentU, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+        axios.put(`http://localhost:3000/api/comment/${comment[0].id}/updatecomment`, commentU, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
             .then(res => {
                 navigate('/')
                 return res.data
@@ -28,9 +28,13 @@ const EditComment = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/post/${id}/post`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`http://localhost:3000/api/comment/${id}/comment`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setComment(res.data)
+            setText(res.data[0].text)
+            setLink(res.data[0].link)
+            setVideo(res.data[0].video)
+            setYoutube(res.data[0].youtube)
           })
           .catch((err) => {
             console.log(err)
@@ -46,10 +50,10 @@ const EditComment = () => {
 
                 <div className='feed-post'>
                     <form className='comment-form' onSubmit={updateComment}>
-                        <textarea placeholder='Write something' rows='8' onChange={(e) => setText(e.target.value)} value={comment[0].text}></textarea>
-                        <input type='text' placeholder='link' className={`post-input ${linkShow ? '' : 'hidden'}`} onChange={(e) => setLink(e.target.value)} value={comment[0].link}/>
-                        <input type='text' placeholder='video link' className={`post-input ${videoShow ? '' : 'hidden'}`} onChange={(e) => setVideo(e.target.value)} value={comment[0].video}/> 
-                        <input type='text' placeholder='youtube link' className={`post-input ${youtubeShow ? '' : 'hidden'}`} onChange={(e) => setYoutube(e.target.value)} value={comment[0].youtube}/> 
+                        <textarea placeholder='Write something' rows='8' onChange={(e) => setText(e.target.value)} value={text}></textarea>
+                        <input type='text' placeholder='link' className={`post-input ${linkShow ? '' : 'hidden'}`} onChange={(e) => setLink(e.target.value)} value={link}/>
+                        <input type='text' placeholder='video link' className={`post-input ${videoShow ? '' : 'hidden'}`} onChange={(e) => setVideo(e.target.value)} value={video}/> 
+                        <input type='text' placeholder='youtube link' className={`post-input ${youtubeShow ? '' : 'hidden'}`} onChange={(e) => setYoutube(e.target.value)} value={youtube}/> 
                     <button className='post-btn'>Comment</button>
                     </form>
                 </div>

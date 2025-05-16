@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import UserPosts from './components/User/UserPosts';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import AppContext from '../context/AppContext';
 import UserComments from './components/User/UserComments';
@@ -8,6 +8,7 @@ import UserComments from './components/User/UserComments';
 const Profile = () => {
     const {id} = useParams()
     const {user} = useContext(AppContext)
+    const navigate = useNavigate()
 
     const [currentUser, setCurrentUser] = useState([])
     const [view, setView] = useState(false)
@@ -47,13 +48,13 @@ const Profile = () => {
                     <h3>{currentUser[0].username}</h3>
                     <p>{currentUser[0].description == null ? '' : currentUser[0].description}</p>
                     <div className='followers'>
-                        <p className='follow-label'>{currentUser[0].followers.length} Followers</p>
-                        <p className='follow-label'>{currentUser[0].following.length} Follwing</p>
+                        <p className='follow-label' onClick={() => navigate(`followers`)}> {currentUser[0].followers.length} Followers</p>
+                        <p className='follow-label' onClick={() => navigate(`followers`)}> {currentUser[0].following.length} Follwing</p>
                     </div>
                     {currentUser[0].id != user.id ?<button className='follow-profile-btn' onClick={() => follow(currentUser[0].id)}>Follow</button> : ''}
                 </div>
             </div>}
-            <button className='post-btn' onClick={() => setView(!view)}>View {!view ? 'Posts' : 'Comments'}</button>
+            <button className='post-btn' onClick={() => setView(!view)}>View {!view ? 'Comments' : 'Posts'}</button>
             {!view ? <UserPosts id={id}/> : <UserComments id={id} />}
             </div>
         </section>
