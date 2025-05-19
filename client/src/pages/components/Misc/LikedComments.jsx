@@ -1,18 +1,16 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import AppContext from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
-import LikedComments from './components/Misc/LikedComments';
+import AppContext from '../../../context/AppContext';
 
-const Likes = () => {
+const LikedComments = ({loading}) => {
     const {user} = useContext(AppContext)
     const navigate = useNavigate()
-    const [posts, setPosts] = useState([])
-    const [loading, setLoading] = useState(true)
+    const [comments, setComments] = useState([])
 
-    const likePost = (post) => {
+    const likePost = (comment) => {
         try{
-            const like = {post: post, comment: null, liker: user.id,}
+            const like = {post: null, comment: comment, liker: user.id,}
             axios.post(`http://localhost:3000/api/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
         } catch(err){
             console.log(err)
@@ -20,30 +18,25 @@ const Likes = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/likes/${user.id}/allposts`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`http://localhost:3000/api/likes/${user.id}/allcomments`, {headers: {'Content-Type': 'application/json'}})
             .then((res) => {
-                setPosts(res.data)
-                setLoading(false)
+                setComments(res.data)
             })
             .catch((err) => {
                 console.log(err)
             })
-    },[user.id, posts])
+    },[user.id, comments])
 
     return (
-        <section className='home-page'>
-            <div className='feed'>
-            <div className='filter-feed'>
-                <h1>Liked Posts</h1>
-            </div>
-            {loading && posts.length === 0 ? <p>Loading the likes...</p> : posts.length === 0 ? <p>There are no likes</p>:
-                posts.map((post, key) => {
+        <>
+            {loading && comments.length === 0 ? <p>Loading the likes...</p> : comments.length === 0 ? <p>There are no comment likes</p>:
+                comments.map((post, key) => {
                     return(
                     <div className='feed-post' key={key}>
                         <div className='post-info'>
                             <p className='feed-user'>{post.username}</p>
                             <p>{new Date(Number(post.date)).toLocaleString()}</p>
-                            <p>Post</p>
+                            <p>Comment</p>
                         </div>
                         <div className='post-content' onClick={() => navigate(`/${post.id}/post`)}>
                             {post.text.trim() != '' ? <p className='feed-content'>{post.text}</p> : ''}
@@ -80,10 +73,8 @@ const Likes = () => {
                     )
                 })
             }
-            <LikedComments />
-        </div>
-        </section>
+        </>
     );
 }
 
-export default Likes;
+export default LikedComments;
