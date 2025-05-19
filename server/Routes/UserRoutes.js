@@ -9,7 +9,7 @@ router.post('/register', user.userRegister)
 router.post('/login', user.userLogin)
 router.get('/allusers', user.getAllUsers)
 router.get('/:id/user', user.getUser)
-router.put('/:id/updateuser', user.userUpdate)
+router.put('/updateuser', user.userUpdate)
 router.delete('/:id/deleteuser', user.userDelete)
 
 router.get('/accountstore', (req, res, next) => {

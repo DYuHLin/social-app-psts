@@ -52,6 +52,7 @@ const Profile = () => {
                         <p className='follow-label' onClick={() => navigate(`followers`)}> {currentUser[0].following.length} Follwing</p>
                     </div>
                     {currentUser[0].id != user.id ?<button className='follow-profile-btn' onClick={() => follow(currentUser[0].id)}>Follow</button> : ''}
+                    {currentUser[0].id == user.id ?<button className='follow-profile-btn' onClick={() => navigate('edit')}>Edit</button> : ''}
                 </div>
             </div>}
             <button className='post-btn' onClick={() => setView(!view)}>View {!view ? 'Comments' : 'Posts'}</button>

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import profileImg from '../../src/assets/img/4.png';
 import axios from 'axios';
 import AppContext from '../context/AppContext';
 import { useParams } from 'react-router-dom';
@@ -50,16 +49,16 @@ const Follow = () => {
                 {followers.length == 0 && !view ? <p>This user has no followers</p> : followers.length != 0 && !view ? followers.map((flw, key) => {return(
                     <div className='user-search-card' key={key}>
                          <div className='user-info'>
-                            <img src={profileImg} alt='Profile image' className='profile-img' />
-                            <p className='follow-name'>Username</p>
+                            <img src={flw.image} alt='Profile image' className='profile-img' />
+                            <p className='follow-name'>{flw.username}</p>
                         </div>
                         <button className='follow-btn' onClick={() => follow(flw.id)}>Follow</button>
                     </div>
                 )}) : following.length == 0 && view ? <p>This user is not following anyone</p> : following.length != 0 && view ? following.map((flw, key) => {return(
                     <div className='user-search-card' key={key}>
                          <div className='user-info'>
-                            <img src={profileImg} alt='Profile image' className='profile-img' />
-                            <p className='follow-name'>Username</p>
+                            <img src={flw.image} alt='Profile image' className='profile-img' />
+                            <p className='follow-name'>{flw.username}</p>
                         </div>
                         <button className='follow-btn' onClick={() => follow(flw.id)}>Follow</button>
                     </div>
