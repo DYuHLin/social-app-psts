@@ -1,9 +1,22 @@
 const asyncHandler = require('express-async-handler')
 const likeModel = require('../models/likes')
+const postModel = require('../models/posts')
+const imageModel = require('../models/images')
 
 exports.getAllLikes = asyncHandler(async (req, res, next) => {
-    const likes = await likeModel.getLikes(req.params.id)
-    return res.json(likes)
+    const posts = await postModel.get()
+        const images = await imageModel.getPost()
+        const likes = await likeModel.getAllLikes()
+        for(let i = 0; i < posts.length; i++){
+            let imgs = images.filter((img) => {return img.post == posts[i].id})
+            let postLikes = likes.filter((lke) => {return lke.post == posts[i].id})
+            posts[i].images = imgs
+            posts[i].likes = postLikes
+        }
+    
+        const likePost = posts.filter((pst) => pst.likes.some((lke) => lke.liker == req.params.id))
+
+        return res.json(likePost)
 })
 
 exports.createPostLike = asyncHandler(async (req, res, next) => {
