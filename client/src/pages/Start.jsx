@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import LoginForm from './components/Authentication/LoginForm';
 import RegisterForm from './components/Authentication/RegisterForm';
 import MainLogo from '../assets/img/6.png'
@@ -6,7 +6,7 @@ import AppContext from '../context/AppContext';
 // import axios from 'axios'
 
 const Start = () => {
-    const {user} = useContext(AppContext)
+    // const {user} = useContext(AppContext)
     const [forms, setForms] = useState(true)
 
     const googleLogin = (e) => {
@@ -26,7 +26,7 @@ const Start = () => {
                     <form onSubmit={googleLogin}>
                         <button className='google-auth-btn'>Continue with Google</button>
                     </form>  
-                    <button onClick={() => console.log(user)}>Show</button>
+                    {/* <button onClick={() => console.log(user)}>Show</button> */}
             </div>
             <div className='begin-screen'>
                 <div className='start-logo'>

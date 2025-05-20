@@ -18,17 +18,16 @@ const Notifications = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/notifications/allnotifications`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`http://localhost:3000/api/notifications/${user.id}/allnotifications`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setNotifications(res.data)
-            // setFilteredResults(res.data.filter((post) => decoded.user.followers.some((userId) => userId.user._id === post.user._id)))
             setLoading(false)
           })
           .catch((err) => {
             console.log(err)
             // toast.error('There was an error fetching the posts')
           })
-    },[])
+    },[user.id])
 
     return (
         <section className='home-page'>

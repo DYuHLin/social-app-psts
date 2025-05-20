@@ -1,6 +1,39 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useContext } from 'react';
+import AppContext from '../context/AppContext';
+import { useNavigate } from 'react-router-dom';
 
 const Logout = () => {
+    const {user} = useContext(AppContext)
+    const navigate = useNavigate()
+
+    const logout = (e) => {
+        e.preventDefault()
+        document.cookie = "connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        try{
+            axios.post(`http://localhost:3000/api/auth/logout`, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+                .then((res) => {
+                    navigate('/gettingstarted')
+                    return res.data
+                })
+        } catch(err){
+            console.log(err)
+        }
+    }
+
+    const deleteAcc = (e) => {
+        e.preventDefault()
+        try{
+            axios.delete(`http://localhost:3000/api/auth/${user.id}/deleteuser`, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+                .then((res) => {
+                    navigate('/gettingstarted')
+                    return res.data
+                })
+        } catch(err){
+            console.log(err)
+        }
+    }
+
     return (
         <section className='home-page'>
             <div className='feed'>
@@ -9,13 +42,13 @@ const Logout = () => {
                 </div>
 
                 <div className='feed-post'>
-                    <form>
+                    <form onSubmit={logout}>
                         <h1 className='comment-title'>Logout</h1>
                         <p>Are you sure you want to logout?</p>
                         <button className='post-btn'>Logout</button>
                     </form>
                     
-                    <form>
+                    <form onSubmit={deleteAcc}>
                         <h1 className='comment-title'>Delete</h1>
                         <p>Are you sure you want to delete your profile?</p>
                         <button className='post-btn'>Delete</button>

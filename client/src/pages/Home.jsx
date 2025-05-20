@@ -9,17 +9,22 @@ const Home = () => {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
+      try{
         axios.get(`http://localhost:3000/api/post/allposts`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setPosts(res.data)
             // setFilteredResults(res.data.filter((post) => decoded.user.followers.some((userId) => userId.user._id === post.user._id)))
             setLoading(false)
+            return res.data
           })
           .catch((err) => {
             console.log(err)
             // toast.error('There was an error fetching the posts')
           })
-      },[posts])
+      } catch(err){
+        console.log(err)
+      }
+      },[])
 
     return (
         <section className='home-page'>

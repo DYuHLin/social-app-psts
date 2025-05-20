@@ -13,7 +13,18 @@ router.put('/updateuser', user.userUpdate)
 router.delete('/:id/deleteuser', user.userDelete)
 
 router.get('/accountstore', (req, res, next) => {
-    return res.json(req.session)
+    if(!req.session.authenticated){
+        return false
+    } else{
+        return res.json(req.session)
+    }
+})
+
+router.post('/logout', (req, res, next) => {
+    req.session.authenticated = false
+    delete req.session.user
+    res.clearCookie('connect.sid')
+    return res.json('logged out')
 })
 
 // Google OAuth
