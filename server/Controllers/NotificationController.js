@@ -12,3 +12,8 @@ exports.createNotifications = asyncHandler(async (req, res, next) => {
     await notificationModel.create(user, following)
     return res.json('created')
 })
+
+exports.deleteNotifications = asyncHandler(async (req, res, next) => {
+    await notificationModel.delete(req.params.id)
+    return res.json('deleted')
+})

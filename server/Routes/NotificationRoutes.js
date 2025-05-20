@@ -3,7 +3,7 @@ const express = require('express')
 
 const router = express.Router()
 
-router.post('/create', notifications.createNotifications)
 router.get('/allnotifications', notifications.getAllnotifications)
+router.delete('/:id/delete', notifications.deleteNotifications)
 
 module.exports = router
