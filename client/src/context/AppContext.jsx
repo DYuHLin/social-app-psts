@@ -6,7 +6,6 @@ const AppContext = createContext()
 
 export const AppProvider = ({children}) => {
     const [user, setUser] = useState(false)
-    const [gUser, setGuser] = useState(false)
     const defaultImg = "https://res.cloudinary.com/dqdoxrm2x/image/upload/v1744207814/feq9ujcmkjrbabkptc6y.jpg"
 
     const ProtectedRoutes = () => {
@@ -19,24 +18,12 @@ export const AppProvider = ({children}) => {
          axios.get('http://localhost:3000/api/auth/account', {withCredentials: true, headers: {'Content-Type': 'application/json'}})
              .then(res => {
                  console.log(res.data)
-                 setGuser(res.data)
-             });
-    },[])
-
-    useEffect(() => {
-         axios.get('http://localhost:3000/api/auth/accountstore', {withCredentials: true, headers: {'Content-Type': 'application/json'}})
-             .then(res => {  
-                console.log(res.data)
-                 if(res.data.user){
-                    setUser(res.data.user[0])
-                 } else{
-                    setUser(false)
-                 }
+                 setUser(res.data)
              });
     },[])
 
     return (
-        <AppContext.Provider value={{ProtectedRoutes, setUser, user, gUser, defaultImg}}>
+        <AppContext.Provider value={{ProtectedRoutes, setUser, user, defaultImg}}>
             {children}
         </AppContext.Provider>
     )

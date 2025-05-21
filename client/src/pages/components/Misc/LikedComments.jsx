@@ -67,7 +67,7 @@ const LikedComments = ({loading}) => {
                         </div>
                         <div className='post-actions'>
                             <p className='feed-icons' onClick={() => likePost(post.id)}><i className='bx bx-heart' />{post.likes.length}</p>
-                            <p className='feed-icons'><i className='bx bx-comment' /> </p>
+                            <p className='feed-icons'>View Comments </p>
                         </div>
                     </div>
                     )

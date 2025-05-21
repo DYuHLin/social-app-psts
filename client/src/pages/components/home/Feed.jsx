@@ -33,7 +33,7 @@ const Feed = ({posts, loading}) => {
                         </div>
                         <div className='post-content' onClick={() => navigate(`/${post.id}/post`)}>
                             {post.text.trim() != '' ? <p className='feed-content'>{post.text}</p> : ''}
-                            {post.link.trim() != '' ? <a href={post.link}>{post.link}</a> : ''}
+                            {post.link.trim() != '' ? <a href={post.link} className='link-post'>{post.link}</a> : ''}
                             {post.video.trim() != '' ? <div className='vid-container'><video className='video' src={post.video} controls /> </div>: ''}
                             {post.youtube.trim() != '' ? <div className='ytvid' dangerouslySetInnerHTML={{__html: post.youtube}}></div> : ''}
                             {
@@ -60,7 +60,7 @@ const Feed = ({posts, loading}) => {
                         </div>
                         <div className='post-actions'>
                             <p className='feed-icons' onClick={() => likePost(post.id)}><i className='bx bx-heart' />{post.likes.length}</p>
-                            <p className='feed-icons'><i className='bx bx-comment' /> </p>
+                            <p className='feed-icons'>View Comments </p>
                         </div>
                     </div>
                     )

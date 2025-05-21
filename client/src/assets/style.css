@@ -245,16 +245,14 @@ h2{
     height: inherit;
     max-height: inherit;
     border-radius: 50%;
-    border: 1px solid white;
     object-fit: cover;
 }
 
 .profile-img-suggestion{
-    height: inherit;
-    max-height: inherit;
-    width: 80%;
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
     border-radius: 50%;
-    border: 1px solid white;
     object-fit: cover;
 }
 
@@ -262,7 +260,6 @@ h2{
     height: inherit;
     max-height: inherit;
     border-radius: 50%;
-    border: 1px solid white;
     object-fit: cover;
     width: 17%;
 }
@@ -320,6 +317,11 @@ span{
     gap: 40px;
 }
 
+.post-actions{
+    display: flex;
+    align-items: center;
+}
+
 .feed-user{
     color: lightgray;
 }
@@ -330,6 +332,9 @@ span{
 
 .feed-icons{
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .ytvid{
@@ -354,8 +359,14 @@ span{
 
 .img-container{
     width: 100%;
+    min-height: 60px;
     margin: 0;
     padding: 0;
+  }
+
+  .pic-container{
+    width: 50%;
+    height: 100%;
   }
 
   .post-content{
@@ -531,7 +542,6 @@ textarea{
     width: 100%;
     max-width: 100%;
     border-radius: 50%;
-    border: 1px solid white;
 }
 
 .followers{
@@ -606,4 +616,9 @@ textarea{
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .link-post{
+    color: blue;
+    text-decoration: underline;
   }

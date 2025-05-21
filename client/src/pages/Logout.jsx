@@ -4,7 +4,7 @@ import AppContext from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
 
 const Logout = () => {
-    const {user} = useContext(AppContext)
+    const {user, setUser} = useContext(AppContext)
     const navigate = useNavigate()
 
     const logout = (e) => {
@@ -13,6 +13,7 @@ const Logout = () => {
         try{
             axios.post(`http://localhost:3000/api/auth/logout`, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
                 .then((res) => {
+                    setUser(false)
                     navigate('/gettingstarted')
                     return res.data
                 })
@@ -26,6 +27,7 @@ const Logout = () => {
         try{
             axios.delete(`http://localhost:3000/api/auth/${user.id}/deleteuser`, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
                 .then((res) => {
+                    setUser(false)
                     navigate('/gettingstarted')
                     return res.data
                 })

@@ -12,13 +12,13 @@ router.get('/:id/user', user.getUser)
 router.put('/updateuser', user.userUpdate)
 router.delete('/:id/deleteuser', user.userDelete)
 
-router.get('/accountstore', (req, res, next) => {
-    if(!req.session.authenticated){
-        return false
-    } else{
-        return res.json(req.session)
-    }
-})
+// router.get('/accountstore', (req, res, next) => {
+//     if(!req.session.authenticated){
+//         return res.json(false)
+//     } else{
+//         return res.json(req.session)
+//     }
+// })
 
 router.post('/logout', (req, res, next) => {
     req.session.authenticated = false

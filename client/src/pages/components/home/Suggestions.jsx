@@ -37,7 +37,9 @@ const Suggestions = () => {
                     users.slice(-4, 3).map((sug, key) => {return(
                         <div className='user-card' key={key}>
                         <div className='user-info'>
-                            <img src={sug.image} alt='Profile image' className='profile-img-suggestion' />
+                            <div className='pic-container'>
+                                <img src={sug.image} alt='Profile image' className='profile-img-suggestion' />
+                            </div>
                             <p className='follow-name'>{sug.username}</p>
                         </div>
                         <button className='follow-btn' onClick={() => follow(sug.id)}>Follow</button>
@@ -53,7 +55,9 @@ const Suggestions = () => {
                     users.sort((a,b) => a.followers.length - b.followers.length).slice(0, 3).map((sug, key) => {return(
                         <div className='user-card' key={key}>
                         <div className='user-info'>
-                            <img src={sug.image} alt='Profile image' className='profile-img-suggestion' />
+                            <div className='pic-container'>
+                                <img src={sug.image} alt='Profile image' className='profile-img-suggestion' />
+                            </div>                     
                             <p className='follow-name'>{sug.username}</p>
                         </div>
                         <button className='follow-btn' onClick={() => follow(sug.id)}>Follow</button>
