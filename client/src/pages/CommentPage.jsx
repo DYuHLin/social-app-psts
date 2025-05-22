@@ -4,6 +4,7 @@ import Comments from './components/Post/Comments';
 import AppContext from '../context/AppContext';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import LinkPreview from './components/Misc/LinkPreview';
 
 const CommentPage = () => {
     let {id} = useParams()
@@ -44,7 +45,7 @@ const CommentPage = () => {
                         </div>
                         <div className='post-content'>
                             {post[0].text.trim() != '' ? <p className='feed-content'>{post[0].text}</p> : ''}
-                            {post[0].link.trim() != '' ? <a href={post[0].link}>{post[0].link}</a> : ''}
+                            {post[0].link.trim() != '' ? <LinkPreview url={post[0].link} /> : ''}
                             {post[0].video.trim() != '' ? <div className='vid-container'><video className='video' src={post[0].video} controls /> </div>: ''}
                             {post[0].youtube.trim() != '' ? <div className='ytvid' dangerouslySetInnerHTML={{__html: post[0].youtube}}></div> : ''}
                             {

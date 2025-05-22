@@ -7,6 +7,7 @@ const Follow = () => {
     const {user} = useContext(AppContext)
     const [followers, setFollowers] = useState([])
     const [following, setFollowing] = useState([])
+    const [currentFollowing, setCurrentFollowing] = useState([])
     const {id} = useParams()
     const [view, setView] = useState(false)
 
@@ -39,20 +40,32 @@ const Follow = () => {
               })
         },[id])
 
+        useEffect(() => {
+            axios.get(`http://localhost:3000/api/follow/${user.id}/following`, {headers: {'Content-Type': 'application/json'}})
+              .then((res) => {
+                setCurrentFollowing(res.data)
+              })
+              .catch((err) => {
+                console.log(err)
+              })
+        },[user.id])
+
     return (
         <section className='home-page'>
             <div className='feed'>
                 <div className='filter-feed'>
                     <h1>{!view ?'Followers' : 'Following'}</h1> 
                 </div>
-                <button onClick={() => setView(!view)}>View {!view ? 'Following' : 'Following'}</button>
+                <button className='follow-btn' onClick={() => setView(!view)}>View {!view ? 'Following' : 'Followers'}</button>
                 {followers.length == 0 && !view ? <p>This user has no followers</p> : followers.length != 0 && !view ? followers.map((flw, key) => {return(
                     <div className='user-search-card' key={key}>
                          <div className='user-info'>
                             <img src={flw.image} alt='Profile image' className='profile-img' />
                             <p className='follow-name'>{flw.username}</p>
                         </div>
-                        <button className='follow-btn' onClick={() => follow(flw.id)}>Follow</button>
+                        <button className='follow-btn' onClick={() => follow(flw.id)}>{
+                            currentFollowing.some((fl) => fl.user_id == flw.id) ? 'Following' : 'Follow'
+                        }</button>
                     </div>
                 )}) : following.length == 0 && view ? <p>This user is not following anyone</p> : following.length != 0 && view ? following.map((flw, key) => {return(
                     <div className='user-search-card' key={key}>
@@ -60,7 +73,7 @@ const Follow = () => {
                             <img src={flw.image} alt='Profile image' className='profile-img' />
                             <p className='follow-name'>{flw.username}</p>
                         </div>
-                        <button className='follow-btn' onClick={() => follow(flw.id)}>Follow</button>
+                        <button className='follow-btn' onClick={() => follow(flw.user_id)}>Following</button>
                     </div>
                 )}) : ''
                 }

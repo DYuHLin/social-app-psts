@@ -1,11 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import AppContext from '../../../context/AppContext';
+import { useNavigate } from 'react-router-dom';
 
 const Suggestions = () => {
     const {user} = useContext(AppContext)
+    const navigate = useNavigate()
     const [users, setUsers] = useState([])
     const [loading, setLoading] = useState(true)
+    const [following, setFollowing] = useState([])
     const follow = (other) => {
         try{
             const fllw = {follower: user.id, following: other}
@@ -19,7 +22,6 @@ const Suggestions = () => {
         axios.get(`http://localhost:3000/api/auth/allusers`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setUsers(res.data)
-            // setFilteredResults(res.data.filter((post) => decoded.user.followers.some((userId) => userId.user._id === post.user._id)))
             setLoading(false)
           })
           .catch((err) => {
@@ -27,6 +29,16 @@ const Suggestions = () => {
             // toast.error('There was an error fetching the posts')
           })
     },[])
+
+    useEffect(() => {
+        axios.get(`http://localhost:3000/api/follow/${user.id}/following`, {headers: {'Content-Type': 'application/json'}})
+          .then((res) => {
+            setFollowing(res.data)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+    },[user.id])
     
     return (
         <div className='suggestions'>
@@ -34,15 +46,17 @@ const Suggestions = () => {
                 <h2>Latest Users</h2>
                 <div className='users'>
                 { loading && users.length == 0 ? '' : users.length == 0 ? <p>There are no users</p> :
-                    users.slice(-4, 3).map((sug, key) => {return(
+                    users.slice(-5, 3).map((sug, key) => {return(
                         <div className='user-card' key={key}>
                         <div className='user-info'>
                             <div className='pic-container'>
                                 <img src={sug.image} alt='Profile image' className='profile-img-suggestion' />
                             </div>
-                            <p className='follow-name'>{sug.username}</p>
+                            <p className='follow-name' onClick={() => navigate(`/profile/${sug.id}`)}>{sug.username}</p>
                         </div>
-                        <button className='follow-btn' onClick={() => follow(sug.id)}>Follow</button>
+                        <button className='follow-btn' onClick={() => follow(sug.id)}>{
+                            following.some((fl) => fl.user_id == sug.id) ? 'Following' : 'Follow'
+                        }</button>
                     </div>
                     )})
                 }
@@ -58,9 +72,11 @@ const Suggestions = () => {
                             <div className='pic-container'>
                                 <img src={sug.image} alt='Profile image' className='profile-img-suggestion' />
                             </div>                     
-                            <p className='follow-name'>{sug.username}</p>
+                            <p className='follow-name' onClick={() => navigate(`/profile/${sug.id}`)}>{sug.username}</p>
                         </div>
-                        <button className='follow-btn' onClick={() => follow(sug.id)}>Follow</button>
+                        <button className='follow-btn' onClick={() => follow(sug.id)}>{
+                            following.some((fl) => fl.user_id == sug.id) ? 'Following' : 'Follow'
+                        }</button>
                     </div>
                     )})
                     }

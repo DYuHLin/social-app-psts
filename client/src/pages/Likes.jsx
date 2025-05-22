@@ -41,11 +41,11 @@ const Likes = () => {
                     return(
                     <div className='feed-post' key={key}>
                         <div className='post-info'>
-                            <p className='feed-user'>{post.username}</p>
+                            <p className='feed-user' onClick={() => navigate(`/profile/${post.user_id}`)}>{post.username}</p>
                             <p>{new Date(Number(post.date)).toLocaleString()}</p>
                             <p>Post</p>
                         </div>
-                        <div className='post-content' onClick={() => navigate(`/${post.id}/post`)}>
+                        <div className='post-content'>
                             {post.text.trim() != '' ? <p className='feed-content'>{post.text}</p> : ''}
                             {post.link.trim() != '' ? <a href={post.link}>{post.link}</a> : ''}
                             {post.video.trim() != '' ? <div className='vid-container'><video className='video' src={post.video} controls /> </div>: ''}
@@ -74,7 +74,7 @@ const Likes = () => {
                         </div>
                         <div className='post-actions'>
                             <p className='feed-icons' onClick={() => likePost(post.id)}><i className='bx bx-heart' />{post.likes.length}</p>
-                            <p className='feed-icons'> View Comments</p>
+                            <p className='feed-icons'  onClick={() => navigate(`/${post.id}/post`)}> View Comments</p>
                         </div>
                     </div>
                     )

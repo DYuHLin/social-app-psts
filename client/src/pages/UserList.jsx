@@ -7,6 +7,7 @@ const UserList = () => {
     const {user} = useContext(AppContext)
     const [users, setUsers] = useState([])
     const [loading, setLoading] = useState(true)
+    const [following, setFollowing] = useState([])
     const [search, setSearch] = useState('')
     const navigate = useNavigate()
 
@@ -32,6 +33,16 @@ const UserList = () => {
           })
     },[])
 
+    useEffect(() => {
+        axios.get(`http://localhost:3000/api/follow/${user.id}/following`, {headers: {'Content-Type': 'application/json'}})
+          .then((res) => {
+            setFollowing(res.data)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+    },[user.id])
+
     return (
         <section className='home-page'>
             <div className='feed'>
@@ -46,7 +57,9 @@ const UserList = () => {
                                 <img src={userM.image} alt='Profile image' className='profile-img-list' />
                                 <p className='follow-name'>{userM.username}</p>
                             </div>
-                            {userM.id == user.id ? '' : <button className='follow-btn' onClick={() => follow(userM.id)}>Follow</button>}
+                            {userM.id == user.id ? '' : <button className='follow-btn' onClick={() => follow(userM.id)}>{
+                            following.some((fl) => fl.user_id == userM.id) ? 'Following' : 'Follow'
+                        }</button>}
                         </div>
                     )})
                 }

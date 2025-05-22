@@ -58,7 +58,7 @@ const Create = () => {
                     <i className='bx bx-link post-op' onClick={() => {setLinkShow(!linkShow); setImgShow(false); setYoutubeShow(false); setVideoShow(false);}}/>
                     <i className='bx bxl-youtube post-op' onClick={() => {setLinkShow(false); setImgShow(false); setYoutubeShow(!youtubeShow); setVideoShow(false);}}/>
                     <i className='bx bx-image post-op' onClick={() => {setLinkShow(false); setImgShow(!imgShow); setYoutubeShow(false); setVideoShow(false);}}/>
-                    <i className='bx bxs-videos post-op' onClick={() => {setLinkShow(!linkShow); setImgShow(false); setYoutubeShow(false); setVideoShow(false);}}/>
+                    <i className='bx bxs-videos post-op' onClick={() => {setLinkShow(false); setImgShow(false); setYoutubeShow(false); setVideoShow(!videoShow);}}/>
                 </div>
             </div>
         </section>

@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import CommentWriter from './components/Post/CommentWriter';
 import Comments from './components/Post/Comments';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import AppContext from '../context/AppContext';
+import LinkPreview from './components/Misc/LinkPreview';
 
 const Post = () => {
     let {id} = useParams()
     const {user} = useContext(AppContext)
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
     const [post, setPost] = useState([])
 
     const likePost = (post) => {
@@ -39,12 +40,12 @@ const Post = () => {
 
                 {post.length == 0 ? '' : <div className='feed-post'>
                         <div className='post-info'>
-                            <p className='feed-user'>{post[0].username}</p>
+                            <p className='feed-user' onClick={() => navigate(`/profile/${post[0].user_id}`)}>{post[0].username}</p>
                             <p>{new Date(Number(post[0].date)).toLocaleString()}</p>
                         </div>
                         <div className='post-content'>
                             {post[0].text.trim() != '' ? <p className='feed-content'>{post[0].text}</p> : ''}
-                            {post[0].link.trim() != '' ? <a href={post[0].link}>{post[0].link}</a> : ''}
+                            {post[0].link.trim() != '' ? <LinkPreview url={post[0].link} /> : ''}
                             {post[0].video.trim() != '' ? <div className='vid-container'><video className='video' src={post[0].video} controls /> </div>: ''}
                             {post[0].youtube.trim() != '' ? <div className='ytvid' dangerouslySetInnerHTML={{__html: post[0].youtube}}></div> : ''}
                             {

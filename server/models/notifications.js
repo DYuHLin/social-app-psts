@@ -9,7 +9,7 @@ notifications.getNotifications = async (id) => {
 }
 
 notifications.create = async (user, following) => {
-    await pool.query(`INSERT INTO notifications (c_users, following) VALUES($1, $2);`, [user, following])
+    await pool.query(`INSERT INTO notifications (c_user, following) VALUES($1, $2);`, [user, following])
 }
 
 notifications.delete = async (id) => {

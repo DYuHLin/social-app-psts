@@ -34,7 +34,7 @@ const Notifications = () => {
             <div className='feed'>
                 <div className='filter-feed'>
                     <h1>Notifications</h1> 
-                    <button onClick={() => deleteNotifications()}>Clear</button>
+                    <button className='follow-btn' onClick={() => deleteNotifications()}>Clear</button>
                 </div>
                 {loading && notifications.length === 0 ? <p>Loading the notifications...</p> : notifications.length === 0 ? <p>There are no notifications right now</p>:
                     notifications.map((noti, key) => {return(

@@ -34,7 +34,7 @@ const LikedComments = ({loading}) => {
                     return(
                     <div className='feed-post' key={key}>
                         <div className='post-info'>
-                            <p className='feed-user'>{post.username}</p>
+                            <p className='feed-user' onClick={() => navigate(`/profile/${post.userid}`)}>{post.username}</p>
                             <p>{new Date(Number(post.date)).toLocaleString()}</p>
                             <p>Comment</p>
                         </div>
@@ -67,7 +67,7 @@ const LikedComments = ({loading}) => {
                         </div>
                         <div className='post-actions'>
                             <p className='feed-icons' onClick={() => likePost(post.id)}><i className='bx bx-heart' />{post.likes.length}</p>
-                            <p className='feed-icons'>View Comments </p>
+                            <p className='feed-icons' onClick={() => navigate(`/${post.id}/comment`)}>View Comments </p>
                         </div>
                     </div>
                     )

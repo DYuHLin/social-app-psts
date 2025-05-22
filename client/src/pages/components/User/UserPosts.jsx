@@ -71,8 +71,8 @@ const UserPosts = ({id}) => {
                         <div className='post-actions'>
                             <p className='feed-icons' onClick={() => likePost(post.id)}><i className='bx bx-heart' />{post.likes.length}</p>
                             <p className='feed-icons'><i className='bx bx-comment' /> </p>
-                            {post.user_id == user.id ? <button onClick={() => navigate(`/${post.id}/post/edit`)}>update</button> : ''}
-                            {post.user_id == user.id ? <button onClick={() => navigate(`/${post.id}/post/delete`)}>delete</button> : ''}
+                            {post.user_id == user.id ? <button className='follow-btn' onClick={() => navigate(`/${post.id}/post/edit`)}>update</button> : ''}
+                            {post.user_id == user.id ? <button className='follow-btn' onClick={() => navigate(`/${post.id}/post/delete`)}>delete</button> : ''}
                         </div>
                     </div>
                     )

@@ -275,6 +275,7 @@ h2{
 
 span{
     font-size: 20px;
+    cursor: pointer;
 }
 
 .side-list{
@@ -282,6 +283,10 @@ span{
     flex-direction: column;
     list-style: none;
     gap: 30px;
+}
+
+.red{
+    color: red;
 }
 
 .side-item{
@@ -324,6 +329,7 @@ span{
 
 .feed-user{
     color: lightgray;
+    cursor: pointer;
 }
 
 .feed-content{
@@ -561,9 +567,13 @@ textarea{
     font-weight: 500;
 }
 
+.follow-name{
+    cursor: pointer;
+}
+
 .link-preview{
     cursor: pointer;
-    background-color: #481e8b; 
+    background-color: rgb(60, 60, 88); 
     padding: 20px;
     display: flex;
     align-items: center;

@@ -15,11 +15,15 @@ export const AppProvider = ({children}) => {
     }
 
     useEffect(() => {
-         axios.get('http://localhost:3000/api/auth/account', {withCredentials: true, headers: {'Content-Type': 'application/json'}})
+        try{
+            axios.get('http://localhost:3000/api/auth/account', {withCredentials: true, headers: {'Content-Type': 'application/json'}})
              .then(res => {
                  console.log(res.data)
                  setUser(res.data)
              });
+        } catch(err){
+            console.log(err)
+        }
     },[])
 
     return (

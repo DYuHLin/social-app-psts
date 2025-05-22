@@ -9,6 +9,7 @@ const Profile = () => {
     const {id} = useParams()
     const {user} = useContext(AppContext)
     const navigate = useNavigate()
+    const [following, setFollowing] = useState([])
 
     const [currentUser, setCurrentUser] = useState([])
     const [view, setView] = useState(false)
@@ -24,6 +25,16 @@ const Profile = () => {
             console.log(err)
           })
     },[id])
+
+    useEffect(() => {
+        axios.get(`http://localhost:3000/api/follow/${user.id}/following`, {headers: {'Content-Type': 'application/json'}})
+          .then((res) => {
+            setFollowing(res.data)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+    },[user.id])
 
     const follow = (other) => {
         try{
@@ -49,9 +60,11 @@ const Profile = () => {
                     <p>{currentUser[0].description == null ? '' : currentUser[0].description}</p>
                     <div className='followers'>
                         <p className='follow-label' onClick={() => navigate(`followers`)}> {currentUser[0].followers.length} Followers</p>
-                        <p className='follow-label' onClick={() => navigate(`followers`)}> {currentUser[0].following.length} Follwing</p>
+                        <p className='follow-label' onClick={() => navigate(`followers`)}> {currentUser[0].following.length} Following</p>
                     </div>
-                    {currentUser[0].id != user.id ?<button className='follow-profile-btn' onClick={() => follow(currentUser[0].id)}>Follow</button> : ''}
+                    {currentUser[0].id != user.id ?<button className='follow-profile-btn' onClick={() => follow(currentUser[0].id)}>{
+                            following.some((fl) => fl.user_id == currentUser[0].id) ? 'Following' : 'Follow'
+                        }</button> : ''}
                     {currentUser[0].id == user.id ?<button className='follow-profile-btn' onClick={() => navigate('edit')}>Edit</button> : ''}
                 </div>
             </div>}

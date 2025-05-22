@@ -23,7 +23,7 @@ router.delete('/:id/deleteuser', user.userDelete)
 router.post('/logout', (req, res, next) => {
     req.session.authenticated = false
     delete req.session.user
-    res.clearCookie('connect.sid')
+    req.session.destroy()
     return res.json('logged out')
 })
 

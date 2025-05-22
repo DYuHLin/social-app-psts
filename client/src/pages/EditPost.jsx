@@ -60,7 +60,7 @@ const EditPost = () => {
                 <div className='filter-feed'>
                     <i className='bx bx-link post-op' onClick={() => {setLinkShow(!linkShow); setYoutubeShow(false); setVideoShow(false);}}/>
                     <i className='bx bxl-youtube post-op' onClick={() => {setLinkShow(false); setYoutubeShow(!youtubeShow); setVideoShow(false);}}/>
-                    <i className='bx bxs-videos post-op' onClick={() => {setLinkShow(!linkShow); setYoutubeShow(false); setVideoShow(false);}}/>
+                    <i className='bx bxs-videos post-op' onClick={() => {setLinkShow(false); setYoutubeShow(false); setVideoShow(!videoShow);}}/>
                 </div>
             </div>
         </section>
