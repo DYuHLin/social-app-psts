@@ -3,19 +3,21 @@ import CommentWriter from './components/Post/CommentWriter';
 import Comments from './components/Post/Comments';
 import AppContext from '../context/AppContext';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import LinkPreview from './components/Misc/LinkPreview';
 
 const CommentPage = () => {
     let {id} = useParams()
     const {user} = useContext(AppContext)
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
     const [post, setPost] = useState([])
+    const [reloading, setReloading] = useState(false)
 
     const likePost = (post) => {
         try{
             const like = {post: null, comment: post, liker: user.id,}
             axios.post(`http://localhost:3000/api/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            setReloading(true)
         } catch(err){
             console.log(err)
         }
@@ -25,11 +27,12 @@ const CommentPage = () => {
         axios.get(`http://localhost:3000/api/comment/${id}/comment`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setPost(res.data)
+            setReloading(false)
           })
           .catch((err) => {
             console.log(err)
           })
-    },[id])
+    },[id, reloading])
 
     return (
         <section className='home-page'>
@@ -40,7 +43,7 @@ const CommentPage = () => {
 
                 {post.length == 0 ? '' : <div className='feed-post'>
                         <div className='post-info'>
-                            <p className='feed-user'>{post[0].username}</p>
+                            <p className='feed-user' onClick={() => navigate(`/profile/${post[0].user_id}`)}>{post[0].username}</p>
                             <p>{new Date(Number(post[0].date)).toLocaleString()}</p>
                         </div>
                         <div className='post-content'>

@@ -61,3 +61,9 @@ exports.createCommentLike = asyncHandler(async (req, res, next) => {
         return res.json('unlike')
     }
 })
+
+exports.getTheLikes = asyncHandler(async (req, res, next) => {
+    const likes = await likeModel.getAllLikes()
+
+    return res.json(likes)
+})

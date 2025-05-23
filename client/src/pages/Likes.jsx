@@ -3,17 +3,20 @@ import React, { useContext, useEffect, useState } from 'react';
 import AppContext from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
 import LikedComments from './components/Misc/LikedComments';
+import LinkPreview from './components/Misc/LinkPreview';
 
 const Likes = () => {
     const {user} = useContext(AppContext)
     const navigate = useNavigate()
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(true)
+    const [reloading, setReloading] = useState(false)
 
     const likePost = (post) => {
         try{
             const like = {post: post, comment: null, liker: user.id,}
             axios.post(`http://localhost:3000/api/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            setReloading(true)
         } catch(err){
             console.log(err)
         }
@@ -24,11 +27,12 @@ const Likes = () => {
             .then((res) => {
                 setPosts(res.data)
                 setLoading(false)
+                setReloading(false)
             })
             .catch((err) => {
                 console.log(err)
             })
-    },[user.id, posts])
+    },[user.id, reloading])
 
     return (
         <section className='home-page'>
@@ -47,7 +51,7 @@ const Likes = () => {
                         </div>
                         <div className='post-content'>
                             {post.text.trim() != '' ? <p className='feed-content'>{post.text}</p> : ''}
-                            {post.link.trim() != '' ? <a href={post.link}>{post.link}</a> : ''}
+                            {post.link.trim() != '' ? <LinkPreview url={post.link} /> : ''}
                             {post.video.trim() != '' ? <div className='vid-container'><video className='video' src={post.video} controls /> </div>: ''}
                             {post.youtube.trim() != '' ? <div className='ytvid' dangerouslySetInnerHTML={{__html: post.youtube}}></div> : ''}
                             {

@@ -6,7 +6,6 @@ const session = require('express-session')
 const store = session.MemoryStore()
 const socket = require('socket.io')
 const passport = require('passport')
-// const passportSetup = require('./passport')
 const userRoutes = require('./Routes/UserRoutes')
 const postRoutes = require('./Routes/PostRoutes')
 const commentRoutes = require('./Routes/CommentRoutes')
@@ -36,6 +35,8 @@ app.use(passport.session())
 app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true,
+    methods: ['GET','PUT','POST','DELETE'],
+    optionSuccessStatus:200,
 }))
 
 app.use('/api/auth', userRoutes)
@@ -47,3 +48,34 @@ app.use('/api/likes', likeRoutes)
 app.use('/api/notifications', notificationRoutes)
 
 const server = app.listen(3000, () => console.log('app is listening on port 3000'))
+
+const io = socket(server, {
+    origin: 'http://localhost:5173',
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    optionsSuccessStatus: 200,
+    transports: ["websocket"]
+})
+
+io.on('connection', (socket) => {
+    console.log('connected: ' + socket.id)
+
+    socket.on('join_post', (data) => {
+        console.log(`user ${socket.id} has joined ${data}`)
+        socket.join(data)
+    })
+
+    socket.on('send_post', (data) => {
+        socket.broadcast.emit('get_posts', data)
+        console.log(data)
+    })
+
+    socket.on('send_comment', (data) => {
+        socket.broadcast.emit('get_comments', data)
+        console.log(data)
+    })
+
+    socket.on('disconnect', () => {
+        console.log('disconnected: ' + socket.id)
+    })
+})

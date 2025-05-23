@@ -11,11 +11,13 @@ const Post = () => {
     const {user} = useContext(AppContext)
     const navigate = useNavigate()
     const [post, setPost] = useState([])
+    const [reloading, setReloading] = useState(false)
 
     const likePost = (post) => {
         try{
             const like = {post: post, comment: null, liker: user.id,}
             axios.post(`http://localhost:3000/api/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            setReloading(true)
         } catch(err){
             console.log(err)
         }
@@ -25,11 +27,12 @@ const Post = () => {
         axios.get(`http://localhost:3000/api/post/${id}/post`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setPost(res.data)
+            setReloading(false)
           })
           .catch((err) => {
             console.log(err)
           })
-    },[id])
+    },[id, reloading])
 
     return (
         <section className='home-page'>

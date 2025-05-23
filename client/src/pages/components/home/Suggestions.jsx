@@ -9,10 +9,12 @@ const Suggestions = () => {
     const [users, setUsers] = useState([])
     const [loading, setLoading] = useState(true)
     const [following, setFollowing] = useState([])
+    const [reloading, setReloading] = useState(false)
     const follow = (other) => {
         try{
             const fllw = {follower: user.id, following: other}
             axios.post(`http://localhost:3000/api/follow/create`, fllw, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            setReloading(true)
         } catch(err){
             console.log(err)
         }
@@ -23,21 +25,26 @@ const Suggestions = () => {
           .then((res) => {
             setUsers(res.data)
             setLoading(false)
+            setReloading(false)
           })
           .catch((err) => {
             console.log(err)
             // toast.error('There was an error fetching the posts')
           })
-    },[])
+    },[reloading])
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/follow/${user.id}/following`, {headers: {'Content-Type': 'application/json'}})
-          .then((res) => {
-            setFollowing(res.data)
-          })
-          .catch((err) => {
-            console.log(err)
-          })
+        if(user.id){
+            axios.get(`http://localhost:3000/api/follow/${user.id}/following`, {headers: {'Content-Type': 'application/json'}})
+                .then((res) => {
+                setFollowing(res.data)
+            })
+                .catch((err) => {
+                console.log(err)
+            })
+        } else {
+            return
+        }
     },[user.id])
     
     return (

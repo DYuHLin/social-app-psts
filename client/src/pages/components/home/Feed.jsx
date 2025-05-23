@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
-// import LinkPreview from '../Misc/LinkPreview';
 import axios from 'axios';
 import AppContext from '../../../context/AppContext';
 import { useNavigate } from 'react-router-dom';
 import LinkPreview from '../Misc/LinkPreview';
 
-const Feed = ({posts, loading}) => {
+const Feed = ({posts, loading, setReloading}) => {
     const {user} = useContext(AppContext)
     const navigate = useNavigate()
 
@@ -13,6 +12,7 @@ const Feed = ({posts, loading}) => {
         try{
             const like = {post: post, comment: null, liker: user.id,}
             axios.post(`http://localhost:3000/api/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            setReloading(true)
         } catch(err){
             console.log(err)
         }
@@ -25,7 +25,7 @@ const Feed = ({posts, loading}) => {
                 <span>Following</span>
             </div>
             { loading && posts.length === 0 ? <p>Loading the posts...</p> : posts.length === 0 ? <p>There are no posts right now</p>:
-                posts.map((post, key) => {
+                posts.sort((a, b) => {return new Date(Number(b.date)) - new Date(Number(a.date))}).map((post, key) => {
                     return(
                     <div className='feed-post' key={key}>
                         <div className='post-info'>
@@ -61,14 +61,13 @@ const Feed = ({posts, loading}) => {
                         </div>
                         <div className='post-actions'>
                             <p className='feed-icons' onClick={() => likePost(post.id)}><i className={`bx bx-heart ${
-                            post.likes.some((lke) => lke.liker == user.id ? 'red' : '')}`} />{post.likes.length}</p>
+                            post.likes.some((lke) => lke.liker == user.id ? "red" : '')}`} />{post.likes.length}</p>
                             <p className='feed-icons' onClick={() => navigate(`/${post.id}/post`)}>View Comments </p>
                         </div>
                     </div>
                     )
                 })
             }
-            <button onClick={() => console.log(posts)}>sjw</button>
         </div>
     );
 }

@@ -9,11 +9,13 @@ const Comments = ({postId, commentId}) => {
     const {user} = useContext(AppContext)
     const [comments, setComments] = useState([])
     const [loading, setLoading] = useState(true)
+    const [reloading, setReloading] = useState(false)
 
     const likePost = (post) => {
         try{
             const like = {post: null, comment: post, liker: user.id,}
             axios.post(`http://localhost:3000/api/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            setReloading(true)
         } catch(err){
             console.log(err)
         }
@@ -25,6 +27,7 @@ const Comments = ({postId, commentId}) => {
           .then((res) => {
             setComments(res.data)
             setLoading(false)
+            setReloading(false)
           })
           .catch((err) => {
             console.log(err)
@@ -35,6 +38,7 @@ const Comments = ({postId, commentId}) => {
           .then((res) => {
             setComments(res.data)
             setLoading(false)
+            setReloading(false)
           })
           .catch((err) => {
             console.log(err)
@@ -42,7 +46,7 @@ const Comments = ({postId, commentId}) => {
           })
         }
 
-    }, [postId, commentId, comments])
+    }, [postId, commentId, reloading])
 
     return (
         <>

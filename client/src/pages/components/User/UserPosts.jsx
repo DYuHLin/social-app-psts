@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../../../context/AppContext';
+import LinkPreview from '../Misc/LinkPreview';
 
 const UserPosts = ({id}) => {
     const [posts, setPosts] = useState([])
@@ -43,7 +44,7 @@ const UserPosts = ({id}) => {
                         </div>
                         <div className='post-content' onClick={() => navigate(`/${post.id}/post`)}>
                             {post.text.trim() != '' ? <p className='feed-content'>{post.text}</p> : ''}
-                            {post.link.trim() != '' ? <a href={post.link}>{post.link}</a> : ''}
+                            {post.link.trim() != '' ? <LinkPreview url={post.link} /> : ''}
                             {post.video.trim() != '' ? <div className='vid-container'><video className='video' src={post.video} controls /> </div>: ''}
                             {post.youtube.trim() != '' ? <div className='ytvid' dangerouslySetInnerHTML={{__html: post.youtube}}></div> : ''}
                             {

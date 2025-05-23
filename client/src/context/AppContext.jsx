@@ -9,9 +9,7 @@ export const AppProvider = ({children}) => {
     const defaultImg = "https://res.cloudinary.com/dqdoxrm2x/image/upload/v1744207814/feq9ujcmkjrbabkptc6y.jpg"
 
     const ProtectedRoutes = () => {
-        return () => {
-            user == false ? (<Navigate to= '/gettingstarted'/>) : user ? (<Outlet />) : ''
-        }
+        return (  user == false ? (<Navigate to= '/gettingstarted'/>) : user ? (<Outlet />) : '')
     }
 
     useEffect(() => {

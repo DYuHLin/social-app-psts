@@ -40,7 +40,7 @@ const CommentWriter = ({postId, commentId}) => {
                 <textarea placeholder='Write something' rows='8' onChange={(e) => setText(e.target.value)}></textarea>
                 <input type='text' placeholder='link' className={`post-input ${linkShow ? '' : 'hidden'}`} onChange={(e) => setLink(e.target.value)}/>
                 <input type='text' placeholder='video link' className={`post-input ${videoShow ? '' : 'hidden'}`} onChange={(e) => setVideo(e.target.value)}/> 
-                <input type='text' placeholder='youtube link' className={`post-input ${youtubeShow ? '' : 'hidden'}`} onChange={(e) => setYoutube(e.target.value)}/> 
+                <input type='text' placeholder='Embed youtube Video' className={`post-input ${youtubeShow ? '' : 'hidden'}`} onChange={(e) => setYoutube(e.target.value)}/> 
                 <PostImg setImage={setImg} imgBox={imgShow}/>
                 <button className='post-btn'>Comment</button>
             </form>

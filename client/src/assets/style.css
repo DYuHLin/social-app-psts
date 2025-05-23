@@ -632,3 +632,7 @@ textarea{
     color: blue;
     text-decoration: underline;
   }
+
+  @media (max-width: 1500px){
+    
+  }
