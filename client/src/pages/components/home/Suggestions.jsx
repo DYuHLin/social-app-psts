@@ -60,7 +60,7 @@ const Suggestions = () => {
                             <div className='pic-container'>
                                 <img src={sug.image} alt='Profile image' className='profile-img-suggestion' />
                             </div>
-                            <p className='follow-name' onClick={() => navigate(`/profile/${sug.id}`)}>{sug.username}</p>
+                            <div className='sug-name'><p className='follow-name' onClick={() => navigate(`/profile/${sug.id}`)}>{sug.username}</p></div>   
                         </div>
                         <button className='follow-btn' onClick={() => follow(sug.id)}>{
                             following.some((fl) => fl.user_id == sug.id) ? 'Following' : 'Follow'
@@ -80,7 +80,7 @@ const Suggestions = () => {
                             <div className='pic-container'>
                                 <img src={sug.image} alt='Profile image' className='profile-img-suggestion' />
                             </div>                     
-                            <p className='follow-name' onClick={() => navigate(`/profile/${sug.id}`)}>{sug.username}</p>
+                            <div className='sug-name'><p className='follow-name' onClick={() => navigate(`/profile/${sug.id}`)}>{sug.username}</p></div> 
                         </div>
                         <button className='follow-btn' onClick={() => follow(sug.id)}>{
                             following.some((fl) => fl.user_id == sug.id) ? 'Following' : 'Follow'

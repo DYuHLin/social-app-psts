@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import AppContext from '../context/AppContext';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Follow = () => {
     const {user} = useContext(AppContext)
@@ -10,6 +10,7 @@ const Follow = () => {
     const [currentFollowing, setCurrentFollowing] = useState([])
     const {id} = useParams()
     const [view, setView] = useState(false)
+    const navigate = useNavigate()
 
     const follow = (other) => {
         try{
@@ -61,7 +62,7 @@ const Follow = () => {
                     <div className='user-search-card' key={key}>
                          <div className='user-info'>
                             <img src={flw.image} alt='Profile image' className='profile-img' />
-                            <p className='follow-name'>{flw.username}</p>
+                            <p className='follow-name' onClick={() => navigate(`/profile/${flw.user_id}`)}>{flw.username}</p>
                         </div>
                         <button className='follow-btn' onClick={() => follow(flw.id)}>{
                             currentFollowing.some((fl) => fl.user_id == flw.id) ? 'Following' : 'Follow'
@@ -71,7 +72,7 @@ const Follow = () => {
                     <div className='user-search-card' key={key}>
                          <div className='user-info'>
                             <img src={flw.image} alt='Profile image' className='profile-img' />
-                            <p className='follow-name'>{flw.username}</p>
+                            <p className='follow-name' onClick={() => navigate(`/profile/${flw.user_id}`)}>{flw.username}</p>
                         </div>
                         <button className='follow-btn' onClick={() => follow(flw.user_id)}>Following</button>
                     </div>

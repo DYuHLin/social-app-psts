@@ -53,6 +53,10 @@ section{
     min-height: 100vh; 
 }
 
+.start-page{
+    width: 100%;
+}
+
 .start-forms{
     width: 30%;
     background-color: white;
@@ -98,10 +102,8 @@ section{
 }
 
 .logo-mini{
-    max-width: 50%;
-    max-height: 100%;
     height: 100%;
-    width: 50%;
+    width: 211px;
 }
 
 form{
@@ -159,6 +161,7 @@ button:hover{
     display: flex;
     justify-content: center;
     gap: 40px;
+    width: 100%;
 }
 
 .create-page{
@@ -236,9 +239,15 @@ h2{
     max-height: 100%;
     width: 50%;
     max-width: 50%;
+    min-width: 50%;
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+.sug-name{
+    overflow: hidden;
+    width: 100%;
 }
 
 .profile-img{
@@ -249,19 +258,17 @@ h2{
 }
 
 .profile-img-suggestion{
-    height: 100%;
-    min-height: 100%;
-    width: 100%;
+    height: 84px;
+    width: 84px;
     border-radius: 50%;
     object-fit: cover;
 }
 
 .profile-img-list{
-    height: inherit;
-    max-height: inherit;
+    height: 51px;
+    width: 51px;
     border-radius: 50%;
     object-fit: cover;
-    width: 17%;
 }
 
 .follow-btn, .post-btn{
@@ -537,8 +544,8 @@ textarea{
 }
 
 .profile-card-img{
-    width: 30%;
-    height: 73%;
+    width: 135px;
+    height: 135px;
     padding: 12px;
 }
 
@@ -569,6 +576,7 @@ textarea{
 
 .follow-name{
     cursor: pointer;
+    overflow: hidden;
 }
 
 .link-preview{
@@ -633,6 +641,38 @@ textarea{
     text-decoration: underline;
   }
 
+  .sidebar-pic{
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+  }
+
   @media (max-width: 1500px){
-    
+    .suggestions{
+        display: none;
+    }
+
+    .side-text{
+        display: none;
+    }
+
+    .sidebar{
+        width: 40px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .feed{
+        width: 80%;
+    }
+  }
+
+  @media (max-width: 1100px){
+    .begin-screen{
+        display: none;
+    }
+    .start-forms{
+        width: 100%;
+    }
   }
