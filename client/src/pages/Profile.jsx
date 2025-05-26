@@ -65,7 +65,8 @@ const Profile = () => {
                     {currentUser[0].id != user.id ?<button className='follow-profile-btn' onClick={() => follow(currentUser[0].id)}>{
                             following.some((fl) => fl.user_id == currentUser[0].id) ? 'Following' : 'Follow'
                         }</button> : ''}
-                    {currentUser[0].id == user.id ?<button className='follow-profile-btn' onClick={() => navigate('edit')}>Edit</button> : ''}
+                    {currentUser[0].id == user.id && currentUser[0].google_id.length > 0 ? '' :
+                    currentUser[0].id == user.id ?<button className='follow-profile-btn' onClick={() => navigate('edit')}>Edit</button> : ''}
                 </div>
             </div>}
             <button className='post-btn' onClick={() => setView(!view)}>View {!view ? 'Comments' : 'Posts'}</button>

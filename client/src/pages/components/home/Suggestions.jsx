@@ -38,6 +38,7 @@ const Suggestions = () => {
             axios.get(`http://localhost:3000/api/follow/${user.id}/following`, {headers: {'Content-Type': 'application/json'}})
                 .then((res) => {
                 setFollowing(res.data)
+                setReloading(false)
             })
                 .catch((err) => {
                 console.log(err)
@@ -45,7 +46,7 @@ const Suggestions = () => {
         } else {
             return
         }
-    },[user.id])
+    },[user.id, reloading])
     
     return (
         <div className='suggestions'>

@@ -74,7 +74,8 @@ const Post = () => {
                             }
                         </div>
                         <div className='post-actions'>
-                            <p className='feed-icons' onClick={() => likePost(post[0].id)}><i className='bx bx-heart' />{post[0].likes.length}</p>
+                            <p className='feed-icons' onClick={() => likePost(post[0].id)}><i className={`bx bx-heart ${
+                            post[0].likes.some((lke) => lke.liker == user.id) ? `red` : ''}`} />{post[0].likes.length}</p>
                         </div>
                     </div>}
             <CommentWriter postId = {id} commentId={null}/>

@@ -87,7 +87,8 @@ const Comments = ({postId, commentId}) => {
                             }
                         </div>
                         <div className='post-actions'>
-                            <p className='feed-icons' onClick={() => likePost(post.id)}><i className='bx bx-heart' />{post.likes.length}</p>
+                            <p className='feed-icons' onClick={() => likePost(post.id)}><i className={`bx bx-heart ${
+                            post.likes.some((lke) => lke.liker == user.id) ? `red` : ''}`} />{post.likes.length}</p>
                             <p className='feed-icons' onClick={() => navigate(`/${post.id}/comment`)}>View Comments </p>
                         </div>
                     </div>

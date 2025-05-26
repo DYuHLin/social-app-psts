@@ -4,7 +4,7 @@ import AppContext from '../../../context/AppContext';
 import { useNavigate } from 'react-router-dom';
 import LinkPreview from '../Misc/LinkPreview';
 
-const Feed = ({posts, loading, setReloading}) => {
+const Feed = ({posts, loading, setReloading, setOriginal, setFilter, feed}) => {
     const {user} = useContext(AppContext)
     const navigate = useNavigate()
 
@@ -21,8 +21,8 @@ const Feed = ({posts, loading, setReloading}) => {
     return (
         <div className='feed'>
             <div className='filter-feed'>
-                <span className='active'>All</span>
-                <span>Following</span>
+                <span className={`${!feed ? 'active' : ''}`} onClick={() => setOriginal()}>All</span>
+                <span className={`${feed ? 'active' : ''}`} onClick={() => setFilter()}>Following</span>
             </div>
             { loading && posts.length === 0 ? <p>Loading the posts...</p> : posts.length === 0 ? <p>There are no posts right now</p>:
                 posts.sort((a, b) => {return new Date(Number(b.date)) - new Date(Number(a.date))}).map((post, key) => {
@@ -61,7 +61,7 @@ const Feed = ({posts, loading, setReloading}) => {
                         </div>
                         <div className='post-actions'>
                             <p className='feed-icons' onClick={() => likePost(post.id)}><i className={`bx bx-heart ${
-                            post.likes.some((lke) => lke.liker == user.id ? "red" : '')}`} />{post.likes.length}</p>
+                            post.likes.some((lke) => lke.liker == user.id) ? `red` : ''}`} />{post.likes.length}</p>
                             <p className='feed-icons' onClick={() => navigate(`/${post.id}/post`)}>View Comments </p>
                         </div>
                     </div>

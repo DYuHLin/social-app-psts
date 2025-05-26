@@ -1,21 +1,57 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Feed from './components/home/Feed';
 import Suggestions from './components/home/Suggestions';
 import Sidebar from './components/home/Sidebar';
 import axios from 'axios';
+import AppContext from '../context/AppContext';
 
 const Home = () => {
+  const {user} = useContext(AppContext)
     const [posts, setPosts] = useState([])
+    const [following, setFollowing] = useState([])
     const [loading, setLoading] = useState(true)
     const [reloading, setReloading] = useState(false)
+    const [feed, setFeed] = useState(false)
+
+    const setFilter = () => {
+      try{
+        axios.get(`http://localhost:3000/api/post/allposts`, {headers: {'Content-Type': 'application/json'}})
+          .then((res) => {
+            setPosts(res.data.filter((pst) => following.some((use) => use.user_id == pst.user_id)))
+            setFeed(true)
+            return res.data
+          })
+          .catch((err) => {
+            console.log(err)
+            // toast.error('There was an error fetching the posts')
+          })
+      } catch(err){
+        console.log(err)
+      }
+    }
+
+    const setOriginal = () => {
+      try{
+        axios.get(`http://localhost:3000/api/post/allposts`, {headers: {'Content-Type': 'application/json'}})
+          .then((res) => {
+            setPosts(res.data)
+            setFeed(true)
+            return res.data
+          })
+          .catch((err) => {
+            console.log(err)
+            // toast.error('There was an error fetching the posts')
+          })
+      } catch(err){
+        console.log(err)
+      }
+    }
 
     useEffect(() => {
       try{
         axios.get(`http://localhost:3000/api/post/allposts`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
-            console.log(res.data)
             setPosts(res.data)
-            // setFilteredResults(res.data.filter((post) => decoded.user.followers.some((userId) => userId.user._id === post.user._id)))
             setLoading(false)
             setReloading(false)
             return res.data
@@ -29,10 +65,20 @@ const Home = () => {
       }
       },[reloading])
 
+      useEffect(() => {
+        axios.get(`http://localhost:3000/api/follow/${user.id}/following`, {headers: {'Content-Type': 'application/json'}})
+          .then((res) => {
+            setFollowing(res.data)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+    },[user.id])
+
     return (
         <section className='home-page'>
             <Sidebar />
-            <Feed posts={posts} loading={loading} setReloading={setReloading}/>
+            <Feed posts={posts} loading={loading} setReloading={setReloading} setOriginal = {setOriginal} setFilter={setFilter} feed={feed}/>
             <Suggestions />
         </section>
     );

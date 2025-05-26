@@ -7,6 +7,7 @@ import LinkPreview from '../Misc/LinkPreview';
 const UserComments = ({id}) => {
     const [comments, setComments] = useState([])
     const [loading, setLoading] = useState(true)
+    const [reloading, setReloading] = useState(false)
     const navigate = useNavigate()
     const {user} = useContext(AppContext)
 
@@ -14,6 +15,7 @@ const UserComments = ({id}) => {
         try{
             const like = {post: null, comment: post, liker: user.id,}
             axios.post(`http://localhost:3000/api/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            setReloading(true)
         } catch(err){
             console.log(err)
         }
@@ -24,12 +26,13 @@ const UserComments = ({id}) => {
           .then((res) => {
             setComments(res.data.filter((post) => { return post.userid == id }))
             setLoading(false)
+            setReloading(false)
           })
           .catch((err) => {
             console.log(err)
             // toast.error('There was an error fetching the posts')
           })
-    },[id])
+    },[id, reloading])
     return (
         <>
             <h1>Comments</h1>       
@@ -69,7 +72,8 @@ const UserComments = ({id}) => {
                             }
                         </div>
                         <div className='post-actions'>
-                            <p className='feed-icons' onClick={() => likePost(post.id)}><i className='bx bx-heart' />{post.likes.length}</p>
+                            <p className='feed-icons' onClick={() => likePost(post.id)}><i className={`bx bx-heart ${
+                            post.likes.some((lke) => lke.liker == user.id) ? `red` : ''}`} />{post.likes.length}</p>
                             <p className='feed-icons'><i className='bx bx-comment' /> </p>
                             {post.userid == user.id ? <button className='follow-btn' onClick={() => navigate(`/${post.id}/comment/edit`)}>update</button> : ''}
                             {post.userid == user.id ? <button className='follow-btn' onClick={() => navigate(`/${post.id}/comment/delete`)}>delete</button> : ''}
