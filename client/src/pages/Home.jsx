@@ -15,7 +15,7 @@ const Home = () => {
 
     const setFilter = () => {
       try{
-        axios.get(`http://localhost:3000/api/post/allposts`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`${import.meta.env.VITE_URI}/post/allposts`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setPosts(res.data.filter((pst) => following.some((use) => use.user_id == pst.user_id)))
             setFeed(true)
@@ -23,7 +23,6 @@ const Home = () => {
           })
           .catch((err) => {
             console.log(err)
-            // toast.error('There was an error fetching the posts')
           })
       } catch(err){
         console.log(err)
@@ -32,7 +31,7 @@ const Home = () => {
 
     const setOriginal = () => {
       try{
-        axios.get(`http://localhost:3000/api/post/allposts`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`${import.meta.env.VITE_URI}/post/allposts`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setPosts(res.data)
             setFeed(true)
@@ -40,7 +39,6 @@ const Home = () => {
           })
           .catch((err) => {
             console.log(err)
-            // toast.error('There was an error fetching the posts')
           })
       } catch(err){
         console.log(err)
@@ -49,7 +47,7 @@ const Home = () => {
 
     useEffect(() => {
       try{
-        axios.get(`http://localhost:3000/api/post/allposts`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`${import.meta.env.VITE_URI}/post/allposts`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setPosts(res.data)
             setLoading(false)
@@ -58,7 +56,6 @@ const Home = () => {
           })
           .catch((err) => {
             console.log(err)
-            // toast.error('There was an error fetching the posts')
           })
       } catch(err){
         console.log(err)
@@ -66,7 +63,7 @@ const Home = () => {
       },[reloading])
 
       useEffect(() => {
-        axios.get(`http://localhost:3000/api/follow/${user.id}/following`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`${import.meta.env.VITE_URI}/follow/${user.id}/following`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setFollowing(res.data)
           })

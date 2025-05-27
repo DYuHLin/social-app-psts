@@ -9,7 +9,7 @@ const DeleteComment = () => {
 
     const deleteComment = (e) => {
         e.preventDefault()
-        axios.delete(`http://localhost:3000/api/comment/${comment[0].id}/deletecomment`, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+        axios.delete(`${import.meta.env.VITE_URI}/comment/${comment[0].id}/deletecomment`, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
             .then(res => {
                 navigate('/')
                 return res.data
@@ -17,7 +17,7 @@ const DeleteComment = () => {
     }
     
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/comment/${id}/comment`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`${import.meta.env.VITE_URI}/comment/${id}/comment`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setComment(res.data)
           })

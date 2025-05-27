@@ -20,7 +20,7 @@ const EditPost = () => {
     const updatePost = (e) => {
         e.preventDefault()
         const postU = {text, video, link, date: post[0].date, poster: user.id, youtube, id: id}
-        axios.put(`http://localhost:3000/api/post/${id}/updatepost`, postU, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+        axios.put(`${import.meta.env.VITE_URI}/post/${id}/updatepost`, postU, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
             .then(res => {
                 navigate('/')
                 return res.data
@@ -28,7 +28,7 @@ const EditPost = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/post/${id}/post`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`${import.meta.env.VITE_URI}/post/${id}/post`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setPost(res.data)
             setText(res.data[0].text)

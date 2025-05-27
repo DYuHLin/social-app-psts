@@ -16,7 +16,7 @@ const Post = () => {
     const likePost = (post) => {
         try{
             const like = {post: post, comment: null, liker: user.id,}
-            axios.post(`http://localhost:3000/api/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            axios.post(`${import.meta.env.VITE_URI}/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
             setReloading(true)
         } catch(err){
             console.log(err)
@@ -24,7 +24,7 @@ const Post = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/post/${id}/post`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`${import.meta.env.VITE_URI}/post/${id}/post`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setPost(res.data)
             setReloading(false)

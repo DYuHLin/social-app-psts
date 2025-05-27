@@ -21,12 +21,12 @@ const Create = () => {
     const createPost = (e) => {
         e.preventDefault()
         const post = {text, video, link, date: Date.now(), poster: user.id, youtube}
-        axios.post(`http://localhost:3000/api/post/create`, post, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+        axios.post(`${import.meta.env.VITE_URI}/post/create`, post, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
             .then(res => res.data)
             .then((post) => {
                 if(img.length !== 0){
                     for(let i = 0; i < img.length; i++){
-                        axios.post(`http://localhost:3000/api/image/create`, {image: img[i], post: post.id}, 
+                        axios.post(`${import.meta.env.VITE_URI}/image/create`, {image: img[i], post: post.id}, 
                         {headers: {'Content-Type': 'application/json'}, withCredentials: true})
                     }
                     navigate('/')

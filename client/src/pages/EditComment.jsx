@@ -20,7 +20,7 @@ const EditComment = () => {
     const updateComment = (e) => {
         e.preventDefault()
         const commentU = {text, video, link, date: comment[0].date, poster: user.id, post: comment[0].post, youtube, comment: comment[0].comment}
-        axios.put(`http://localhost:3000/api/comment/${comment[0].id}/updatecomment`, commentU, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+        axios.put(`${import.meta.env.VITE_URI}/comment/${comment[0].id}/updatecomment`, commentU, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
             .then(res => {
                 navigate('/')
                 return res.data
@@ -28,7 +28,7 @@ const EditComment = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/comment/${id}/comment`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`${import.meta.env.VITE_URI}/comment/${id}/comment`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setComment(res.data)
             setText(res.data[0].text)

@@ -2,6 +2,7 @@ const user = require('../Controllers/UserController')
 const express = require('express')
 const passport = require('passport')
 const isAuth = require('./IsAuth')
+require('dotenv').config()
 
 const router = express.Router()
 
@@ -11,14 +12,6 @@ router.get('/allusers', user.getAllUsers)
 router.get('/:id/user', user.getUser)
 router.put('/updateuser', user.userUpdate)
 router.delete('/:id/deleteuser', user.userDelete)
-
-// router.get('/accountstore', (req, res, next) => {
-//     if(!req.session.authenticated){
-//         return res.json(false)
-//     } else{
-//         return res.json(req.session)
-//     }
-// })
 
 router.post('/logout', (req, res, next) => {
     req.session.authenticated = false
@@ -34,7 +27,7 @@ router.get('/google', passport.authenticate('google', {
 }))
 
 router.get('/google/callback', passport.authenticate('google', {
-    successRedirect: 'http://localhost:5173/',
+    successRedirect: `${process.env.FRONTEND}/`,
     session: true,
 }))
 

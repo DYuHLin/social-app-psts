@@ -6,11 +6,11 @@ const AppContext = createContext()
 
 export const AppProvider = ({children}) => {
     const [user, setUser] = useState(false)
-    const defaultImg = "https://res.cloudinary.com/dqdoxrm2x/image/upload/v1744207814/feq9ujcmkjrbabkptc6y.jpg"
+    const defaultImg = `${import.meta.env.VITE_DEFAULT}`
 
     useEffect(() => {
         try{
-            axios.get('http://localhost:3000/api/auth/account', {withCredentials: true, headers: {'Content-Type': 'application/json'}})
+            axios.get(`${import.meta.env.VITE_URI}/auth/account`, {withCredentials: true, headers: {'Content-Type': 'application/json'}})
              .then(res => {
                  console.log(res.data)
                  setUser(res.data)

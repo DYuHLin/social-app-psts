@@ -11,14 +11,14 @@ const LikedComments = ({loading}) => {
     const likePost = (comment) => {
         try{
             const like = {post: null, comment: comment, liker: user.id,}
-            axios.post(`http://localhost:3000/api/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            axios.post(`${import.meta.env.VITE_URI}/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
         } catch(err){
             console.log(err)
         }
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/likes/${user.id}/allcomments`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`${import.meta.env.VITE_URI}/likes/${user.id}/allcomments`, {headers: {'Content-Type': 'application/json'}})
             .then((res) => {
                 setComments(res.data)
             })

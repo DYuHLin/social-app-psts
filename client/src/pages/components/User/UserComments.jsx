@@ -14,7 +14,7 @@ const UserComments = ({id}) => {
     const likePost = (post) => {
         try{
             const like = {post: null, comment: post, liker: user.id,}
-            axios.post(`http://localhost:3000/api/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            axios.post(`${import.meta.env.VITE_URI}/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
             setReloading(true)
         } catch(err){
             console.log(err)
@@ -22,7 +22,7 @@ const UserComments = ({id}) => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/comment/getall`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`${import.meta.env.VITE_URI}/comment/getall`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setComments(res.data.filter((post) => { return post.userid == id }))
             setLoading(false)
@@ -30,7 +30,6 @@ const UserComments = ({id}) => {
           })
           .catch((err) => {
             console.log(err)
-            // toast.error('There was an error fetching the posts')
           })
     },[id, reloading])
     return (

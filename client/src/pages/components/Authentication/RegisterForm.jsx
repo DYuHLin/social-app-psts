@@ -20,7 +20,7 @@ const RegisterForm = ({setForms}) => {
             if(confirmPassword !== password){
                 setError('These passwords do not match')
             }else{
-                axios.post('http://localhost:3000/api/auth/register', register, {headers: {'Content-Type': 'application/json'}})
+                axios.post(`${import.meta.env.VITE_URI}/auth/register`, register, {headers: {'Content-Type': 'application/json'}})
                     .then(res => res.data)
                     .then(status => {
                         if(status == 'username'){

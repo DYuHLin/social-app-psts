@@ -15,14 +15,14 @@ const Follow = () => {
     const follow = (other) => {
         try{
             const fllw = {follower: user.id, following: other}
-            axios.post(`http://localhost:3000/api/follow/create`, fllw, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            axios.post(`${import.meta.env.VITE_URI}/follow/create`, fllw, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
         } catch(err){
             console.log(err)
         }
     }
 
     useEffect(() => {
-            axios.get(`http://localhost:3000/api/follow/${id}/followers`, {headers: {'Content-Type': 'application/json'}})
+            axios.get(`${import.meta.env.VITE_URI}/follow/${id}/followers`, {headers: {'Content-Type': 'application/json'}})
               .then((res) => {
                 setFollowers(res.data)
               })
@@ -32,7 +32,7 @@ const Follow = () => {
         },[id])
 
         useEffect(() => {
-            axios.get(`http://localhost:3000/api/follow/${id}/following`, {headers: {'Content-Type': 'application/json'}})
+            axios.get(`${import.meta.env.VITE_URI}/follow/${id}/following`, {headers: {'Content-Type': 'application/json'}})
               .then((res) => {
                 setFollowing(res.data)
               })
@@ -42,7 +42,7 @@ const Follow = () => {
         },[id])
 
         useEffect(() => {
-            axios.get(`http://localhost:3000/api/follow/${user.id}/following`, {headers: {'Content-Type': 'application/json'}})
+            axios.get(`${import.meta.env.VITE_URI}/follow/${user.id}/following`, {headers: {'Content-Type': 'application/json'}})
               .then((res) => {
                 setCurrentFollowing(res.data)
               })

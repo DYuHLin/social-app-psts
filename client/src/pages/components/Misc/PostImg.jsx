@@ -18,7 +18,6 @@ const PostImg = ({setImage, imgBox}) => {
             setLoading(false)
         }catch(err){
             console.log(err)
-            // toast.error('There was an error uploading the image(s)')
         }
     }
   return (

@@ -11,7 +11,7 @@ const Feed = ({posts, loading, setReloading, setOriginal, setFilter, feed}) => {
     const likePost = (post) => {
         try{
             const like = {post: post, comment: null, liker: user.id,}
-            axios.post(`http://localhost:3000/api/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            axios.post(`${import.meta.env.VITE_URI}/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
             setReloading(true)
         } catch(err){
             console.log(err)

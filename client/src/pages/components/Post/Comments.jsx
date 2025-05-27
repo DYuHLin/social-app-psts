@@ -14,7 +14,7 @@ const Comments = ({postId, commentId}) => {
     const likePost = (post) => {
         try{
             const like = {post: null, comment: post, liker: user.id,}
-            axios.post(`http://localhost:3000/api/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            axios.post(`${import.meta.env.VITE_URI}/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
             setReloading(true)
         } catch(err){
             console.log(err)
@@ -23,7 +23,7 @@ const Comments = ({postId, commentId}) => {
 
     useEffect(() => {
         if(postId != null){
-            axios.get(`http://localhost:3000/api/comment/${postId}/allcomments`, {headers: {'Content-Type': 'application/json'}})
+            axios.get(`${import.meta.env.VITE_URI}/comment/${postId}/allcomments`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setComments(res.data)
             setLoading(false)
@@ -31,10 +31,9 @@ const Comments = ({postId, commentId}) => {
           })
           .catch((err) => {
             console.log(err)
-            // toast.error('There was an error fetching the posts')
           })
         } else if(commentId != null) {
-            axios.get(`http://localhost:3000/api/comment/${commentId}/allcommentscomments`, {headers: {'Content-Type': 'application/json'}})
+            axios.get(`${import.meta.env.VITE_URI}/comment/${commentId}/allcommentscomments`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setComments(res.data)
             setLoading(false)
@@ -42,7 +41,6 @@ const Comments = ({postId, commentId}) => {
           })
           .catch((err) => {
             console.log(err)
-            // toast.error('There was an error fetching the posts')
           })
         }
 

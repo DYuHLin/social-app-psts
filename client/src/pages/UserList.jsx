@@ -15,7 +15,7 @@ const UserList = () => {
     const follow = (other) => {
         try{
             const fllw = {follower: user.id, following: other}
-            axios.post(`http://localhost:3000/api/follow/create`, fllw, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            axios.post(`${import.meta.env.VITE_URI}/follow/create`, fllw, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
             setReloading(true)
         } catch(err){
             console.log(err)
@@ -23,7 +23,7 @@ const UserList = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/auth/allusers`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`${import.meta.env.VITE_URI}/auth/allusers`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setUsers(res.data)
             setLoading(false)
@@ -31,12 +31,11 @@ const UserList = () => {
           })
           .catch((err) => {
             console.log(err)
-            // toast.error('There was an error fetching the posts')
           })
     },[reloading])
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/follow/${user.id}/following`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`${import.meta.env.VITE_URI}/follow/${user.id}/following`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setFollowing(res.data)
             setReloading(false)

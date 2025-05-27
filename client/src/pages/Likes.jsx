@@ -15,7 +15,7 @@ const Likes = () => {
     const likePost = (post) => {
         try{
             const like = {post: post, comment: null, liker: user.id,}
-            axios.post(`http://localhost:3000/api/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            axios.post(`${import.meta.env.VITE_URI}/likes/likepost`, like, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
             setReloading(true)
         } catch(err){
             console.log(err)
@@ -23,7 +23,7 @@ const Likes = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/likes/${user.id}/allposts`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`${import.meta.env.VITE_URI}/likes/${user.id}/allposts`, {headers: {'Content-Type': 'application/json'}})
             .then((res) => {
                 setPosts(res.data)
                 setLoading(false)

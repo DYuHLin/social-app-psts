@@ -21,7 +21,7 @@ const EditProfile = () => {
             if(confirmPassword !== password){
                 setError('These passwords do not match')
             }else{
-                axios.put(`http://localhost:3000/api/auth/updateuser`, upUser, {headers: {'Content-Type': 'application/json'}})
+                axios.put(`${import.meta.env.VITE_URI}/auth/updateuser`, upUser, {headers: {'Content-Type': 'application/json'}})
                     .then(res => res.data)
                     .then(status => {
                         if(status == 'username'){

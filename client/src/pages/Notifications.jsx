@@ -10,7 +10,7 @@ const Notifications = () => {
     const navigate = useNavigate()
 
     const deleteNotifications = () => {
-        axios.delete(`http://localhost:3000/api/notifications/${user.id}/delete`, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+        axios.delete(`${import.meta.env.VITE_URI}/notifications/${user.id}/delete`, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
             .then(res => {
                 navigate('/')
                 return res.data
@@ -18,7 +18,7 @@ const Notifications = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/notifications/${user.id}/allnotifications`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`${import.meta.env.VITE_URI}/notifications/${user.id}/allnotifications`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setNotifications(res.data)
             setLoading(false)

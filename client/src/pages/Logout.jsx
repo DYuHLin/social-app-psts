@@ -11,7 +11,7 @@ const Logout = () => {
         e.preventDefault()
         document.cookie = "connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         try{
-            axios.post(`http://localhost:3000/api/auth/logout`, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            axios.post(`${import.meta.env.VITE_URI}/auth/logout`, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
                 .then((res) => {
                     setUser(false)
                     navigate('/gettingstarted')
@@ -25,7 +25,7 @@ const Logout = () => {
     const deleteAcc = (e) => {
         e.preventDefault()
         try{
-            axios.delete(`http://localhost:3000/api/auth/${user.id}/deleteuser`, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            axios.delete(`${import.meta.env.VITE_URI}/auth/${user.id}/deleteuser`, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
                 .then((res) => {
                     setUser(false)
                     navigate('/gettingstarted')

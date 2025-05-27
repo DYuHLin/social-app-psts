@@ -14,7 +14,7 @@ const LoginForm = () => {
         e.preventDefault()
         const login = {username: username, password: password}
         try{
-            const res = await axios.post('http://localhost:3000/api/auth/login', login, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            const res = await axios.post(`${import.meta.env.VITE_URI}/auth/login`, login, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
             if(res.data == 'username'){
                 setError('This username is incorrect or does not exist')
             } else if(res.data == 'password'){

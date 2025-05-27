@@ -389,18 +389,16 @@ span{
 .slider-wrapper{
     position: relative;
     max-width: 100%;
-    margin: 0;
-    height: 375px;
+    margin: 0 auto;
 }
 
 .slider{
     display: flex;
     aspect-ratio: 16/9;
-    overflow: auto;
+    overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     box-shadow: o 1.5rem 3 rem -0,75rem hsla(0, 0%, 0%, 0.25);
-    border-radius: 0.5rem;
 }
 
 .slider::-webkit-scrollbar{
@@ -452,6 +450,11 @@ textarea{
     color: white;
     border: 1px solid white;
     padding: 10px;
+}
+
+.guest-login{
+    color: black;
+    text-decoration: underline;
 }
 
 .post-op{

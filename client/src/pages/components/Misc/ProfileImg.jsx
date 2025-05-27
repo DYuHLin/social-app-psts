@@ -4,7 +4,6 @@ import { imgUpload } from './ImageUpload';
 const ProfileImg = ({setImage}) => {
 
     const UploadImage = async (files) => {
-        //jag6ma0t
         setImage(await imgUpload(files[0]))
       }
 

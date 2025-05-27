@@ -16,7 +16,7 @@ const Profile = () => {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/auth/${id}/user`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`${import.meta.env.VITE_URI}/auth/${id}/user`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setCurrentUser(res.data)
             setLoading(false)
@@ -27,7 +27,7 @@ const Profile = () => {
     },[id])
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/follow/${user.id}/following`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`${import.meta.env.VITE_URI}/follow/${user.id}/following`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setFollowing(res.data)
           })
@@ -39,7 +39,7 @@ const Profile = () => {
     const follow = (other) => {
         try{
             const fllw = {follower: user.id, following: other}
-            axios.post(`http://localhost:3000/api/follow/create`, fllw, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            axios.post(`${import.meta.env.VITE_URI}/follow/create`, fllw, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
         } catch(err){
             console.log(err)
         }

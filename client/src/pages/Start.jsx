@@ -1,18 +1,31 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import LoginForm from './components/Authentication/LoginForm';
 import RegisterForm from './components/Authentication/RegisterForm';
 import MainLogo from '../assets/img/6.png'
+import axios from 'axios'
 import AppContext from '../context/AppContext';
-// import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 const Start = () => {
-    // const {user} = useContext(AppContext)
-    const [forms, setForms] = useState(true)
+    const [forms, setForms,] = useState(true)
+    const {setUser} = useContext(AppContext)
+    const navigate = useNavigate()
 
     const googleLogin = (e) => {
         e.preventDefault()
-        const path = 'http://localhost:3000/api/auth/google'
+        const path = `${import.meta.env.VITE_URI}/auth/google`
         window.open(path, '_self')
+    }
+
+    const guestLogin = async () => {
+        const login = {username: import.meta.env.VITE_GUESTNAME, password: import.meta.env.VITE_GUESTNAME}
+            try{
+                const res = await axios.post(`${import.meta.env.VITE_URI}/auth/login`, login, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+                setUser(res.data.user[0])
+                navigate('/')
+            } catch(err){
+                console.log(err)
+            }
     }
 
     return (
@@ -26,7 +39,7 @@ const Start = () => {
                     <form onSubmit={googleLogin}>
                         <button className='google-auth-btn'>Continue with Google</button>
                     </form>  
-                    {/* <button onClick={() => console.log(user)}>Show</button> */}
+                    <span className='guest-login' onClick={guestLogin}>Guest Login</span>
             </div>
             <div className='begin-screen'>
                 <div className='start-logo'>

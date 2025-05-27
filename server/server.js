@@ -4,7 +4,6 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const store = session.MemoryStore()
-const socket = require('socket.io')
 const passport = require('passport')
 const userRoutes = require('./Routes/UserRoutes')
 const postRoutes = require('./Routes/PostRoutes')
@@ -33,7 +32,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: process.env.FRONTEND,
     credentials: true,
     methods: ['GET','PUT','POST','DELETE'],
     optionSuccessStatus:200,
@@ -47,4 +46,4 @@ app.use('/api/follow', followRoutes)
 app.use('/api/likes', likeRoutes)
 app.use('/api/notifications', notificationRoutes)
 
-const server = app.listen(3000, () => console.log('app is listening on port 3000'))
+const server = app.listen(process.env.PORT, () => console.log(`app is listening on port ${process.env.PORT}`))

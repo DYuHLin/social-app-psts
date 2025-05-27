@@ -50,20 +50,19 @@ exports.userLogin = asyncHandler(async (req, res, next) => {
 
 exports.userUpdate = asyncHandler(async (req, res, next) => {
     try{
-        const user = await userModel.exist(req.body.username)
-        if(user.length != 0){
-            return res.json('username')
-        } else {
-            bcrypt.hash(req.body.password, 10, async (err, hashed) => {
-                if(err){
-                    console.log(err)
-                    return next(err)
-                } else {
-                    await userModel.update(req.body.username, hashed, req.body.description, req.body.image, req.body.id)
-                    return res.json('success')
-                }
+        bcrypt.hash(req.body.password, 10, async (err, hashed) => {
+            if(err){
+                console.log(err)
+                return next(err)
+            } else {
+                await userModel.update(req.body.username, hashed, req.body.description, req.body.image, req.body.id)
+                req.session.authenticated = false
+                delete req.session.user
+                req.session.destroy()
+                return res.json('success')
+            }
             })
-        }
+        
     } catch(err){
         next(err)
     }

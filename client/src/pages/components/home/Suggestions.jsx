@@ -13,7 +13,7 @@ const Suggestions = () => {
     const follow = (other) => {
         try{
             const fllw = {follower: user.id, following: other}
-            axios.post(`http://localhost:3000/api/follow/create`, fllw, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+            axios.post(`${import.meta.env.VITE_URI}/follow/create`, fllw, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
             setReloading(true)
         } catch(err){
             console.log(err)
@@ -21,7 +21,7 @@ const Suggestions = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/auth/allusers`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`${import.meta.env.VITE_URI}/auth/allusers`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setUsers(res.data)
             setLoading(false)
@@ -29,13 +29,12 @@ const Suggestions = () => {
           })
           .catch((err) => {
             console.log(err)
-            // toast.error('There was an error fetching the posts')
           })
     },[reloading])
 
     useEffect(() => {
         if(user.id){
-            axios.get(`http://localhost:3000/api/follow/${user.id}/following`, {headers: {'Content-Type': 'application/json'}})
+            axios.get(`${import.meta.env.VITE_URI}/follow/${user.id}/following`, {headers: {'Content-Type': 'application/json'}})
                 .then((res) => {
                 setFollowing(res.data)
                 setReloading(false)
@@ -54,7 +53,7 @@ const Suggestions = () => {
                 <h2>Latest Users</h2>
                 <div className='users'>
                 { loading && users.length == 0 ? '' : users.length == 0 ? <p>There are no users</p> :
-                    users.slice(-5, 3).map((sug, key) => {return(
+                    users.slice(-3).reverse().map((sug, key) => {return(
                         <div className='user-card' key={key}>
                         <div className='user-info'>
                             <div className='pic-container'>

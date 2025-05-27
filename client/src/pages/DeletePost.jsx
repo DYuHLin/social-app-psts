@@ -9,7 +9,7 @@ const DeletePost = () => {
 
     const deletePost = (e) => {
         e.preventDefault()
-        axios.delete(`http://localhost:3000/api/post/${post[0].id}/deletepost`, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+        axios.delete(`${import.meta.env.VITE_URI}/post/${post[0].id}/deletepost`, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
             .then(res => {
                 navigate('/')
                 return res.data
@@ -17,7 +17,7 @@ const DeletePost = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/post/${id}/post`, {headers: {'Content-Type': 'application/json'}})
+        axios.get(`${import.meta.env.VITE_URI}/post/${id}/post`, {headers: {'Content-Type': 'application/json'}})
           .then((res) => {
             setPost(res.data)
           })

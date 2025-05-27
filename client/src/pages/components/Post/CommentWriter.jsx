@@ -19,12 +19,12 @@ const CommentWriter = ({postId, commentId}) => {
     const createComment = (e) => {
         e.preventDefault()
         const comment = {text, video, link, date: Date.now(), poster: user.id, post: postId, youtube, comments: commentId}
-        axios.post(`http://localhost:3000/api/comment/create`, comment, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
+        axios.post(`${import.meta.env.VITE_URI}/comment/create`, comment, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
             .then(res => res.data)
             .then((post) => {
                 if(img.length !== 0){
                     for(let i = 0; i < img.length; i++){
-                        axios.post(`http://localhost:3000/api/image/create`, {image: img[i], comment: post.id}, 
+                        axios.post(`${import.meta.env.VITE_URI}/image/create`, {image: img[i], comment: post.id}, 
                         {headers: {'Content-Type': 'application/json'}, withCredentials: true})
                     }
                 } else{
@@ -50,7 +50,6 @@ const CommentWriter = ({postId, commentId}) => {
                 <i className='bx bx-image post-op' onClick={() => {setLinkShow(false); setImgShow(!imgShow); setYoutubeShow(false); setVideoShow(false);}}/>
                 <i className='bx bxs-videos post-op' onClick={() => {setLinkShow(false); setImgShow(false); setYoutubeShow(false); setVideoShow(!videoShow);}}/>
             </div>
-            {/* <button onClick={() => console.log(user)}>Show</button> */}
         </>
     );
 }
