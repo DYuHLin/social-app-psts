@@ -32,7 +32,6 @@ router.get('/google/callback', passport.authenticate('google', {
 }))
 
 router.get('/account', isAuth,  (req, res, next) => {
-    console.log(req.user) 
     return res.json(req.user) 
 })
 

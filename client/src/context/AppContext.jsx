@@ -1,5 +1,4 @@
 import {createContext, useState, useEffect} from 'react'
-import {Outlet, Navigate} from 'react-router-dom'
 import axios from 'axios'
 
 const AppContext = createContext()
@@ -12,7 +11,6 @@ export const AppProvider = ({children}) => {
         try{
             axios.get(`${import.meta.env.VITE_URI}/auth/account`, {withCredentials: true, headers: {'Content-Type': 'application/json'}})
              .then(res => {
-                 console.log(res.data)
                  setUser(res.data)
              });
         } catch(err){

@@ -17,6 +17,7 @@ const UserList = () => {
             const fllw = {follower: user.id, following: other}
             axios.post(`${import.meta.env.VITE_URI}/follow/create`, fllw, {headers: {'Content-Type': 'application/json'}, withCredentials: true})
             setReloading(true)
+            navigate('/')
         } catch(err){
             console.log(err)
         }
