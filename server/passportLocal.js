@@ -18,7 +18,7 @@ passport.use(
                 }
             }
 
-            done(null, user)
+            done(null, user[0])
         } catch(err){
             console.log(err)
             done(err, null)
@@ -36,7 +36,7 @@ passport.deserializeUser(async (id, done) => {
         if(user.length == 0){
             throw new Error('user not found')
         }
-        done(null, user)
+        done(null, user[0])
     }catch(err){
         done(err, null)
     }

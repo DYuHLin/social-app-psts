@@ -11,7 +11,7 @@ export const AppProvider = ({children}) => {
         try{
             axios.get(`${import.meta.env.VITE_URI}/auth/account`, {withCredentials: true, headers: {'Content-Type': 'application/json'}})
              .then(res => {
-                 setUser(res.data[0])
+                 setUser(res.data)
              });
         } catch(err){
             console.log(err)

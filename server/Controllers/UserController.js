@@ -89,5 +89,6 @@ exports.getUser = asyncHandler(async (req, res, next) => {
 
 exports.userDelete = asyncHandler(async (req, res, next) => {
     await userModel.delete(req.params.id)
+    req.session.destroy()
     return res.json('deleted')
 })
