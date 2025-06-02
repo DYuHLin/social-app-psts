@@ -20,6 +20,7 @@ const Feed = ({posts, loading, setReloading, setOriginal, setFilter, feed}) => {
 
     return (
         <div className='feed'>
+        <button onClick={() => console.log(user)}>show</button>
             <div className='filter-feed'>
                 <span className={`${!feed ? 'active' : ''}`} onClick={() => setOriginal()}>All</span>
                 <span className={`${feed ? 'active' : ''}`} onClick={() => setFilter()}>Following</span>

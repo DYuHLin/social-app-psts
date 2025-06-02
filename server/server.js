@@ -3,7 +3,6 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-const store = session.MemoryStore()
 const passport = require('passport')
 const userRoutes = require('./Routes/UserRoutes')
 const postRoutes = require('./Routes/PostRoutes')
@@ -12,20 +11,27 @@ const imageRoutes = require('./Routes/ImageRoutes')
 const followRoutes = require('./Routes/FollowerRoutes')
 const likeRoutes = require('./Routes/LikeRoutes')
 const notificationRoutes = require('./Routes/NotificationRoutes')
+const pool = require('./db/Pool')
 require('dotenv').config()
 require('./passport')
+require('./passportLocal')
 
 const app = express()
+const pgSession = require('connect-pg-simple')(session)
 
 app.use(express.json())
 app.use(cookieParser())
 app.use(bodyParser.json({limit: '50mb'}))
 app.use(bodyParser.urlencoded({extended: false}))
-app.use(session({secret: 'cats', cookie: {
+app.use(session({store: new pgSession({
+    pool: pool,
+    tableName: 'user_sessions'
+    }),
+    secret: 'cats', cookie: {
    secure: "development" === "production" ? "true" : "auto",
    sameSite: "development" === "production" ? "none" : "lax",
-   maxAge: 30 * 24 * 60 * 60 * 1000,
-  }, resave: false, saveUninitialized: false, store
+   maxAge: 1000 * 60 * 60 * 6,
+  }, resave: false, saveUninitialized: false
 }))
 
 app.use(passport.initialize())
